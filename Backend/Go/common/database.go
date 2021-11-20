@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"starbars/config"
-/* 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"os" */
 	_ "github.com/go-sql-driver/mysql"
 )
 

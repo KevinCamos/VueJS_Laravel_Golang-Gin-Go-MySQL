@@ -23,9 +23,9 @@ func main() {
 	db := common.Init()
 	Migrate(db)
 	defer db.Close()
-	routersInit := routers.InitRouter()
-routersInit.Run()
-
+	routersInit := routers.InitRouter()	
+	routersInit.Run(":8040")
+   
 	// server := &http.Server{
 	// 	Addr:           endPoint,
 	// 	Handler:        routersInit,

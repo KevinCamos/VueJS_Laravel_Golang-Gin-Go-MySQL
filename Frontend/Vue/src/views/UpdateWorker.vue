@@ -70,7 +70,11 @@
           </div>
         </div>
         <div class="form-group">
-           <button type="button" class="btn btn-primary m-1" @click="updateWorker">
+          <button
+            type="button"
+            class="btn btn-primary m-1"
+            @click="updateWorker"
+          >
             Update
           </button>
           <button type="button" class="btn btn-primary m-1" @click="cancel">
@@ -82,9 +86,7 @@
   </div>
 </template>
 
-
 <script>
-
 import Constant from "../Constant";
 import { reactive } from "vue";
 import { useStore } from "vuex";
@@ -95,18 +97,19 @@ export default {
     const store = useStore();
     const router = useRouter();
     const currentRoute = useRoute();
-console.log( store.state.workerlist)
+    console.log(store.state.workerlist);
     const workeritem = store.state.workerlist.find(
       (item) => item.id === currentRoute.params.id
     );
-    console.log;
     const state = reactive({
       workeritemlocal: { ...workeritem },
     });
-
     const updateWorker = () => {
       router.push({ name: "workerList" });
-      store.dispatch(Constant.UPDATE_WORKER, { workeritem: state.workeritemlocal });
+      console.log("worker/" + Constant.UPDATE_WORKER);
+      store.dispatch("worker/" + Constant.UPDATE_WORKER, {
+        workeritem: state.workeritemlocal,
+      });
     };
 
     const cancel = () => {

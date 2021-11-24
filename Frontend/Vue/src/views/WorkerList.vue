@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col p-3">
         <router-link class="btn btn-primary" to="/workers/add"
-          >Crea un trabajador</router-link>
+          >Crea un trabajador</router-link
+        >
       </div>
     </div>
     <div class="card card-default card-borderless">
@@ -25,30 +26,30 @@
 </template>
 
 <script>
-/* import Constant from '../Constant';
- */ import WorkerItem from "../components/WorkerItem.vue";
+import Constant from "../Constant";
+import WorkerItem from "../components/WorkerItem.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
-/* import { useRouter } from 'vue-router';
- */
+// import { useRouter } from "vue-router";
+
 export default {
   components: { WorkerItem },
   setup() {
     const store = useStore();
-    /*         const router = useRouter();
-     */
-    // const cars = computed(() => store.getters['car/getCars']);
-
+    // const router = useRouter();
     const state = reactive({
-      workerlist: computed(() => store.getters["getWorkers"]),
+      workerlist: computed(() => store.getters["worker/getWorkers"]),
     });
     console.log(state.workerlist);
-    /*  const goAddTodo = () => {
-            store.dispatch(Constant.INITIALIZE_TODOITEM);
-            router.push({ name:"addTodo" });
-        } */
+    // const getWorkers = () => {
 
-    return { state /* goAddTodo */ };
+    if (!state.workerlist) {
+      store.dispatch("worker/" + Constant.INITIALIZE_WORKERITEM);
+    }
+    // router.push({ name: "addWorkers" });
+    // };
+    // getWorkers;
+    return { state /* getWorkers */ };
   },
 };
 </script>

@@ -1,47 +1,49 @@
 import Constant from '../../Constant';
-import shortid from 'shortid';
+// import shortid from 'shortid';
 import WorkerService from '@/services/WorkerService'
 
 export const workers = {
+    namespaced: true,
     state: {
-        workerlist: [
-            {
-                "id": shortid.generate(),
-                "name": "Juanan",
-                "email": "Juanan@gmail.com",
-                "phone": "845774411",
-                "address": "C/ Desengaño, 21",
-                "active": true,
-                "date_active": "18-05-2020",
-                "appointment": "auxiliar"
-            }, {
-                "id": shortid.generate(),
-                "name": "Alex",
-                "email": "Alex@gmail.com",
-                "phone": "845774411",
-                "address": "C/ L'estació, 21",
-                "active": false,
-                "date_active": "12-06-2020",
-                "appointment": "auxiliar"
-            }, {
-                "id": shortid.generate(),
-                "name": "Anna",
-                "email": "Anna@gmail.com",
-                "phone": "845774411",
-                "address": "C/ San Loreanzo, 21",
-                "active": true,
-                "date_active": "12-06-2020",
-                "appointment": "auxiliar"
-            },
+        // workerlist: [
+        //     {
+        //         "id": shortid.generate(),
+        //         "name": "Juanan",
+        //         "email": "Juanan@gmail.com",
+        //         "phone": "845774411",
+        //         "address": "C/ Desengaño, 21",
+        //         "active": true,
+        //         "date_active": "18-05-2020",
+        //         "appointment": "auxiliar"
+        //     }, {
+        //         "id": shortid.generate(),
+        //         "name": "Alex",
+        //         "email": "Alex@gmail.com",
+        //         "phone": "845774411",
+        //         "address": "C/ L'estació, 21",
+        //         "active": false,
+        //         "date_active": "12-06-2020",
+        //         "appointment": "auxiliar"
+        //     }, {
+        //         "id": shortid.generate(),
+        //         "name": "Anna",
+        //         "email": "Anna@gmail.com",
+        //         "phone": "845774411",
+        //         "address": "C/ San Loreanzo, 21",
+        //         "active": true,
+        //         "date_active": "12-06-2020",
+        //         "appointment": "auxiliar"
+        //     },
 
-        ]
+        // ]
     },
 
 
     mutations: {
         [Constant.ADD_WORKER]: (state, payload) => {
-            state.workerlist.push({ ...payload.workeritem, id: shortid.generate(), done: false });
-            state.workeritem = {
+            console.log(payload)
+            state.workerlist.push({ ...payload/* , id: shortid.generate(), done: false */ });
+         /*    state.workeritem = {
                 id: "",
                 name: "",
                 email: "",
@@ -49,7 +51,7 @@ export const workers = {
                 address: "",
                 date_active: "",
                 appointment: "",
-            };
+            }; */
         },
         [Constant.DELETE_WORKER]: (state, payload) => {
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
@@ -64,8 +66,9 @@ export const workers = {
             state.workerlist[index] = payload.workeritem;
         },
         [Constant.INITIALIZE_WORKERITEM]: (state, payload) => {
-            if (payload && payload.workeritem) {
-                state.workerlist = payload.workerlist;
+            console.log(payload)
+            if (payload) {
+                state.workerlist = payload;
             } else {
                 state.workerlist = {
                     id: "",
@@ -79,22 +82,20 @@ export const workers = {
             }
         },
     },
-    actions: {  
-        [Constant.ADD_WORKER]: (store/* , payload */) => {
+    actions: {
+        [Constant.ADD_WORKER]: (store, payload) => {
+            console.log(payload.workeritem)
+            // store.commit(Constant.ADD_WORKER, payload);
 
-
-           
-         return new Promise((resolve, reject) => {
-            WorkerService.getAll()
-                    .then((comments) => {
-                        console.log(comments.data)
-                        store.commit(Constant.ADD_WORKER, comments.data);
-                        resolve(comments)
-                    })
-                    .catch((err) => reject(err))
+            WorkerService.createUser(payload.workeritem)
+                .then(function (worker) {
+                    console.log(worker.data)
+                    store.commit(Constant.ADD_WORKER, worker.data);
+                    // resolve(workers)
                 })
-            
-
+                .catch(function (error) {
+                    console.log(error)
+                })
 
         },
         [Constant.DELETE_WORKER]: (store, payload) => {
@@ -105,14 +106,31 @@ export const workers = {
         },
         [Constant.UPDATE_WORKER]: (store, payload) => {
             store.commit(Constant.UPDATE_WORKER, payload);
-        }, 
-        [Constant.INITIALIZE_WORKERITEM]: (store, payload) => {
-            store.commit(Constant.INITIALIZE_WORKERITEM, payload);
+        },
+        [Constant.INITIALIZE_WORKERITEM]: (store, /* payload */) => {
+            /* return new Promise((resolve, reject) => {
+                 WorkerService.getAll()
+                     .then((workers) => {
+                         console.log(workers.data)
+                         store.commit(Constant.INITIALIZE_WORKERITEM, workers.data);
+                         resolve(workers)
+                     })
+                     .catch((err) => reject(err))
+             }) */
+            WorkerService.getAll()
+                .then(function (workers) {
+                    console.log(workers.data)
+                    store.commit(Constant.INITIALIZE_WORKERITEM, workers.data);
+                    // resolve(workers)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         }
     },
     getters: {
         getWorkers(state) {
-            return state.workerlist ;
+            return state.workerlist;
         }
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid my-container">
     <Header />
     <router-view></router-view>
   </div>
@@ -14,5 +14,9 @@ export default {
 </script>
 
 <style>
+.my-container{
+    padding-right:0;
+    padding-left: 0;
+}
 
 </style>

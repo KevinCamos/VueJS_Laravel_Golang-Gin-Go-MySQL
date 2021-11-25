@@ -97,16 +97,17 @@ export default {
     const store = useStore();
     const router = useRouter();
     const currentRoute = useRoute();
-    console.log(store.state.workerlist);
-    const workeritem = store.state.workerlist.find(
-      (item) => item.id === currentRoute.params.id
+    console.log(store.state.worker.workerlist[0].id);
+    console.log(currentRoute.params.id);
+    const workeritem = store.state.worker.workerlist.find(
+      (item) => item.id.toString() === currentRoute.params.id
     );
+    console.log(workeritem);
     const state = reactive({
       workeritemlocal: { ...workeritem },
     });
     const updateWorker = () => {
       router.push({ name: "workerList" });
-      console.log("worker/" + Constant.UPDATE_WORKER);
       store.dispatch("worker/" + Constant.UPDATE_WORKER, {
         workeritem: state.workeritemlocal,
       });

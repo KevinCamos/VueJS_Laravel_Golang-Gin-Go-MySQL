@@ -42,14 +42,21 @@ func GetUserByID(c *gin.Context) {
 }
 func UpdateUser(c *gin.Context) {
 	id := c.Params.ByName("id")
+	fmt.Println("id", id)
+
 	var user UserModel
 	if err := config.DB.Where("id = ?", id).First(&user).Error; err != nil {
+		fmt.Println("errorput1", "errorput1")
+
 		c.AbortWithStatus(http.StatusNotFound)
 	}
 	c.BindJSON(&user)
+	c.JSON(http.StatusOK, user)
 
-	if err := config.DB.Save(user);	 err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+	if err := config.DB.Save(&user);	 err != nil {
+		fmt.Println("errorput2", "errorput2")
+
+		 c.AbortWithStatus(http.StatusNotFound)
 	} else {
 		c.JSON(http.StatusOK, user)
 	}

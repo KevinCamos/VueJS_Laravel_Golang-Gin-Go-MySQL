@@ -34,7 +34,7 @@ export default {
   props: {
     workeritem: Object,
   },
-  setup(props) {
+  setup() {
     const store = useStore();
     const router = useRouter();
 
@@ -49,13 +49,15 @@ export default {
     };
     const deleteWork = (id) => {
       console.log("delete");
+  
+      console.log(id);
 
-      store.dispatch(Constant.DELETE_WORKER, { id });
+      store.dispatch("worker/"+Constant.DELETE_WORKER, { id });
     };
     const editWork = (id) => {
-      store.dispatch(Constant.UPDATE_WORKER, {
-        workeritem: { ...props.workeritem },
-      });
+      // store.dispatch("worker/"+Constant.UPDATE_WORKER, {
+      //   workeritem: { ...props.workeritem },
+      // });
       router.push({ name: "updateWorker", params: { id } });
     };
 

@@ -37,21 +37,19 @@ export const workers = {
 
         // ]
     },
-
-
     mutations: {
         [Constant.ADD_WORKER]: (state, payload) => {
             console.log(payload)
             state.workerlist.push({ ...payload/* , id: shortid.generate(), done: false */ });
-         /*    state.workeritem = {
-                id: "",
-                name: "",
-                email: "",
-                phone: "",
-                address: "",
-                date_active: "",
-                appointment: "",
-            }; */
+            /*    state.workeritem = {
+                   id: "",
+                   name: "",
+                   email: "",
+                   phone: "",
+                   address: "",
+                   date_active: "",
+                   appointment: "",
+               }; */
         },
         [Constant.DELETE_WORKER]: (state, payload) => {
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
@@ -62,8 +60,9 @@ export const workers = {
             state.workerlist[index].done = !state.workerlist[index].done;
         },
         [Constant.UPDATE_WORKER]: (state, payload) => {
-            let index = state.workerlist.findIndex((item) => item.id === payload.workeritem.id);
-            state.workerlist[index] = payload.workeritem;
+console.log(payload)
+            let index = state.workerlist.findIndex((item) => item.id === payload.id);
+            state.workerlist[index] = payload;
         },
         [Constant.INITIALIZE_WORKERITEM]: (state, payload) => {
             console.log(payload)
@@ -96,16 +95,37 @@ export const workers = {
                 .catch(function (error) {
                     console.log(error)
                 })
-
         },
         [Constant.DELETE_WORKER]: (store, payload) => {
-            store.commit(Constant.DELETE_WORKER, payload);
+            console.log(payload)
+            console.log(payload.id)
+            WorkerService.deleteById(payload.id)
+                .then(function (res) {
+                    if (res.statusText !== "OK") {
+                        throw new Error({ 'Message': 'Ha habido algún problema al eliminar al trabajador' })
+                    }
+                    console.log(res)
+                    store.commit(Constant.DELETE_WORKER, payload);
+                }
+                )
+                .catch(function (error) {
+                    console.log(error)
+                })
         },
         [Constant.TOGGLE_DONE]: (store, payload) => {
             store.commit(Constant.TOGGLE_DONE, payload);
         },
         [Constant.UPDATE_WORKER]: (store, payload) => {
-            store.commit(Constant.UPDATE_WORKER, payload);
+            console.log(payload.workeritem, payload.workeritem.id)
+            WorkerService.updateUser(payload.workeritem, payload.workeritem.id)
+                .then(function (worker) {
+                    console.log(worker.data)
+                    store.commit(Constant.UPDATE_WORKER, worker.data);
+                    // resolve(workers)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         },
         [Constant.INITIALIZE_WORKERITEM]: (store, /* payload */) => {
             /* return new Promise((resolve, reject) => {

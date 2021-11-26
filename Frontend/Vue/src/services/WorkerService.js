@@ -1,19 +1,20 @@
 import Api from '@/services/Api'
+import secret from '../secret.js'
 
 export default {
   getAll() {
-    return Api().get(`users/`)
+    return Api().get(`${secret.GO_APP_URL}users/`)
   },
   getById(id) {
-    return Api().get(`users/${id}`)
+    return Api().get(`${secret.GO_APP_URL}users/${id}`)
   },
   createUser(data) {
-    return Api().post('users/', data)
+    return Api().post(`${secret.GO_APP_URL}users/`, data)
   },
   updateUser(data, id) {
-    return Api().put(`users/${id}`, data)
+    return Api().put(`${secret.GO_APP_URL}users/${id}`, data)
   },
   deleteById(id) {
-    return Api().delete(`users/${id}`)
+    return Api().delete(`${secret.GO_APP_URL}users/${id}`)
   }
 }

@@ -2,7 +2,6 @@ import axios from 'axios'
 
 
 export default (URL) => {
-  console.log(URL);
   const axiosInstance = axios.create({
 /*     baseURL: `${secret.LARAVEL_APP_URL}` */
     baseURL: URL

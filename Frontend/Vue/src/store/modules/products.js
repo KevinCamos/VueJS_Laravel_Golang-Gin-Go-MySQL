@@ -58,10 +58,9 @@ export const products = {
 
             ProductsService.deleteProductById(payload.id)
             .then(function (res) {
-                if (res.statusText !== "OK") {
-                    throw new Error({ 'Message': 'Ha habido algún problema al eliminar al trabajador' })
+                if (res.data.message !== "OK") {
+                    throw new Error({ 'Message': 'Ha habido algún problema al eliminar el producto' })
                 }
-                console.log(res);
                 store.commit(Constant.DELETE_PRODUCTS, payload);
             }
             )
@@ -70,12 +69,13 @@ export const products = {
             })
         },
         [Constant.UPDATE_PRODUCTS]: (store, payload) => {
-            console.log(payload.productsitem, payload.productsitem.id)
+            console.log(payload.productsitem);
+            console.log(payload.productsitem.id);
 
-            ProductsService.updateProduct(payload.products, payload.products.id)
+            ProductsService.updateProduct(payload.productsitem, payload.productsitem.id)
             .then(function (res) {
-                console.log(res.data)
-                store.commit(Constant.UPDATE_PRODUCTS, res.data);
+                console.log(res.data.data)
+                store.commit(Constant.UPDATE_PRODUCTS, res.data.data);
             })
             .catch(function (error) {
                 console.log(error)

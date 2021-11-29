@@ -40,8 +40,6 @@ class ProductsController extends Controller
 
     public function store(StoreProductsRequest $request)
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("store");
 /*         return response()->json([
             "message" => "Product create"
         ], 200); */
@@ -88,9 +86,7 @@ class ProductsController extends Controller
             $product->category = $request->category;
             $product->price = $request->price;
             $product->save();
-            return response()->json([
-                "message" => "Product updated successfully"
-            ], 200);
+            return ProductsResource::make(Products::where('id', $id)->firstOrFail());
         } else {
             return response()->json([
                 "message" => "Product not found"
@@ -108,7 +104,7 @@ class ProductsController extends Controller
     {
         Products::where('id', $id)->delete();
         return response()->json([
-            "message" => "Products deleted"
+            "message" => "OK"
         ], 202);
     }
 }

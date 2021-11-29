@@ -1,5 +1,4 @@
 <template>
-
   <li :class="checked(workeritem.active)" @click="toggleDone(true)">
     <span
       :class="{ pointer: true, 'todo-done': workeritem.active }"

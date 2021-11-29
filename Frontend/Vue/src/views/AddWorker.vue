@@ -114,7 +114,7 @@ export default {
     const addWorker = () => {
       /* Aquí van las validaciones  */
       if (state.workeritemlocal.name.trim().length >= 2) {
-        store.dispatch("worker/"+Constant.ADD_WORKER, {
+        store.dispatch("worker/" + Constant.ADD_WORKER, {
           workeritem: state.workeritemlocal,
         });
         router.push({ name: "workerList" });

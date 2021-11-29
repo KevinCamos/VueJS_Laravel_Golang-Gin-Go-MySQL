@@ -5,37 +5,7 @@ import WorkerService from '@/services/WorkerService'
 export const workers = {
     namespaced: true,
     state: {
-        // workerlist: [
-        //     {
-        //         "id": shortid.generate(),
-        //         "name": "Juanan",
-        //         "email": "Juanan@gmail.com",
-        //         "phone": "845774411",
-        //         "address": "C/ Desengaño, 21",
-        //         "active": true,
-        //         "date_active": "18-05-2020",
-        //         "appointment": "auxiliar"
-        //     }, {
-        //         "id": shortid.generate(),
-        //         "name": "Alex",
-        //         "email": "Alex@gmail.com",
-        //         "phone": "845774411",
-        //         "address": "C/ L'estació, 21",
-        //         "active": false,
-        //         "date_active": "12-06-2020",
-        //         "appointment": "auxiliar"
-        //     }, {
-        //         "id": shortid.generate(),
-        //         "name": "Anna",
-        //         "email": "Anna@gmail.com",
-        //         "phone": "845774411",
-        //         "address": "C/ San Loreanzo, 21",
-        //         "active": true,
-        //         "date_active": "12-06-2020",
-        //         "appointment": "auxiliar"
-        //     },
-
-        // ]
+        
     },
     mutations: {
         [Constant.ADD_WORKER]: (state, payload) => {

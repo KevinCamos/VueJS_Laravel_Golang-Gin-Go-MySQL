@@ -1,8 +1,10 @@
 import axios from 'axios'
-import secret from '../secret.js'
-export default () => {
+
+export default (URL) => {
+  console.log(URL);
   const axiosInstance = axios.create({
-    baseURL: `${secret.GO_APP_URL}`
+/*     baseURL: `${secret.LARAVEL_APP_URL}` */
+    baseURL: URL
   })
 
 /*   const token = localStorage.getItem('token')

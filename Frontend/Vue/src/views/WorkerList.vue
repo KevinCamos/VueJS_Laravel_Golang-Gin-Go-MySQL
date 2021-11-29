@@ -30,24 +30,22 @@ import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 // import { useRouter } from "vue-router";
 
-export default {
+export default { 
   components: { WorkerItem },
   setup() {
     const store = useStore();
-    // const router = useRouter();
+
     const state = reactive({
       workerlist: computed(() => store.getters["worker/getWorkers"]),
     });
     console.log(state.workerlist);
-    // const getWorkers = () => {
 
     if (!state.workerlist) {
+      console.log("carga treballadors");
       store.dispatch("worker/" + Constant.INITIALIZE_WORKERITEM);
     }
-    // router.push({ name: "addWorkers" });
-    // };
-    // getWorkers;
-    return { state /* getWorkers */ };
+
+    return { state };
   },
 };
 </script>

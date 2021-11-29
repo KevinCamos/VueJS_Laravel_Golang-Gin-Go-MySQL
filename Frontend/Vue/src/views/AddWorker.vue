@@ -92,14 +92,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    /* 
- "name": "Alex",
-"email": "Alex@gmail.com",
-"phone": "845774411",
-"address": "C/ L'estació, 21"
-"date_active": "12-06-2020",
-"appointment": "auxiliar"
- */
+
     const state = reactive({
       workeritemlocal: {
         name: "",
@@ -110,7 +103,12 @@ export default {
         appointment: "",
       },
     });
-
+  /*   const validators = () => {
+      if (state.workeritemlocal.name.trim().length < 2) {
+        return false
+      }
+      return true;
+    }; */
     const addWorker = () => {
       /* Aquí van las validaciones  */
       if (state.workeritemlocal.name.trim().length >= 2) {
@@ -126,7 +124,7 @@ export default {
       router.push({ name: "workerList" });
     };
 
-    return { state, addWorker, cancel };
+    return { state, addWorker, cancel,/* validators */ };
   },
 };
 </script>

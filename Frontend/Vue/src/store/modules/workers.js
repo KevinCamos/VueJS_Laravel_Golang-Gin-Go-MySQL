@@ -5,21 +5,11 @@ import WorkerService from '@/services/WorkerService'
 export const workers = {
     namespaced: true,
     state: {
-        
     },
     mutations: {
         [Constant.ADD_WORKER]: (state, payload) => {
             console.log(payload)
             state.workerlist.push({ ...payload/* , id: shortid.generate(), done: false */ });
-            /*    state.workeritem = {
-                   id: "",
-                   name: "",
-                   email: "",
-                   phone: "",
-                   address: "",
-                   date_active: "",
-                   appointment: "",
-               }; */
         },
         [Constant.DELETE_WORKER]: (state, payload) => {
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
@@ -30,7 +20,7 @@ export const workers = {
             state.workerlist[index].done = !state.workerlist[index].done;
         },
         [Constant.UPDATE_WORKER]: (state, payload) => {
-console.log(payload)
+            console.log(payload)
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
             state.workerlist[index] = payload;
         },
@@ -53,6 +43,7 @@ console.log(payload)
     },
     actions: {
         [Constant.ADD_WORKER]: (store, payload) => {
+            
             console.log(payload.workeritem)
             // store.commit(Constant.ADD_WORKER, payload);
 
@@ -98,15 +89,7 @@ console.log(payload)
                 })
         },
         [Constant.INITIALIZE_WORKERITEM]: (store, /* payload */) => {
-            /* return new Promise((resolve, reject) => {
-                 WorkerService.getAll()
-                     .then((workers) => {
-                         console.log(workers.data)
-                         store.commit(Constant.INITIALIZE_WORKERITEM, workers.data);
-                         resolve(workers)
-                     })
-                     .catch((err) => reject(err))
-             }) */
+
             WorkerService.getAll()
                 .then(function (workers) {
                     console.log(workers.data)

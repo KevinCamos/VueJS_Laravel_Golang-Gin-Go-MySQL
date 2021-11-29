@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 export default (URL) => {
   console.log(URL);
   const axiosInstance = axios.create({

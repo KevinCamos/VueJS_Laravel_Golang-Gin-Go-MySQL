@@ -26,22 +26,5 @@ func main() {
 	routersInit := routers.InitRouter()	
 	routersInit.Run(":8040")
    
-	// server := &http.Server{
-	// 	Addr:           endPoint,
-	// 	Handler:        routersInit,
-	// 	// ReadTimeout:    readTimeout,
-	// 	// WriteTimeout:   writeTimeout,
-	// 	// MaxHeaderBytes: maxHeaderBytes,
-	// }
-
-
-	// server.ListenAndServe()
-
-	// users.UserRegister(v1.Group("/users"))
-
-
-
-/* 	r := Routes.SetupRouter()
-	//running
-	r.Run() */
+	
 }

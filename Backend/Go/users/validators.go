@@ -3,13 +3,13 @@ import (
 	"fmt"
 	"starbars/common"
 	 "github.com/gin-gonic/gin"
-	//  "github.com/go-playground/validator/v10"
 
 )
 
 
 type UserModelValidator struct {
 	User struct {
+		
 		Name string `form:"name" json:"name" binding:"required,min=3,max=255"`
 		Email string `form:"email" json:"email" binding:"required,email"`
 		Phone string `form:"phone" json:"phone" binding:"omitempty,min=9,max=20"`
@@ -31,7 +31,6 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 		return err
 	}
 
-	fmt.Println("Entra al bind del validador")
 	fmt.Println(self)
 	fmt.Println(self.User)
 	// fmt.Println(self.Name)

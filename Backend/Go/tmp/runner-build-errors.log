@@ -1,0 +1,2 @@
+# starbars
+.\main.go:23:4: db.Close undefined (type *gorm.DB has no field or method Close)

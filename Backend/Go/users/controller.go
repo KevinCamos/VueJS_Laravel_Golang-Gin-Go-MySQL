@@ -18,25 +18,28 @@ func UserCreate(c *gin.Context) {
 		return
 	}
 
-
-
-
-
 	fmt.Println("Pasa per ací")
 	fmt.Println(&userModelValidator)
 	fmt.Println(&userModelValidator.userModel)
 
 	// c.BindJSON(&user)
-	if err := config.DB.Create(&userModelValidator.userModel).Error; err != nil {
+/* 	if err := config.DB.Create(&userModelValidator.userModel).Error; err != nil {
 		fmt.Println(err.Error(), "Ací hi ha un error, routers.go de users")
 		c.AbortWithStatus(http.StatusNotFound)
+	} */
+	if err := SaveOne(&userModelValidator.userModel); err != nil {
+		fmt.Println(err.Error(), "ERROR VALIDATOR")
+		c.AbortWithStatus(http.StatusNotFound)
 	}
+
+
+	fmt.Println( " Guardat?")
 	c.Set("my_user_model", userModelValidator.userModel)
 	serializer := UserSerializer{c}
 	c.JSON(http.StatusCreated, gin.H{"user": serializer.Response()})
 
 	
-	// c.JSON(http.StatusOK, userModelValidator.userModel)
+	c.JSON(http.StatusOK, userModelValidator.userModel)
 }
 
 func GetAllUsers(c *gin.Context) {

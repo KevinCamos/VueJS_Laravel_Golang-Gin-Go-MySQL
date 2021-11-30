@@ -3,7 +3,7 @@ package main
 import (
 	"starbars/config"
 	// "fmt"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 	"github.com/gin-gonic/gin"
 	
 	"starbars/common"
@@ -18,9 +18,12 @@ func Migrate(db *gorm.DB) {
 }
 
 func main() {
+	
 	db := common.Init()
+	db.Close()
+
 	Migrate(db)
-	defer db.Close()
+	// defer db.Close()
 
 	r := gin.Default()
 

@@ -16,7 +16,7 @@ type UserModelValidator struct {
 		Address string `form:"address" json:"address" binding:"omitempty,min=4,max=255"`
 		Appointment string `form:"appointment" json:"appointment" binding:"required,min=4,max=25"`
 	} `json:"user"`
-	UserModel UserModel `json:"-"`
+	userModel UserModel `json:"-"`
 }
 
 func NewUserModelValidator() UserModelValidator {
@@ -37,11 +37,11 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	// fmt.Println(self.Name)
 	// fmt.println(self.User. )
 
-	self.UserModel.Name = self.User.Name
-	self.UserModel.Email = self.User.Email
-	self.UserModel.Phone = self.User.Phone
-	self.UserModel.Address = self.User.Address
-	self.UserModel.Appointment = self.User.Appointment
+	self.userModel.Name = self.User.Name
+	self.userModel.Email = self.User.Email
+	self.userModel.Phone = self.User.Phone
+	self.userModel.Address = self.User.Address
+	self.userModel.Appointment = self.User.Appointment
 
 	fmt.Println(self)
 	return nil

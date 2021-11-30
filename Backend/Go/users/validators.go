@@ -14,7 +14,7 @@ type UserModelValidator struct {
 		Address string `form:"address" json:"adress" binding:"min=4,max=255"`
 
 		// Password string `form:"password" json:"password" binding:"exists,min=5,max=20"`
-		Active bool `form:"active" json:"active" binding:"exists"`
+		// Active bool `form:"active" json:"active" binding:"exists"`
 		Appointemnt string `form:"appointment" json:"appointment" binding:"min=4,max=25"`
 	} `json:"user"`
 	userModel UserModel `json:"-"`

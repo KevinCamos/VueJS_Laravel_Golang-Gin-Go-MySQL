@@ -13,7 +13,7 @@ type UserModel struct {
 	Email   string `json:"email"`
 	Phone   string `json:"phone"`
 	Address string `json:"address"`
-	Active bool `json:"active"`
+	// Active bool `json:"active"`
 /* 	Date_Active string `json:"date_active"` 
 	Date_Inactive string `json:"date_inactive"`*/
 	Appointment string `json:"appointment"`

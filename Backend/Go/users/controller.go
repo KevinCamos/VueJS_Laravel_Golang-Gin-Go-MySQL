@@ -5,17 +5,33 @@ import (
 	"net/http"
 	"starbars/config"
 	"github.com/gin-gonic/gin"
-
+	// "starbars/common"
 )
+
 func UserCreate(c *gin.Context) {
-	var user UserModel
-	// var err
-	c.BindJSON(&user)
-	if err := config.DB.Create(&user).Error; err != nil {
+	// var user UserModel
+	userModelValidator := NewUserModelValidator()
+	if err := userModelValidator.Bind(c); err != nil {
+		fmt.Println("Pasa per ací")
+
+		c.JSON(http.StatusUnprocessableEntity,err)
+		return
+	}
+
+
+
+
+
+	fmt.Println("Pasa per ací")
+	fmt.Println(&userModelValidator)
+	fmt.Println(&userModelValidator.UserModel)
+
+	// c.BindJSON(&user)
+	if err := config.DB.Create(&userModelValidator.UserModel).Error; err != nil {
 		fmt.Println(err.Error(), "Ací hi ha un error, routers.go de users")
 		c.AbortWithStatus(http.StatusNotFound)
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, userModelValidator.UserModel)
 }
 
 func GetAllUsers(c *gin.Context) {

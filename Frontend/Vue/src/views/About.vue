@@ -1,5 +1,8 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="about m-5">
+    <h1>Sobre nosotros</h1>
+    <div>
+      Somos una empresa de restauración
+    </div>
   </div>
 </template>

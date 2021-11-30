@@ -1,25 +1,32 @@
 <template>
-  <div style="mt-2">
-    <div class="row">
-      <div class="col p-3">
-        <router-link class="btn btn-primary" to="/workers/add" >Crea un trabajador</router-link>
-      </div>
-    </div>
-    <div class="card card-default card-borderless">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <ul class="list-group">
-              <WorkerItem
-                v-for="workeritem in state.workerlist"
-                :key="workeritem.id"
-                :workeritem="workeritem"
-              />
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="container">
+    <router-link class="btn btn-primary m-2 mt-5" to="/workers/add"
+      >Crea un trabajador</router-link
+    >
+
+    <table class="table table-hover table-striped table-bordered m-2">
+      <!-- Tabla con borde, hover y con alternancia de color -->
+      <caption class="text-center">
+        <!-- Texto centrado -->
+        Trabajadores
+      </caption>
+      <thead class="thead-dark">
+        <!-- cabecera invertida colores -->
+        <tr>
+          <th>Nombre</th>
+          <th>Puesto</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <WorkerItem
+          v-for="workeritem in state.workerlist"
+          :key="workeritem.id"
+          :workeritem="workeritem"
+        />
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -30,7 +37,7 @@ import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 // import { useRouter } from "vue-router";
 
-export default { 
+export default {
   components: { WorkerItem },
   setup() {
     const store = useStore();

@@ -1,27 +1,14 @@
 <template>
-  <li :class="checked(workeritem.active)" @click="toggleDone(true)">
-    <span
-      :class="{ pointer: true, 'todo-done': workeritem.active }"
-      :title="'Explanation : ' + workeritem.name" :id="workeritem.id"
-    >
+  <tr :id="workeritem.id">
+    <td>
       {{ workeritem.name }}
-      ({{ workeritem.appointment }})
-
-      {{ workeritem.done ? " (done)" : "" }}
-    </span>
-    <div class="float-right">
-      <span
-        class="badge badge-secondary pointer ml-1"
-        @click.stop="editWork(workeritem.id)"
-        >Edit</span
-      >
-      <span
-        class="badge badge-secondary pointer ml-1"
-        @click.stop="deleteWork(workeritem.id)"
-        >Delete</span
-      >
-    </div>
-  </li>
+    </td>
+    <td>
+      {{ workeritem.appointment }}
+    </td>
+    <td @click.stop="editWork(workeritem.id)" class="edit">Editar</td>
+    <td @click.stop="deleteWork(workeritem.id)" class="delete">Eliminar</td>
+  </tr>
 </template>
 
 <script>
@@ -37,21 +24,21 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    const checked = (active) => {
+    /*   const checked = (active) => {
       console.log("checked");
       return { "list-group-item": true, "list-group-item-success": active };
-    };
-    const toggleDone = (id) => {
+    }; */
+    /*   const toggleDone = (id) => {
       console.log("toggle");
 
       store.dispatch(Constant.TOGGLE_DONE, { id });
-    };
+    }; */
     const deleteWork = (id) => {
       console.log("delete");
-  
+
       console.log(id);
 
-      store.dispatch("worker/"+Constant.DELETE_WORKER, { id });
+      store.dispatch("worker/" + Constant.DELETE_WORKER, { id });
     };
     const editWork = (id) => {
       // store.dispatch("worker/"+Constant.UPDATE_WORKER, {
@@ -60,9 +47,21 @@ export default {
       router.push({ name: "updateWorker", params: { id } });
     };
 
-    return { toggleDone, deleteWork, editWork, checked };
+    return { /* toggleDone, */ deleteWork, editWork /* checked */ };
   },
 };
 </script>
 
-<style></style>
+<style>
+tr:hover {
+  cursor: pointer;
+}
+.edit:hover {
+  background-color: rgb(144, 238, 144);
+  color: green;
+}
+.delete:hover {
+  background-color: #ff8080;
+  color: darkred;
+}
+</style>

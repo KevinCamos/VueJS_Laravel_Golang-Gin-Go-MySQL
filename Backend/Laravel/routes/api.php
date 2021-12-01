@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,13 @@ use App\Http\Controllers\ProductsController;
 Route::resource('restaurant', RestaurantController::class);
 Route::resource('products', ProductsController::class);
 
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('user', [AuthController::class, 'user']);
+    Route::get('logout', [AuthController::class, 'logout']);
+});
 /* Route::name('api.')->group(function () {
     Route::name('products.')->group(function () {
         $out = new \Symfony\Component\Console\Output\ConsoleOutput();

@@ -1,0 +1,15 @@
+Arrancar Go
+
+go run main.go
+
+
+
+Arrancar Laravel
+
+php artisan serve
+
+
+
+Arrancar Vue
+
+npm run dev

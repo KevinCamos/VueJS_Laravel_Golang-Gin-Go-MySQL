@@ -1,6 +1,6 @@
 package users
 import (
-	"fmt"
+
 	"starbars/common"
 	 "github.com/gin-gonic/gin"
 )
@@ -13,9 +13,7 @@ type UserModelValidator struct {
 		Phone string `form:"phone" json:"phone" binding:"omitempty,min=9,max=20"`
 		Address string `form:"address" json:"address" binding:"omitempty,min=4,max=255"`
 		Appointment string `form:"appointment" json:"appointment" binding:"required,min=4,max=25"`
-		Password string `form:"password" json:"password" binding:"required,min=4,max=255"`
-
-		
+		Password string `form:"password" json:"password" binding:"required,min=4,max=255"`	
 	// } `json:"user"`
 	userModel UserModel `json:"-"`
 }
@@ -24,41 +22,44 @@ func NewUserModelValidator() UserModelValidator {
 	return UserModelValidator{}
 }
 
-
 func (self *UserModelValidator) Bind(c *gin.Context) error {
 	err := common.Bind(c, self)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(self)
-	fmt.Println(self)
-
 	self.userModel.Name = self.Name
 	self.userModel.Email = self.Email
 	self.userModel.Phone = self.Phone
 	self.userModel.Address = self.Address
 	self.userModel.Appointment = self.Appointment
 
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
-	fmt.Println(self.Name+"123")
 	if self.Password != common.NBRandomPassword {
 		self.userModel.setPassword(self.Password)
 	}else{
 		self.userModel.setPassword(self.Name+"123"/* common.getPassword(self.Name) */)
-
 	}
-
-
-	
-	fmt.Println(self)
 	return nil
 }
- 
+
+
+
+type LoginValidator struct {
+		Email    string `form:"email" json:"email" binding:"required,email"`
+		Password string `form:"password"json:"password" binding:"required,min=8,max=255"`
+	userModel UserModel `json:"-"`
+}
+
+// You can put the default value of a Validator here
+func NewLoginValidator() LoginValidator {
+	loginValidator := LoginValidator{}
+	return loginValidator
+}
+func (self *LoginValidator) Bind(c *gin.Context) error {
+	err := common.Bind(c, self)
+	if err != nil {
+		return err
+	}
+
+	self.userModel.Email = self.Email
+	return nil
+}

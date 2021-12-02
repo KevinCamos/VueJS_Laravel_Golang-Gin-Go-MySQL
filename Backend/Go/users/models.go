@@ -63,5 +63,29 @@ func SaveOne(data interface{}) error {
 	
 	return err
 }
+// You could input the conditions and it will return an UserModel in database with error info.
+// 	userModel, err := FindOneUser(&UserModel{Username: "username0"})
+func FindOneUser(condition interface{}) (UserModel, error) {
+	db := common.GetDB()
+	var model UserModel
+	err := db.Where(condition).First(&model).Error
+	return model, err
+}
 
 
+
+func CheckFindOneUser(condition interface{}) ( error) {
+	db := common.GetDB()
+	var model UserModel
+	err := db.Where(condition).First(&model).Error
+	return err
+}
+
+
+// Database will only save the hashed string, you should check it by util function.
+// 	if err := serModel.checkPassword("password0"); err != nil { password error }
+func (u *UserModel) checkPassword(password string) error {
+	bytePassword := []byte(password)
+	byteHashedPassword := []byte(u.PasswordHash)
+	return bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword)
+}

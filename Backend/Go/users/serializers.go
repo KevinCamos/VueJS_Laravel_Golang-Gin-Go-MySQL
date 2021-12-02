@@ -15,6 +15,8 @@ type RegisterResponse struct {
 	ID    		uuid.UUID	`json:"id"`
 	Name 		string  `json:"name"`
 	Email    	string  `json:"email"`
+	Phone    	string  `json:"phone"`
+	Address    	string  `json:"address"`
 	Appointment string 	`json:"appointment"`
 	Token    string  `json:"token"`
 }
@@ -26,11 +28,12 @@ func (self *RegisterSerializer) Response() RegisterResponse {
 		ID : 			myUserModel.ID,
 		Name : 			myUserModel.Name,
 		Email:    		myUserModel.Email,
+		Phone:    		myUserModel.Phone,
+		Address:    	myUserModel.Address,
 		Appointment:    myUserModel.Appointment,
 		Token:    common.GenToken(myUserModel.ID),
 	}
 	return user
-
 }
 
 

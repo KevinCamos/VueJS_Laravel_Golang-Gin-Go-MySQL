@@ -1,2 +1,5 @@
 # starbars/users
-users\validators.go:55:30: cannot refer to unexported name common.getPassword
+users\controller.go:22:6: assignment mismatch: 1 variable but CheckFindOneUser returns 2 values
+users\models.go:81:2: not enough arguments to return
+	have (error)
+	want (UserModel, error)

@@ -11,6 +11,7 @@ func UserRouter(router *gin.RouterGroup) {
 
 	/* POST */
 	router.POST("/", UserRegister)
+	router.POST("/login", UserLogin)
 
 	/* GET */
 	router.GET("/", GetAllUsers)

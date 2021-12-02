@@ -8,15 +8,12 @@ import (
 
 
 type UserModel struct {
-	ID     uuid.UUID `gorm:"column:id;type:uuid;primary_key;"`
-	Name    string		`json:"name"`
-	Email   string		`json:"email"`
-	Phone   string		`json:"phone"`
-	Address string		`json:"address"`
-	// Active bool `json:"active"`
-/* 	Date_Active string `json:"date_active"` 
-	Date_Inactive string `json:"date_inactive"`*/
-	Appointment string `json:"appointment"`
+	ID     		uuid.UUID 	`gorm:"column:id;type:uuid;primary_key;json:"id""`
+	Name   		 string		`json:"name"`
+	Email  		 string		`json:"email"`
+	Phone  		 string		`json:"phone"`
+	Address		 string		`json:"address"`
+	Appointment  string 	`json:"appointment"`
 }
 
 
@@ -25,11 +22,11 @@ func (b *UserModel) TableName() string {
 }
 
 // BeforeCreate will set a UUID rather than numeric ID.
-func (b *UserModel) BeforeCreate(tx *gorm.DB) (err error) {
+func (userModel *UserModel) BeforeCreate(tx *gorm.DB) (err error) {
 	// UUID version 4
-	b.ID = uuid.NewV4()
+	userModel.ID = uuid.NewV4()
 	fmt.Println("------------------------1")
-	fmt.Println(b.ID)
+	fmt.Println(userModel.ID)
 	fmt.Println("------------------------1")
 	return
   }

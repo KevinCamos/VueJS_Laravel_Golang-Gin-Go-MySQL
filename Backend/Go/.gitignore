@@ -1,3 +1,6 @@
 Config/Database.go
 go.mod
 go.sum
+tmp
+tmp/runner-build.exe
+tmp/runner-build.exe~

@@ -43,15 +43,15 @@
             v-model="state.workeritemlocal.address"
           />
         </div>
-        <div class="form-group">
+     <!--    <div class="form-group">
           <label htmlFor="date_active">Dia de alta :</label>
           <input
             type="date"
             class="form-control"
             id="date_active"
             v-model="state.workeritemlocal.date_active"
-          />
-        </div>
+          /> 
+        </div>-->
         <div class="form-group">
           <label htmlFor="appointment">Puesto de trabajo :</label>
           <select
@@ -99,7 +99,7 @@ export default {
         email: "",
         phone: "",
         address: "",
-        date_active: "",
+        // date_active: "",
         appointment: "",
       },
     });

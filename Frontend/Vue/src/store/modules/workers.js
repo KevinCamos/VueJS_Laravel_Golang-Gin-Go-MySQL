@@ -35,7 +35,6 @@ export const workers = {
                     email: "",
                     phone: "",
                     address: "",
-                    date_active: "",
                     appointment: "",
                 };
             }
@@ -43,10 +42,8 @@ export const workers = {
     },
     actions: {
         [Constant.ADD_WORKER]: (store, payload) => {
-            
+            console.log(payload)
             console.log(payload.workeritem)
-            // store.commit(Constant.ADD_WORKER, payload);
-
             WorkerService.createUser(payload.workeritem)
                 .then(function (worker) {
                     console.log(worker.data)
@@ -77,6 +74,8 @@ export const workers = {
             store.commit(Constant.TOGGLE_DONE, payload);
         },
         [Constant.UPDATE_WORKER]: (store, payload) => {
+            payload.workeritem.id = payload.workeritem.id ? payload.workeritem.id : payload.workeritem.ID
+
             console.log(payload.workeritem, payload.workeritem.id)
             WorkerService.updateUser(payload.workeritem, payload.workeritem.id)
                 .then(function (worker) {
@@ -85,7 +84,7 @@ export const workers = {
                     // resolve(workers)
                 })
                 .catch(function (error) {
-                    console.log(error)
+                    console.log(error)  
                 })
         },
         [Constant.INITIALIZE_WORKERITEM]: (store, /* payload */) => {

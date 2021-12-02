@@ -2,12 +2,6 @@
 package common
 
 import (
-	"fmt"
-	// "math/rand"
-	// "time"
-
-	// "github.com/dgrijalva/jwt-go"
-	"gopkg.in/go-playground/validator.v8"
 
 	 "github.com/gin-gonic/gin/binding"
 	 "github.com/gin-gonic/gin"
@@ -21,24 +15,6 @@ type CommonError struct {
 }
 
 
-// To handle the error returned by c.Bind in gin framework
-// https://github.com/go-playground/validator/blob/v9/_examples/translations/main.go
-func NewValidatorError(err error) CommonError {
-	res := CommonError{}
-	res.Errors = make(map[string]interface{})
-	errs := err.(validator.ValidationErrors)
-	for _, v := range errs {
-		// can translate each error one at a time.
-		//fmt.Println("gg",v.NameNamespace)
-		if v.Param != "" {
-			res.Errors[v.Field] = fmt.Sprintf("{%v: %v}", v.Tag, v.Param)
-		} else {
-			res.Errors[v.Field] = fmt.Sprintf("{key: %v}", v.Tag)
-		}
-
-	}
-	return res
-}
 // Changed the c.MustBindWith() ->  c.ShouldBindWith().
 // I don't want to auto return 400 when error happened.
 // origin function is here: https://github.com/gin-gonic/gin/blob/master/context.go

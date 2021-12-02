@@ -43,6 +43,8 @@
             v-model="state.workeritemlocal.address"
           />
         </div>
+
+        
         <!--    <div class="form-group">
           <label htmlFor="date_active">Dia de alta :</label>
           <input
@@ -98,10 +100,10 @@ export default {
     const router = useRouter();
     const currentRoute = useRoute();
 
-    console.log(store.state.worker.workerlist[0].ID); //en fer el serializer, ficar-ho en minúscula ací i a la linea 104 => (item) => item.ID === currentRoute.params.id
+    console.log(store.state.worker.workerlist[0].id);
     console.log(currentRoute.params.id);
     const workeritem = store.state.worker.workerlist.find(
-      (item) => item.ID === currentRoute.params.id
+      (item) => item.id === currentRoute.params.id
     );
     console.log(workeritem);
     const state = reactive({

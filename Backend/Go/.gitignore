@@ -4,3 +4,4 @@ go.sum
 tmp
 tmp/runner-build.exe
 tmp/runner-build.exe~
+common/secrets.go

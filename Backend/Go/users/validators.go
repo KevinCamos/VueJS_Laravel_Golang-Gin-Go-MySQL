@@ -13,6 +13,9 @@ type UserModelValidator struct {
 		Phone string `form:"phone" json:"phone" binding:"omitempty,min=9,max=20"`
 		Address string `form:"address" json:"address" binding:"omitempty,min=4,max=255"`
 		Appointment string `form:"appointment" json:"appointment" binding:"required,min=4,max=25"`
+		Password string `form:"password" json:"password" binding:"required,min=4,max=255"`
+
+		
 	// } `json:"user"`
 	userModel UserModel `json:"-"`
 }
@@ -37,6 +40,24 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	self.userModel.Address = self.Address
 	self.userModel.Appointment = self.Appointment
 
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	fmt.Println(self.Name+"123")
+	if self.Password != common.NBRandomPassword {
+		self.userModel.setPassword(self.Password)
+	}else{
+		self.userModel.setPassword(self.Name+"123"/* common.getPassword(self.Name) */)
+
+	}
+
+
+	
 	fmt.Println(self)
 	return nil
 }

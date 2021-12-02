@@ -1,5 +1,5 @@
 <template>
-  <tr :id="workeritem.ID">
+  <tr :id="workeritem.id">
     <td>
       {{ workeritem.name }}
     </td>
@@ -7,8 +7,8 @@
       {{ workeritem.appointment }}
     </td>
 
-    <td @click.stop="editWork(workeritem.ID)" class="edit">Editar</td>
-    <td @click.stop="deleteWork(workeritem.ID)" class="delete">Eliminar</td>
+    <td @click.stop="editWork(workeritem.id)" class="edit">Editar</td>
+    <td @click.stop="deleteWork(workeritem.id)" class="delete">Eliminar</td>
   </tr>
 </template>
 

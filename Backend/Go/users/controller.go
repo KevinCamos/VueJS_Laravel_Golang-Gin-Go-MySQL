@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserCreate(c *gin.Context) {
+func UserRegister(c *gin.Context) {
 	userModelValidator := NewUserModelValidator()
 	if err := userModelValidator.Bind(c); err != nil {
 		
@@ -15,38 +15,31 @@ func UserCreate(c *gin.Context) {
 			"error": "400"})
 		return
 	}
-	// fmt.Println(&userModelValidator)
-	// fmt.Println(&userModelValidator.userModel)
 
 	if err := SaveOne(&userModelValidator.userModel); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	}
 	fmt.Println( " Guardat?")
 	c.Set("my_user_model", userModelValidator.userModel)
-	serializer := UserSerializer{c}
+	serializer := RegisterSerializer{c}
 	c.JSON(http.StatusCreated, serializer.Response())
 
-	
-	// c.JSON(http.StatusCreated, gin.H{"user": serializer.Response()})
-
-	/* Respuesta sin serializar */
-	//  c.JSON(http.StatusOK, userModelValidator.userModel)
 }
 
 
 func GetAllUsers(c *gin.Context) {
 	var user []UserModel
-	// err = Models.GetAllUsers(&user)
+
 	if err := config.DB.Find(&user).Error; err != nil {
 		fmt.Println("entra", "error")
-
 		c.AbortWithStatus(http.StatusNotFound)
 	} 
 		fmt.Println("entra", user)
-
-		c.JSON(http.StatusOK, user)
-	
+	serializer := UsersSerializer{c, user}
+	c.JSON(http.StatusCreated, serializer.Response())
 }
+
+
 func GetUserByID(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var user UserModel
@@ -54,8 +47,8 @@ func GetUserByID(c *gin.Context) {
 		c.AbortWithStatus(http.StatusNotFound)
 	}
 		c.JSON(http.StatusOK, user)
-	
 }
+
 func UpdateUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	fmt.Println("id", id)

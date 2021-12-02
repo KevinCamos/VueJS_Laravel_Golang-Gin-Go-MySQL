@@ -14,7 +14,7 @@ func InitRouter() *gin.Engine {
 
 	v1 := r.Group("/api")
 
-	users.UserRegister(v1.Group("/users"))
+	users.UserRouter(v1.Group("/users"))
 
 	return r
 

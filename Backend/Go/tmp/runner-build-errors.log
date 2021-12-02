@@ -1,3 +1,2 @@
 # starbars/users
-users\controller.go:95:1: invalid character U+00A9 '©' in identifier
-users\controller.go:95:1: syntax error: non-declaration statement outside function body
+users\validators.go:55:30: cannot refer to unexported name common.getPassword

@@ -7,10 +7,10 @@ import (
 	// "strconv"
 )
 
-func UserRegister(router *gin.RouterGroup) {
+func UserRouter(router *gin.RouterGroup) {
 
 	/* POST */
-	router.POST("/", UserCreate)
+	router.POST("/", UserRegister)
 
 	/* GET */
 	router.GET("/", GetAllUsers)

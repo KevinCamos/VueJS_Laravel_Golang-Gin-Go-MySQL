@@ -31,7 +31,7 @@ func (self *RegisterSerializer) Response() RegisterResponse {
 		Phone:    		myUserModel.Phone,
 		Address:    	myUserModel.Address,
 		Appointment:    myUserModel.Appointment,
-		Token:    common.GenToken(myUserModel.ID),
+		Token:    common.GenToken(myUserModel.ID, myUserModel.Appointment),
 	}
 	return user
 }

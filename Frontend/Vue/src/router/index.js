@@ -8,7 +8,8 @@ import ProductsList from '../views/ProductsList';
 import Home from '../views/Home';
 import About from '../views/About';
 import NotFound from '../views/NotFound';
-
+import SignIn from '../views/SignIn';
+import SignUp from '../views/SignUp';
 const routes = [
     { path:"", redirect:{ name:"home" } },
     { path:"/home", name:"home", component: Home },
@@ -19,6 +20,8 @@ const routes = [
     { path:"/products", name:"productsList", component: ProductsList },
     { path:"/products/add", name:"addProduct", component: AddProduct },
     { path:"/products/update/:id", name:"updateProduct", component: UpdateProduct },
+    { path:"/signin", name:"signin", component: SignIn },
+    { path:"/signup", name:"signup", component: SignUp },
     { path:"/:catchAll(.*)", component: NotFound },
 ];
 

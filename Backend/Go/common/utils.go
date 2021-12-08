@@ -26,18 +26,34 @@ func Bind(c *gin.Context, obj interface{}) error {
 }
 
 
+// // A Util function to generate jwt_token which can be used in the request header
+// func GenToken(id uuid.UUID) string {
+// 	jwt_token := jwt.New(jwt.GetSigningMethod("HS256"))
+// 	// Set some claims
+// 	jwt_token.Claims = jwt.MapClaims{
+// 		"id":  id,
+// 		"exp": time.Now().Add(time.Hour * 24).Unix(),
+// 	}
+// 	// Sign and get the complete encoded token as a string
+// 	token, _ := jwt_token.SignedString([]byte(NBSecretPassword))
+// 	return token
+// }
+
 // A Util function to generate jwt_token which can be used in the request header
-func GenToken(id uuid.UUID) string {
+func GenToken(id uuid.UUID, appointment string ) string {
 	jwt_token := jwt.New(jwt.GetSigningMethod("HS256"))
 	// Set some claims
 	jwt_token.Claims = jwt.MapClaims{
 		"id":  id,
+		"appointment":  appointment,
+
 		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	}
 	// Sign and get the complete encoded token as a string
 	token, _ := jwt_token.SignedString([]byte(NBSecretPassword))
 	return token
 }
+
 
 // Warp the error info in a object
 func NewError(key string, err error) CommonError {

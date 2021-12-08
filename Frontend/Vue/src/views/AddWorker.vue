@@ -25,6 +25,29 @@
             v-model="state.workeritemlocal.email"
           />
         </div>
+
+        <div class="form-group" >
+          <label htmlFor="password">Password :</label>
+          <input
+            v-if="state.showPassword == true"
+            type="password"
+            class="form-control"
+            id="password"
+            v-model="state.workeritemlocal.password"
+          />
+          <input
+            v-else
+            type="text"
+            class="form-control"
+            id="password"
+            v-model="state.workeritemlocal.password"
+          />
+         
+            <button  v-if="state.showPassword == true"  class="btn btn-outline-success m-1" @click= togglePassword(state.showPassword)>Ver contraseña</button>
+            <button  v-else class="btn btn-outline-danger m-1" @click= togglePassword(state.showPassword)>Ocultar contraseña</button>
+          
+        </div>
+
         <div class="form-group">
           <label htmlFor="phone">Phone :</label>
           <input
@@ -43,15 +66,7 @@
             v-model="state.workeritemlocal.address"
           />
         </div>
-     <!--    <div class="form-group">
-          <label htmlFor="date_active">Dia de alta :</label>
-          <input
-            type="date"
-            class="form-control"
-            id="date_active"
-            v-model="state.workeritemlocal.date_active"
-          /> 
-        </div>-->
+
         <div class="form-group">
           <label htmlFor="appointment">Puesto de trabajo :</label>
           <select
@@ -92,23 +107,29 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    // var showPassword = reactive(true);
     const state = reactive({
       workeritemlocal: {
         name: "",
         email: "",
         phone: "",
         address: "",
-        // date_active: "",
+        password: "",
         appointment: "",
       },
+      showPassword: true
     });
-  /*   const validators = () => {
+    /*   const validators = () => {
       if (state.workeritemlocal.name.trim().length < 2) {
         return false
       }
       return true;
     }; */
+
+    const togglePassword = (toggle)=>{
+      console.log(toggle)
+      state.showPassword = !toggle
+    }
     const addWorker = () => {
       /* Aquí van las validaciones  */
       if (state.workeritemlocal.name.trim().length >= 2) {
@@ -124,7 +145,7 @@ export default {
       router.push({ name: "workerList" });
     };
 
-    return { state, addWorker, cancel,/* validators */ };
+    return { state, addWorker, cancel , togglePassword/* validators */ };
   },
 };
 </script>

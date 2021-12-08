@@ -40,9 +40,9 @@ export default {
       });
       console.log(state.productslist);
 
-      if (!state.productslist) {
+      // if (!state.productslist) {
           store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
-      }
+      // }
       console.log(state);
       return { state };
   },

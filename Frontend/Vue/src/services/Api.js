@@ -1,7 +1,10 @@
 import axios from 'axios'
+import { useRouter } from "vue-router";
 
 
 export default (URL) => {
+  const router = useRouter();
+
   const axiosInstance = axios.create({
 /*     baseURL: `${secret.LARAVEL_APP_URL}` */
     baseURL: URL
@@ -18,7 +21,8 @@ export default (URL) => {
       if (error.response.status === 401) {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        location.reload()
+        // location.reload()
+        router.push({ name: "home" });
       }
       return Promise.reject(error)
     }

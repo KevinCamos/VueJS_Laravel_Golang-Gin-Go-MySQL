@@ -29,14 +29,14 @@ export const workers = {
             if (payload) {
                 state.workerlist = payload;
             } else {
-                state.workerlist = {
+              /*   state.workerlist = {
                     id: "",
-                    name: "",
-                    email: "",
-                    phone: "",
-                    address: "",
-                    appointment: "",
-                };
+                    // name: "",
+                    // email: "",
+                    // phone: "",
+                    // address: "",
+                    // appointment: "",
+                }; */
             }
         },
     },
@@ -97,6 +97,7 @@ export const workers = {
                 })
                 .catch(function (error) {
                     console.log(error)
+                    store.commit(Constant.INITIALIZE_WORKERITEM, false);
                 })
         }
     },

@@ -74,6 +74,7 @@ func GetAllUsers(c *gin.Context) {
 	} 
 		fmt.Println("entra", user)
 	serializer := UsersSerializer{c, user}
+	// console.log(serializer.Response())
 	c.JSON(http.StatusCreated, serializer.Response())
 }
 func GetUserByID(c *gin.Context) {

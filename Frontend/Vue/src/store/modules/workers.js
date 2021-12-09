@@ -103,7 +103,9 @@ export const workers = {
                     // resolve(workers)
                 })
                 .catch(function (error) {
+                    console.log("error")
                     console.log(error)
+                    console.log("error")
                     store.commit(Constant.INITIALIZE_WORKERITEM, false);
                 })
         },

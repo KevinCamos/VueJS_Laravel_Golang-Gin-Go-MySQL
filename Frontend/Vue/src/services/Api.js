@@ -13,18 +13,19 @@ export default (URL) => {
    const token = localStorage.getItem('token')
   if (token) {
     // axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`
-    axiosInstance.defaults.headers.common.Authorization = `TOKEN ${token}`
+    axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`
   } 
 
   axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response.status === 401) {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        // location.reload()
-        router.push({ name: "home" });
-      }
+      console.log(error)
+      // if (error.response.status === 401) {
+      //   localStorage.removeItem('token')
+      //   localStorage.removeItem('user')
+      //   // location.reload()
+      //   router.push({ name: "home" });
+      // }
       return Promise.reject(error)
     }
   )

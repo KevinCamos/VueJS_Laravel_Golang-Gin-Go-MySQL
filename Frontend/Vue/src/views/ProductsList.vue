@@ -22,8 +22,8 @@
     </div>
   </div>
 </template>
-
 <script>
+
 import Constant from "../Constant";
 import ProductsItem from "../components/ProductsItem.vue";
 import { reactive, computed } from "vue";

@@ -10,10 +10,11 @@ export default (URL) => {
     baseURL: URL
   })
 
-/*   const token = localStorage.getItem('token')
+   const token = localStorage.getItem('token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`
-  } */
+    // axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`
+    axiosInstance.defaults.headers.common.Authorization = `TOKEN ${token}`
+  } 
 
   axiosInstance.interceptors.response.use(
     (response) => response,

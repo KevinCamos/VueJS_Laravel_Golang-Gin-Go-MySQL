@@ -15,10 +15,10 @@ export const workers = {
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
             state.workerlist.splice(index, 1);
         },
-        [Constant.TOGGLE_DONE]: (state, payload) => {
-            let index = state.workerlist.findIndex((item) => item.id === payload.id);
-            state.workerlist[index].done = !state.workerlist[index].done;
-        },
+        // [Constant.TOGGLE_DONE]: (state, payload) => {
+        //     let index = state.workerlist.findIndex((item) => item.id === payload.id);
+        //     state.workerlist[index].done = !state.workerlist[index].done;
+        // },
         [Constant.UPDATE_WORKER]: (state, payload) => {
             console.log(payload)
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
@@ -29,15 +29,22 @@ export const workers = {
             if (payload) {
                 state.workerlist = payload;
             } else {
-              /*   state.workerlist = {
-                    id: "",
-                    // name: "",
-                    // email: "",
-                    // phone: "",
-                    // address: "",
-                    // appointment: "",
-                }; */
+                /*   state.workerlist = {
+                      id: "",
+                      // name: "",
+                      // email: "",
+                      // phone: "",
+                      // address: "",
+                      // appointment: "",
+                  }; */
             }
+        },
+        [Constant.LOGIN_ADMIN_WORKER]: (state, payload) => {
+            console.log(payload.user)
+            localStorage.token = payload.user.token;
+            console.log(localStorage.token)
+            // let index = state.workerlist.findIndex((item) => item.id === payload.id);
+            // state.workerlist[index] = payload;
         },
     },
     actions: {
@@ -70,9 +77,9 @@ export const workers = {
                     console.log(error)
                 })
         },
-        [Constant.TOGGLE_DONE]: (store, payload) => {
-            store.commit(Constant.TOGGLE_DONE, payload);
-        },
+        // [Constant.TOGGLE_DONE]: (store, payload) => {
+        //     store.commit(Constant.TOGGLE_DONE, payload);
+        // },
         [Constant.UPDATE_WORKER]: (store, payload) => {
             payload.workeritem.id = payload.workeritem.id ? payload.workeritem.id : payload.workeritem.ID
 
@@ -84,7 +91,7 @@ export const workers = {
                     // resolve(workers)
                 })
                 .catch(function (error) {
-                    console.log(error)  
+                    console.log(error)
                 })
         },
         [Constant.INITIALIZE_WORKERITEM]: (store, /* payload */) => {
@@ -99,7 +106,22 @@ export const workers = {
                     console.log(error)
                     store.commit(Constant.INITIALIZE_WORKERITEM, false);
                 })
-        }
+        },
+        [Constant.LOGIN_ADMIN_WORKER]: (store, payload) => {
+            console.log(payload)
+            console.log(payload.dataUser)
+            WorkerService.loginGo(payload.dataUser)
+                .then(function (worker) {
+                    console.log(worker.data)
+                    const token = localStorage.getItem('token')
+                    store.commit(Constant.LOGIN_ADMIN_WORKER, worker.data);
+                    // resolve(workers)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        },
+
     },
     getters: {
         getWorkers(state) {

@@ -8,10 +8,11 @@ class AuthRepository{
 
     public function register($data)
     {
-        $data = [
+        $data = [	
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
+            'appointment' => 'client',
         ];
         $user = User::create($data);
         return $user;

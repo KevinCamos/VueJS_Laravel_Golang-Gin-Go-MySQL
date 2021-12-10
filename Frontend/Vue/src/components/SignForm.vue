@@ -5,8 +5,8 @@
             <form>
                 <div class="mb-3" v-if="type === 'Sign Up'">
                     <label class="mb-2 text-muted" for="name">Username</label>
-                    <input id="username" type="text" class="form-control" name="username" v-model="v$.form.username.$model" required autofocus>
-                    <div class="input-errors" v-for="(error, index) of v$.form.username.$errors" :key="index">
+                    <input id="name" type="text" class="form-control" name="name" v-model="v$.form.name.$model" required autofocus>
+                    <div class="input-errors" v-for="(error, index) of v$.form.name.$errors" :key="index">
                         <div class="error-msg text-danger">{{ error.$message }}</div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <!-- @click="login()"> -->
                         Login
                     </button>
-                         <button v-else type="button" class="btn btn-primary ms-auto" @click="register()" >
+                        <button v-else type="button" class="btn btn-primary ms-auto" @click="register()" >
                         Crear Usuario
                     </button>
                 </div>
@@ -72,8 +72,9 @@ import { reactive, computed } from "vue";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
 // import { useCssVars } from "vue-demi";
 import { useStore } from "vuex";
-import Constant from "../Constant";
 import { useRouter } from "vue-router";
+import Constant from "../Constant";
+
 
 
 export default {
@@ -82,11 +83,12 @@ export default {
     type: String,
   },
   setup() {
- const store = useStore();
+    const store = useStore();
+    const router = useRouter();
 
     const state = reactive({
       form: {
-        username: "",
+        name: "",
         email: "",
         password: "",
         repeatPassword: "",
@@ -97,7 +99,7 @@ export default {
     const rules = computed(() => {
       return {
         form: {
-          username: {
+          name: {
             required,
             min: minLength(4),
           },
@@ -140,7 +142,9 @@ export default {
         } else {
           alert("S'envia a LARAVEL");
 
-          /* Login a LARAVEL */
+          this.store.dispatch("user/" + Constant.LOGIN_USER, {
+            dataUser: this.state.form,
+          });
         }
       } else {
         /* NO VALIDA*/
@@ -152,7 +156,9 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         /* REGISTRAR PER LARAVEL */
-
+          this.store.dispatch("user/" + Constant.REGISTER_USER, {
+            dataUser: this.state.form,
+          });
         alert("Els 4 inputs es validen");
       } else {
         /* NO VALIDA*/

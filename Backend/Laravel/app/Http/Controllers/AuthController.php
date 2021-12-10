@@ -45,9 +45,10 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        try {
+
+                try {
             $token = $this->authRepository->login($request->validated());
-            return self::apiResponseSuccess(UserResource::make($token), 'Usuario logeado', Response::HTTP_OK); 
+            return self::apiResponseSuccess(UserResource::make($token), 'Usuario logeado', Response::HTTP_OK);
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
         }
@@ -63,11 +64,11 @@ class AuthController extends Controller
         }
     }
 
-    public function user() 
+    public function user()
     {
         try {
             $user = $this->authRepository->user();
-            return self::apiResponseSuccess(UserResource::make($user), 'Datos de Usuario', Response::HTTP_OK); 
+            return self::apiResponseSuccess(UserResource::make($user), 'Datos de Usuario', Response::HTTP_OK);
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
         }

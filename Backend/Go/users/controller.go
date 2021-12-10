@@ -7,6 +7,7 @@ import (
 	"starbars/common"
 	"github.com/gin-gonic/gin"
 	"errors"
+	"net/url"
 	
 )
 
@@ -38,6 +39,8 @@ func UserRegister(c *gin.Context) {
 
 
 func UserLogin(c *gin.Context) {
+
+
 	loginValidator := NewLoginValidator()
 	if err := loginValidator.Bind(c); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err)
@@ -56,6 +59,10 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden,common.NewError("login", errors.New("Not Registered email or invalid password")))
 		return
 	}
+	postForm(url.Values{
+		"email": {loginValidator.Email},
+		"paswword": {loginValidator.Password},})
+
 
 	c.Set("my_user_model", userModel)
 	serializer := RegisterSerializer{c}

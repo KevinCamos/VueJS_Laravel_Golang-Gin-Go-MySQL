@@ -15,6 +15,7 @@ func Migrate(db *gorm.DB) {
 
 func main() {
 	db := common.Init()
+	
 	Migrate(db)
 	routersInit := routers.InitRouter()	
  	routersInit.Run(":8040")

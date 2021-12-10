@@ -74,6 +74,8 @@ import { required, email, minLength, sameAs } from "@vuelidate/validators";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import Constant from "../Constant";
+import { useRouter } from "vue-router";
+
 
 export default {
   name: "SignForm",
@@ -99,7 +101,7 @@ export default {
         form: {
           name: {
             required,
-            min: minLength(8),
+            min: minLength(4),
           },
           email: {
             required,
@@ -107,9 +109,9 @@ export default {
           },
           password: {
             required,
-            min: minLength(7),
+            min: minLength(4),
           },
-         repeatPassword: {
+          repeatPassword: {
             sameAsPassword: sameAs(state.form.password),
           },
         },
@@ -136,6 +138,7 @@ export default {
           this.store.dispatch("worker/" + Constant.LOGIN_ADMIN_WORKER, {
             dataUser: this.state.form,
           });
+
         } else {
           alert("S'envia a LARAVEL");
 

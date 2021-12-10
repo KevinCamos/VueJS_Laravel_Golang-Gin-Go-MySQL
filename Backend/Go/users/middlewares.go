@@ -8,21 +8,19 @@ import (
 	"net/http"
 	"strings"
 	"fmt"
-
 	// "github.com/satori/go.uuid"
 	"reflect"
-
-
+	
 )
 
 // Strips 'TOKEN ' prefix from token string
 func stripBearerPrefixFromTokenString(tok string) (string, error) {
 	// Should be a bearer token
-	// fmt.Println(tok)
+	fmt.Println(strings.ToUpper(tok[0:7]))
 
-	if len(tok) > 5 && strings.ToUpper(tok[0:6]) == "TOKEN " {
-		// fmt.Println("TOKEN!!")
-		return tok[6:], nil
+	if len(tok) > 6 && strings.ToUpper(tok[0:7]) == "BEARER " {
+		fmt.Println("TOKEN!!")
+		return tok[7:], nil
 	}
 	fmt.Println("NO EMPIEZA POR TOKEN")
 
@@ -91,11 +89,14 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 			
 			// my_user_id := claims["id"]
 
-			if claims["appointment"] != "gerente" {
+			if claims["appointment"] != "gerente"  {
 				fmt.Println("error")
 
 				c.AbortWithError(http.StatusUnauthorized,err)
-			} 
+			} else{
+				fmt.Println("ES GERENT!")
+
+			}
 
 			// fmt.Println(my_user_id)
 

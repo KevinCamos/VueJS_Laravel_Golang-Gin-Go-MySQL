@@ -13,4 +13,8 @@ export default {
     UPDATE_PRODUCTS : "updateProdcts",
     DELETE_PRODUCTS : "deleteProdcts",
     INITIALIZE_PRODUCTS : "initializeProdcts",
+
+     /* USER */
+    LOGIN_USER:"loginUser",
+    REGISTER_USER:"registerUser",
 }

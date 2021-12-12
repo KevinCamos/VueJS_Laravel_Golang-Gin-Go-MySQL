@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->is_admin){
+        if (auth()->check() && auth()->user()->appointment=="gerente"){
             return $next($request);
         }
         return response()->json([

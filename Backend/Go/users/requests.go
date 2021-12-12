@@ -3,36 +3,45 @@ package users
 
 import (
 	"starbars/common"
-"log"
 	"fmt"
 	"net/http"
-    "net/url"
-	"encoding/json"
-
+	"bytes"
+	// "io/ioutil"
 )
 
+	func postForm(jsonData []byte)bool {
 
-
-
-	func postForm(data url.Values) {
-		fmt.Println(data)
-		fmt.Println(data)
 		fmt.Println(common.URLLaravel+"login")
-
-/* Los datos se envían con PostForm. */
-		resp, err := http.PostForm(common.URLLaravel+"login", data)
+		url:=common.URLLaravel+"auth"
+      
+		request, err:= http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+		request.Header.Set("Content-Type", "application/json; charset=UTF-8")
+		client := &http.Client{}
+		response, err := client.Do(request)
 		if err != nil {
-			fmt.Println("NIL")
-			log.Fatal(err)
+			panic(err)
+		}
+		defer response.Body.Close()
+
+		fmt.Println("response Status:", response.Status)
+		fmt.Println("http.Status", http.StatusOK)
+		// fmt.Println("response Headers:", response.Header)
+		// fmt.Println("response Headers:", response.Body)
+		// body, _ := ioutil.ReadAll(response.Body)
+		// fmt.Println("response Body:", string(body))
+
+		
+		if(response.Status == "200 OK"){
+			/* AÇÒ NO VA, HI HAURIA QUE COMPROBAR SI TORNA ALGO O QUÉ */
+			fmt.Println("TOT OK" )
+			return true
+		}else{
+			fmt.Println("FAIL" )
+			// err:= nil!=error
+			return false
 		}
 		
-/* Decodificamos el cuerpo de respuesta en un mapa. */
-		var res map[string]interface{}
-
-		json.NewDecoder(resp.Body).Decode(&res)
-/* pintem el formulari */
-fmt.Println(res["form"])
-fmt.Println(res)
+	
 
 	}
 

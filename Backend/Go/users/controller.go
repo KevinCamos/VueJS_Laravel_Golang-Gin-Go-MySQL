@@ -7,7 +7,8 @@ import (
 	"starbars/common"
 	"github.com/gin-gonic/gin"
 	"errors"
-	"net/url"
+
+	// "net/url"
 	
 )
 
@@ -59,17 +60,28 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden,common.NewError("login", errors.New("Not Registered email or invalid password")))
 		return
 	}
-	postForm(url.Values{
-		"email": {loginValidator.Email},
-		"paswword": {loginValidator.Password},})
-
-
+	var jsonData = []byte(`{
+		"email": "`+loginValidator.Email+`",
+		"password": "`+loginValidator.Password+`"
+	}`)
+	
 	c.Set("my_user_model", userModel)
-	serializer := RegisterSerializer{c}
-	c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+	myUserModel := c.MustGet("my_user_model").(UserModel)
 
+	appointment:=myUserModel.Appointment
+	if appointment == "gerente" {
+		if data:= postForm(jsonData); data != true {
+			c.JSON(http.StatusNotFound, gin.H{"message": "no authorized"})
+			return
+		}
+		serializer := RegisterSerializer{c}
+		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+		return
+	}else{
+		c.JSON(http.StatusNotFound, gin.H{"message": "no authorized"})
 
-}
+		}
+	}
 
 
 func GetAllUsers(c *gin.Context) {

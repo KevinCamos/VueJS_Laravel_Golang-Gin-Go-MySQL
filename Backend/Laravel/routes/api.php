@@ -20,6 +20,7 @@ Route::resource('restaurant', RestaurantController::class);
 Route::resource('products', ProductsController::class);
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('auth', [AuthController::class, 'authAdmin']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['jwt.verify', 'admin']], function() {

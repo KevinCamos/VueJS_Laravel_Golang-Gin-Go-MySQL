@@ -9,6 +9,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\AuthRepository;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\AuthAdminResource;
 use JWTAuth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Http\Response;
@@ -35,18 +36,35 @@ class AuthController extends Controller
     {
         try {
             $user = $this->authRepository->register($request->validated());
-            if($user){
+            if ($user) {
                 return self::apiResponseSuccess(null, 'Usuario registrado', Response::HTTP_OK);
             }
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
         }
     }
+    public function authAdmin(Request $request)
+    {
 
+
+        try {
+            $user = $this->authRepository->authAdmin($request);
+            // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            // $out->writeln("---------------ISADMIN-------------------");
+            // $out->writeln(gettype($user));
+            if ($user[0]["appointment"]=="gerente") {
+                return self::apiResponseSuccess(AuthAdminResource::make($request), 'Usuario logeado', Response::HTTP_OK);
+            } else {
+                return self::apiResponseError(Response::HTTP_UNAUTHORIZED);
+            }
+        } catch (\Exception $e) {
+            return self::apiResponseError(Response::HTTP_UNAUTHORIZED);
+        }
+    }
     public function login(LoginRequest $request)
     {
 
-                try {
+        try {
             $token = $this->authRepository->login($request->validated());
             return self::apiResponseSuccess(UserResource::make($token), 'Usuario logeado', Response::HTTP_OK);
         } catch (\Exception $e) {

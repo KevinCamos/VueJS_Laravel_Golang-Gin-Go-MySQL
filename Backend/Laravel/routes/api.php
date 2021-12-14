@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ use App\Http\Controllers\AuthController;
 
 Route::resource('restaurant', RestaurantController::class);
 Route::resource('products', ProductsController::class);
+Route::resource('table', TableController::class);
+Route::resource('order', OrderController::class);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('auth', [AuthController::class, 'authAdmin']);

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ProductsResource;
 use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -78,19 +81,26 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        if (Products::where('id', $id)->exists()) {
-            $product = Products::find($id);
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->category = $request->category;
-            $product->price = $request->price;
-            $product->save();
-            return ProductsResource::make(Products::where('id', $id)->firstOrFail());
-        } else {
-            return response()->json([
-                "message" => "Product not found"
-            ], 404);
+    {   
+        $user = Auth::user();
+        $products = Products::find($id);
+
+        if ($user->can('update', $products)) {
+            if(Gate::allows('isGerente')){
+                if (Products::where('id', $id)->exists()) {
+                    $product = Products::find($id);
+                    $product->name = $request->name;
+                    $product->description = $request->description;
+                    $product->category = $request->category;
+                    $product->price = $request->price;
+                    $product->save();
+                    return ProductsResource::make(Products::where('id', $id)->firstOrFail());
+                } else {
+                    return response()->json([
+                        "message" => "Product not found"
+                    ], 404);
+                }
+            }
         }
     }
 

@@ -13,8 +13,6 @@ class StoreProductsRequest extends FormRequest
      */
     public function authorize()
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("Hello from Terminal");
         return true;
     }
 
@@ -25,8 +23,6 @@ class StoreProductsRequest extends FormRequest
      */
     public function rules()
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("Hello from Terminal");
         return [
             "name" => ["required"],
             "description" => ["required"],

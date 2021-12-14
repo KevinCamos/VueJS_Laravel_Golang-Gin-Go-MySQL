@@ -83,10 +83,12 @@ export default {
     type: String,
   },
   setup() {
-    const store = useStore();
     const router = useRouter();
+    const store = useStore();
 
+ 
     const state = reactive({
+       user: computed(() => store.getters["user/getUser"]),
       form: {
         name: "",
         email: "",
@@ -135,9 +137,12 @@ export default {
         if (this.state.adminmode) {
           alert("S'envia a GO");
 
-          this.store.dispatch("worker/" + Constant.LOGIN_ADMIN_WORKER, {
+          this.store.dispatch("user/" + Constant.LOGIN_ADMIN, {
             dataUser: this.state.form,
-          });
+          })   
+          //ESTO NO VA, PARLAR EN YOLANDA/LORENA, entra abans el then que la funció de dins dels dispatch
+          .then(() => /* console.log(this.state.user) */ this.$router.push({ name: "home" }));
+;
 
         } else {
           alert("S'envia a LARAVEL");

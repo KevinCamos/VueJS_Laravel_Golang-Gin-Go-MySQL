@@ -48,16 +48,16 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(loginValidator.Email, loginValidator.userModel, loginValidator)
+	// fmt.Println(loginValidator.Email, loginValidator.userModel, loginValidator)
 	userModel, err := FindOneUser(&UserModel{Email: loginValidator.userModel.Email})
 
 	if err != nil {
-		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email or invalid password")))
+		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email ")))
 		return
 	}
 
 	if userModel.checkPassword(loginValidator.Password) != nil {
-		c.JSON(http.StatusForbidden,common.NewError("login", errors.New("Not Registered email or invalid password")))
+		c.JSON(http.StatusForbidden,common.NewError("login", errors.New(" invalid password")))
 		return
 	}
 	var jsonData = []byte(`{

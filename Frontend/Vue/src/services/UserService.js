@@ -9,4 +9,7 @@ export default {
         console.log(data);
         return Api(`${secret.LARAVEL_APP_URL}`).post('register/', data)
     },
+    loginGo(data) {
+        return Api(`${secret.GO_APP_URL}`).post('users/login', data)
+      }, 
 }

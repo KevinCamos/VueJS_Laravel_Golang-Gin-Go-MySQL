@@ -9,7 +9,7 @@ export const workers = {
     mutations: {
         [Constant.ADD_WORKER]: (state, payload) => {
             console.log(payload)
-            state.workerlist.push({ ...payload/* , id: shortid.generate(), done: false */ });
+            state.workerlist.push({ ...payload });
         },
         [Constant.DELETE_WORKER]: (state, payload) => {
             let index = state.workerlist.findIndex((item) => item.id === payload.id);
@@ -109,20 +109,7 @@ export const workers = {
                     store.commit(Constant.INITIALIZE_WORKERITEM, false);
                 })
         },
-        [Constant.LOGIN_ADMIN_WORKER]: (store, payload) => {
-            console.log(payload)
-            console.log(payload.dataUser)
-            WorkerService.loginGo(payload.dataUser)
-                .then(function (worker) {
-                    console.log(worker.data)
-                    const token = localStorage.getItem('token')
-                    store.commit(Constant.LOGIN_ADMIN_WORKER, worker.data);
-                    // resolve(workers)
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-        },
+
 
     },
     getters: {

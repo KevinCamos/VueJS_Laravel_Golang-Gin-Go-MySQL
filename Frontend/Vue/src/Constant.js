@@ -6,7 +6,6 @@ export default {
     TOGGLE_DONE : "toggleDone",
     DELETE_WORKER : "deleteWorker",
     INITIALIZE_WORKERITEM : "initializeWorkerItem",
-    LOGIN_ADMIN_WORKER:"logAdminWorker",
 
     /* PRODUCTS */
     ADD_PRODUCTS : "addProdcts",
@@ -17,4 +16,6 @@ export default {
      /* USER */
     LOGIN_USER:"loginUser",
     REGISTER_USER:"registerUser",
+    LOGIN_ADMIN:"loginAdmin",
+
 }

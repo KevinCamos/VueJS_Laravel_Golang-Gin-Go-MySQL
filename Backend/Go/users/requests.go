@@ -12,6 +12,7 @@ import (
 	func postForm(jsonData []byte)bool {
 
 		fmt.Println(common.URLLaravel+"login")
+		
 		url:=common.URLLaravel+"auth"
       
 		request, err:= http.NewRequest("POST", url, bytes.NewBuffer(jsonData))

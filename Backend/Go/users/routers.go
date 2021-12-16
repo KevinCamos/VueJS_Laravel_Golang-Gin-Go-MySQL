@@ -10,8 +10,10 @@ import (
 func UserRouter(router *gin.RouterGroup) {
 
 	/* POST */
+	router.POST("/checkAdmin", CheckAdmin)
+
+	/* POST */
 	router.POST("/", UserRegister)
-	// router.POST("/login", UserLogin)
 
 	/* GET */
 	router.GET("/", GetAllUsers)
@@ -27,18 +29,6 @@ func UserRouter(router *gin.RouterGroup) {
 
 
 func UserRouterNoAuth(router *gin.RouterGroup) {
-
 	/* POST */
-	// router.POST("/", UserRegister)
 	router.POST("/login", UserLogin)
-
-	/* GET */
-	// router.GET("/", GetAllUsers)
-	// router.GET(":id", GetUserByID)
-
-	/* PUT */
-	// router.PUT(":id", UpdateUser)
-
-	// /* DELETE */
-	// router.DELETE(":id", DeleteUser)
 }

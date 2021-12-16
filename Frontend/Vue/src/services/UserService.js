@@ -11,5 +11,8 @@ export default {
     },
     loginGo(data) {
         return Api(`${secret.GO_APP_URL}`).post('users/login', data)
+      },  
+     checkAdmin(data) {
+        return Api(`${secret.GO_APP_URL}`).post('user/checkAdmin/',data)
       }, 
 }

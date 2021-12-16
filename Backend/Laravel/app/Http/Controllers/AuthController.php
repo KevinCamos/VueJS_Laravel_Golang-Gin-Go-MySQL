@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\AuthRepository;
 use App\Http\Resources\UserResource;
@@ -53,6 +54,9 @@ class AuthController extends Controller
             // $out->writeln("---------------ISADMIN-------------------");
             // $out->writeln(gettype($user));
             if ($user[0]["appointment"]=="gerente") {
+                // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            // $out->writeln("---------------ISADMIN-------------------");
+            // $out->writeln(gettype($user));
                 return self::apiResponseSuccess(AuthAdminResource::make($request), 'Usuario logeado', Response::HTTP_OK);
             } else {
                 return self::apiResponseError(Response::HTTP_UNAUTHORIZED);

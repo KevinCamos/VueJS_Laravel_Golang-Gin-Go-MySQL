@@ -1,36 +1,34 @@
 import store from "@/store";
 
 export default {
+  authGuardWorker(to, from, next) {
+    if (store.getters["user/isAuthWorker"]) {
+      next();
+    } else {
+      next("/home");
+    }
+  },
+  authGuardAdmin(to, from, next) {
 
-     authGuardWorker(to, from, next) {
-        console.log(store.getters["user/isAuthWorker"]);
-        if (store.getters["user/isAuthWorker"]) {
-          console.log("isWorker");
-      
-          next();
-        } else {
-            next("/home");
-        }
-      },
-       authGuardAdmin(to, from, next) {
-        console.log(store.getters["user/isAuthAdim"]);
+    if (store.getters["user/checkAdmin"]) {
+      console.log("isAdmin");
 
-        if (store.getters["user/isAuthAdim"]) {
-            console.log("isAdmin");
+      next();
+    } else if (store.getters["user/isAuthWorker"]) {
+      next("/home");
+    } else {
+      next("/signin");
+    }
+  },
+  noAuth(to, from, next) {
+    console.log(!store.getters["user/isAuthWorker"]);
 
-          next();
-        } else {
-          next("/home");
-        }
-      },
-      noAuth(to, from, next) {
-        console.log(!store.getters["user/isAuthWorker"]);
+    if (!store.getters["user/isAuthWorker"]) {
+      next();
+    } else {
+      next("/home");
+    }
+  },
 
-        if (!store.getters["user/isAuthWorker"]) {
-          next();
-        } else {
-          next("/home");
-        }
-      }
-      
-}
+
+};

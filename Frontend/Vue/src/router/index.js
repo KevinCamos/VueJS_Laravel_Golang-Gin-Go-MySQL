@@ -15,7 +15,7 @@ import AuthGuards from "../services/guards/AuthGuards";
 
 const routes = [
   { path: "", redirect: { name: "home" }, },
-  { path: "/home", name: "home", component: Home },
+  { path: "/home", name: "home", component: Home  },
   { path: "/about", name: "about", component: About },
   { path: "/workers", name: "workerList", component: WorkerList, beforeEnter: AuthGuards.authGuardAdmin  },
   { path: "/workers/add", name: "addWorker", component: AddWorker, beforeEnter: AuthGuards.authGuardAdmin  },
@@ -31,8 +31,8 @@ const routes = [
     name: "updateProduct",
     component: UpdateProduct, beforeEnter: AuthGuards.authGuardWorker 
   },
-  { path: "/signin", name: "signin", component: SignIn, beforeEnter: AuthGuards.noAuth  },
-  { path: "/signup", name: "signup", component: SignUp , beforeEnter: AuthGuards.noAuth },
+  { path: "/signin", name: "signin", component: SignIn  },
+  { path: "/signup", name: "signup", component: SignUp  },
   { path: "/:catchAll(.*)", component: NotFound },
 ];
 

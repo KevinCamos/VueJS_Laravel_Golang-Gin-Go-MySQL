@@ -17,5 +17,6 @@ export default {
     LOGIN_USER:"loginUser",
     REGISTER_USER:"registerUser",
     LOGIN_ADMIN:"loginAdmin",
-
+    USER_REMOVE:"userRemove",
+    UPDATE_AUTH:"updateAuth"
 }

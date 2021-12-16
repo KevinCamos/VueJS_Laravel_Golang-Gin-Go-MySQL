@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 	"fmt"
-	// "github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 	"reflect"
 	
 )
@@ -43,12 +43,13 @@ var MyAuth2Extractor = &request.MultiExtractor{
 }
 
 // A helper to write user_id and user_model to the context
-func UpdateContextUserModel(c *gin.Context, my_user_id string) {
+func UpdateContextUserModel(c *gin.Context, my_user_id uuid.UUID) {
 	var myUserModel UserModel
-	if my_user_id != "0" {
+
 		db := common.GetDB()
 		db.First(&myUserModel, my_user_id)
-	}
+
+
 	c.Set("my_user_id", my_user_id)
 	c.Set("my_user_model", myUserModel)
 }
@@ -59,7 +60,6 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		fmt.Println("1")
-		UpdateContextUserModel(c, "0")
 		token, err := request.ParseFromRequest(c.Request, MyAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
 			b := ([]byte(common.NBSecretPassword))
 			fmt.Println(b)
@@ -83,9 +83,15 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			fmt.Println("claims")
-			fmt.Println(claims)
+			fmt.Println(claims["id"])
+			
 			fmt.Println(claims["appointment"])
-			fmt.Println(reflect.TypeOf(claims["appointment"]))
+			fmt.Println(reflect.TypeOf(claims["id"]))
+			
+			/* https://stackoverflow.com/questions/62952279/how-to-convert-a-uuid-string-into-uuid-type */
+			/* https://yourbasic.org/golang/interface-to-string/ */
+			id:=uuid.Must(uuid.FromString( fmt.Sprintf("%v", claims["id"])))
+			UpdateContextUserModel(c,id )
 			
 			// my_user_id := claims["id"]
 
@@ -95,13 +101,9 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 				c.AbortWithError(http.StatusUnauthorized,err)
 			} else{
 				fmt.Println("ES GERENT!")
-
 			}
 
-			// fmt.Println(my_user_id)
-
-			//fmt.Println(my_user_id,claims["id"])
-			// UpdateContextUserModel(c, my_user_id)
+			
 		}
 	}
 }

@@ -7,9 +7,6 @@ import (
 	"starbars/common"
 	"github.com/gin-gonic/gin"
 	"errors"
-
-	// "net/url"
-	
 )
 
 func UserRegister(c *gin.Context) {
@@ -38,16 +35,13 @@ func UserRegister(c *gin.Context) {
 
 }
 
-
 func UserLogin(c *gin.Context) {
-
 
 	loginValidator := NewLoginValidator()
 	if err := loginValidator.Bind(c); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err)
 		return
 	}
-
 	// fmt.Println(loginValidator.Email, loginValidator.userModel, loginValidator)
 	userModel, err := FindOneUser(&UserModel{Email: loginValidator.userModel.Email})
 
@@ -60,29 +54,15 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden,common.NewError("login", errors.New(" invalid password")))
 		return
 	}
-	var jsonData = []byte(`{
-		"email": "`+loginValidator.Email+`",
-		"password": "`+loginValidator.Password+`"
-	}`)
-	
+
 	c.Set("my_user_model", userModel)
-	myUserModel := c.MustGet("my_user_model").(UserModel)
-
-	appointment:=myUserModel.Appointment
-	if appointment == "gerente" {
-		if data:= postForm(jsonData); data != true {
-			c.JSON(http.StatusNotFound, gin.H{"message": "no authorized"})
-			return
-		}
-		serializer := RegisterSerializer{c}
-		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
-		return
-	}else{
-		c.JSON(http.StatusNotFound, gin.H{"message": "no authorized"})
-
-		}
+	CheckInLaravel(c)
 	}
+	
 
+func CheckAdmin(c *gin.Context) {
+		CheckInLaravel(c)
+	}
 
 func GetAllUsers(c *gin.Context) {
 	var user []UserModel

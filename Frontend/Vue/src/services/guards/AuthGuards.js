@@ -1,4 +1,5 @@
 import store from "@/store";
+import UserService from "@/services/UserService";
 
 export default {
 
@@ -10,8 +11,20 @@ export default {
     }
   },
   authGuardAdmin(to, from, next) {
-
-    if (store.getters["user/checkAdmin"]) {
+    UserService.checkAdmin()
+    .then(function (user) {
+      user = user.data.user;
+      localStorage.token = user.token;
+      localStorage.setItem("user", JSON.stringify(user));
+      next();;
+    })
+    .catch(function (error) {
+      store.state.authUser.isAdmin = false;
+      store. state.authUser.isWorker = false;
+      console.log("error!!!")
+      next("/signin");
+    });
+/*     if (store.getters["user/checkAdmin"]) {
       console.log("isAdmin");
 
       next();
@@ -19,7 +32,7 @@ export default {
       next("/home");
     } else {
       next("/signin");
-    }
+    } */
   },
   noAuth(to, from, next) {
     console.log(!store.getters["user/isAuthWorker"]);

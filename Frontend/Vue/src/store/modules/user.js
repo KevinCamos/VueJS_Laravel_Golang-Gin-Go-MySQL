@@ -5,26 +5,7 @@ import UserService from "@/services/UserService";
 
 export const user = {
   namespaced: true,
-<<<<<<< HEAD
-  state: {},
-  mutations: {
-    [Constant.LOGIN_USER]: (state, payload) => {
-      // console.log(payload.data.access_token)
-      localStorage.token = payload.data.access_token;
-      state.user = payload.data;
-      // console.log(localStorage.token)
-    },
-    [Constant.REGISTER_USER]: (state, payload) => {
-      // console.log(payload)
-      state.data = payload;
-    },
-    [Constant.LOGIN_ADMIN]: (state, payload) => {
-      // console.log(payload.user)
-      localStorage.token = payload.user.token;
-      state.user = payload.user;
 
-      // console.log(localStorage.token)
-=======
   state: {
     authUser: {
       isAdmin: false,
@@ -72,7 +53,6 @@ export const user = {
       console.log(payload.authUserLocal);
       state.authUser.isAdmin = payload.authUserLocal.isAdmin;
       state.authUser.isWorker = payload.authUserLocal.isWorker;
->>>>>>> features/vue/AuthGuards
     },
   },
 
@@ -99,47 +79,29 @@ export const user = {
         });
     },
     [Constant.LOGIN_ADMIN]: (store, payload) => {
-<<<<<<< HEAD
-      // console.log(payload)
-      // console.log(payload.dataUser)
-      UserService.loginGo(payload.dataUser)
-        .then(function (user) {
-          // const router = useRouter();
-          // router.push({ name: "home" })
 
-          console.log(user.data);
-          store.commit(Constant.LOGIN_ADMIN, user.data);
-          // resolve(workers)
-=======
       UserService.loginGo(payload.dataUser)
         .then(function (user) {
           console.log(user.data);
           store.commit(Constant.LOGIN_ADMIN, user.data);
->>>>>>> features/vue/AuthGuards
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-<<<<<<< HEAD
-=======
+
     [Constant.USER_REMOVE]: (store, payload) => {
       store.commit(Constant.USER_REMOVE, payload);
     },
     [Constant.UPDATE_AUTH]: (store, payload) => {
       store.commit(Constant.UPDATE_AUTH, payload);
     },
->>>>>>> features/vue/AuthGuards
   },
   getters: {
     getUser(state) {
       return state.user;
     },
-<<<<<<< HEAD
-    isAuthWorker: (state) => {
-      try {
-        let appointment = state.user.appointment;
-=======
+
     /* Este getter es para mostrar el header en su propio componente */
     getAuthUsers(state) {
       return state.authUser;
@@ -149,7 +111,6 @@ export const user = {
     isAuthWorker: (state) => {
       try {
         let appointment = JSON.parse(localStorage.getItem("user")).appointment;
->>>>>>> features/vue/AuthGuards
         let isAdmin =
           appointment == "gerente" || appointment == "auxiliar" ? true : false;
         return isAdmin;
@@ -157,35 +118,33 @@ export const user = {
         return false;
       }
     },
-<<<<<<< HEAD
-    isAuthAdim: (state) => {
-      try {
-        let isAdmin = state.user.appointment == "gerente" ? true : false;
-        return isAdmin;
-      } catch {
-=======
+
     /* Este getter es para GuardAuths */
 
     checkAdmin: (state) => {
       console.log("entra")
       if (localStorage.token) {
-        UserService.checkAdmin(state.user)
+        UserService.checkAdmin()
           .then(function (user) {
+            console.log("entraUser!")
+            console.log(user.data.user)
+            user = user.data.user;
             localStorage.token = user.token;
 
             state.user = user;
 
             state.authUser.isAdmin = true;
             state.authUser.isWorker = false;
+            console.log("deuria de ser true")
             return true;
           })
           .catch(function (error) {
             state.authUser.isAdmin = false;
             state.authUser.isWorker = false;
+            console.log("error!!!")
             return false;
           });
       } else {
->>>>>>> features/vue/AuthGuards
         return false;
       }
     },

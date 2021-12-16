@@ -10,7 +10,7 @@ import (
 func UserRouter(router *gin.RouterGroup) {
 
 	/* POST */
-	router.POST("/checkAdmin", CheckAdmin)
+	router.GET("/checkAdmin", CheckAdmin)
 
 	/* POST */
 	router.POST("/", UserRegister)

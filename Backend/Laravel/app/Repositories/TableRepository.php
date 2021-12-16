@@ -26,7 +26,8 @@ class TableRepository{
     public function updateTable($id, $data)
     {
         if (Table::where('id_table', $id)->exists()) {
-            $table = Table::where('id_table', $id)->update(['id_order'=> $data['id_order'], 'status'=> $data['status']]);
+            Table::where('id_table', $id)->update(['id_order'=> $data['id_order'], 'status'=> $data['status']]);
+            $table = Table::where('id_table', $id)->get();
             return $table;
         }
         return null;

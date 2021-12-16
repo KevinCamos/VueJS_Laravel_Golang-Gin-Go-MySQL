@@ -15,7 +15,7 @@ class CreateTableTable extends Migration
     {
         Schema::create('table', function (Blueprint $table) {
             $table->id('id_table');
-            $table->integer('id_order');
+            $table->integer('id_order')->nullable($value = true);
             $table->string('status');
         });
     }

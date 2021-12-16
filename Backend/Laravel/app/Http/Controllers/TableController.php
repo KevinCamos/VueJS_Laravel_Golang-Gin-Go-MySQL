@@ -60,8 +60,9 @@ class TableController extends Controller
     {
         try {
             $table = $this->tableRepository->createTable($request->validated());
+            $table->id_table = $table->id;
             if ($table) {
-                return self::apiResponseSuccess($table, 'Mesa creada', Response::HTTP_OK);
+                return self::apiResponseSuccess(TableResource::make($table), 'Mesa creada', Response::HTTP_OK);
             }
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
@@ -81,7 +82,7 @@ class TableController extends Controller
             if(is_null($table)){
                 return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
             }
-            return self::apiResponseSuccess($table, 'Mesa obtenida', Response::HTTP_OK);
+            return self::apiResponseSuccess(TableResource::make($table), 'Mesa obtenida', Response::HTTP_OK);
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
         }
@@ -129,7 +130,7 @@ class TableController extends Controller
         try {
             $table = $this->tableRepository->deleteTable($id);
             if($table){
-                return self::apiResponseSuccess(null, 'Mesa eliminada', Response::HTTP_OK);
+                return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
             }
             return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {

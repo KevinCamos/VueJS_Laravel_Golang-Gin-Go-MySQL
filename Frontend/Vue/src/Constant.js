@@ -23,4 +23,8 @@ export default {
     UPDATE_TABLE : "updateTable",
     DELETE_TABLE : "deleteTable",
     INITIALIZE_TABLE : "initializeTable",
+
+    USER_REMOVE:"userRemove",
+    UPDATE_AUTH:"updateAuth"
+
 }

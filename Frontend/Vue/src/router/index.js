@@ -19,8 +19,9 @@ const routes = [
     name: "updateProduct",
     component: () => import('../views/UpdateProduct'), beforeEnter: AuthGuards.authGuardWorker 
   },
-  { path: "/signin", name: "signin", component: () => import('../views/SignIn') , beforeEnter: AuthGuards.noAuth  },
-  { path: "/signup", name: "signup", component: () => import('../views/SignUp') , beforeEnter: AuthGuards.noAuth },
+
+  { path: "/signin", name: "signin", component: () => import('../views/SignIn') },
+  { path: "/signup", name: "signup", component: () => import('../views/SignUp') },
   { path: "/:catchAll(.*)", component: () => import('../views/NotFound') },
 
   { path: "/table", name: "tableList", component: () => import('../views/TableList') },

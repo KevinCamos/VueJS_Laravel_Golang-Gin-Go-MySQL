@@ -17,6 +17,9 @@
                     <router-link class="nav-link" to="/workers">Trabajadores</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link class="nav-link" to="/table">Mesas</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link class="nav-link" to="/products">Products</router-link>
                 </li>
                 <li class="nav-item">
@@ -51,7 +54,7 @@ export default {
 <style>
 .starbarstitle{
 
-  padding-left: 5%;
+    padding-left: 5%;
 
 }
 </style>

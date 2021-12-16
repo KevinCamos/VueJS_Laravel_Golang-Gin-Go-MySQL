@@ -24,15 +24,10 @@
         },
 
         setup() {
-
             const store = useStore();
             const router = useRouter();
 
             const deleteWork = (id) => {
-                console.log("delete");
-            
-                console.log(id);
-
                 store.dispatch("products/"+Constant.DELETE_PRODUCTS, { id });
             };
 

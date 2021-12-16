@@ -31,8 +31,9 @@ const routes = [
     name: "updateProduct",
     component: UpdateProduct, beforeEnter: AuthGuards.authGuardWorker 
   },
-  { path: "/signin", name: "signin", component: SignIn, beforeEnter: AuthGuards.noAuth  },
-  { path: "/signup", name: "signup", component: SignUp , beforeEnter: AuthGuards.noAuth },
+
+  { path: "/signin", name: "signin", component: SignIn  },
+  { path: "/signup", name: "signup", component: SignUp  },
   { path: "/:catchAll(.*)", component: NotFound },
 ];
 

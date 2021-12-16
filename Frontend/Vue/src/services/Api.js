@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 
 export default (URL) => {
   const router = useRouter();
+  const store = useStore();
 
   const axiosInstance = axios.create({
 /*     baseURL: `${secret.LARAVEL_APP_URL}` */
@@ -20,12 +22,14 @@ export default (URL) => {
     (response) => response,
     (error) => {
       console.log(error)
-      // if (error.response.status === 401) {
-      //   localStorage.removeItem('token')
-      //   localStorage.removeItem('user')
-      //   // location.reload()
-      //   router.push({ name: "home" });
-      // }
+      if (error.response.status === 401) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        store.dispatch("user/" + Constant.USER_REMOVE, {
+          succes: true,
+        });
+        router.push({ name: "home" });
+      }
       return Promise.reject(error)
     }
   )

@@ -19,6 +19,7 @@ const routes = [
     name: "updateProduct",
     component: () => import('../views/UpdateProduct'), beforeEnter: AuthGuards.authGuardWorker 
   },
+  { path: "/:id/order", name: "order", component: () => import('../views/Order') , beforeEnter: AuthGuards.authGuardWorker},
 
   { path: "/signin", name: "signin", component: () => import('../views/SignIn') },
   { path: "/signup", name: "signup", component: () => import('../views/SignUp') },

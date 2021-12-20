@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md bg-primary navbar-dark" >
+  <nav class="navbar navbar-expand-md bg-primary navbar-dark">
     <h1 class="navbar-brand starbarstitle mb-1">STARBARS</h1>
     <button class="navbar-toggler" type="button" @click="changeIsNavShow">
       <span class="navbar-toggler-icon"></span>
@@ -17,7 +17,7 @@
           <router-link class="nav-link" to="/workers">Trabajadores</router-link>
         </li>
         <li v-if="state.authUser.isAdmin === true" class="nav-item">
-                    <router-link class="nav-link" to="/table">Mesas</router-link>
+          <router-link class="nav-link" to="/table">Mesas</router-link>
         </li>
         <li
           v-if="
@@ -26,6 +26,17 @@
           class="nav-item"
         >
           <router-link class="nav-link" to="/products">Products</router-link>
+        </li>
+
+        <li
+          v-if="
+            state.authUser.isAdmin === true || state.authUser.isWorker === true
+          "
+          class="nav-item"
+        >
+          <router-link class="nav-link" to="/pedido/order"
+            >Hacer Pedido</router-link
+          >
         </li>
         <li
           v-if="
@@ -58,7 +69,6 @@
       </ul>
     </div>
   </nav>
-
 </template>
 
 <script>
@@ -94,12 +104,9 @@ export default {
       });
     };
     /* COMPROBAMOS SUS PERMISOS AL RECARGAR LA PÁGINA */
-    if (store.getters["user/isAuthAdim"]) 
-        state.authUserLocal.isAdmin = true;
+    if (store.getters["user/isAuthAdim"]) state.authUserLocal.isAdmin = true;
     else if (store.getters["user/isAuthWorker"])
-        
-        
-        state.authUserLocal.isWorker = true;
+      state.authUserLocal.isWorker = true;
 
     store.dispatch("user/" + Constant.UPDATE_AUTH, {
       authUserLocal: state.authUserLocal,
@@ -112,7 +119,7 @@ export default {
 </script>
 
 <style>
-.starbarstitle{
-    padding-left: 5%;
+.starbarstitle {
+  padding-left: 5%;
 }
 </style>

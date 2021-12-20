@@ -15,10 +15,22 @@
                     <label htmlFor="description">Description:</label>
                     <input type="text" class="form-control" id="description" v-model="state.productsitemlocal.description" />
                 </div>
-                <div class="form-group">
+          <!--       <div class="form-group">
                     <label htmlFor="category">Category:</label>
                     <input type="text" class="form-control" id="category" v-model="state.productsitemlocal.category" />
                 </div>
+ -->
+                <div class="form-group">
+                    <label htmlFor="category">Category :</label>
+                    <select  id="category"  name="category" v-model="state.productsitemlocal.category"
+                    class="form-select"  aria-label="Default select example">
+                        <option disabled value="" selected>Define la categoria</option>
+                        <option value="bebida">Bebida</option>
+                        <option value="bocadillo">Bocadillo</option>
+                    </select>
+                    <div>Categoria seleccionada: <b>{{ state.productsitemlocal.category }}</b></div>
+        </div>
+
                 <div class="form-group">
                     <label htmlFor="price">Price:</label>
                     <input type="number" class="form-control" id="price" v-model="state.productsitemlocal.price" />

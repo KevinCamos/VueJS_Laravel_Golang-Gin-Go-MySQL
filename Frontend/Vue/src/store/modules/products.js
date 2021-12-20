@@ -71,8 +71,8 @@ export const products = {
         [Constant.UPDATE_PRODUCTS]: (store, payload) => {
             console.log(payload.productsitem);
             console.log(payload.productsitem.id);
-
-            ProductsService.updateProduct(payload.productsitem, payload.productsitem.id)
+console.log({...payload.productsitem})
+            ProductsService.updateProduct({...payload.productsitem}, payload.productsitem.id)
             .then(function (res) {
                 console.log(res.data.data)
                 store.commit(Constant.UPDATE_PRODUCTS, res.data.data);

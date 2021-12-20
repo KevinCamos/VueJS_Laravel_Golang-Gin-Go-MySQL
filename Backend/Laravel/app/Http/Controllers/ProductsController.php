@@ -81,7 +81,7 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $user = Auth::user();
         $products = Products::find($id);
 

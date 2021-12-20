@@ -10,8 +10,7 @@ export const user = {
     authUser: {
       isAdmin: false,
       isWorker: false,
-      // isClient: false,
-    },
+     },
   },
   mutations: {
     [Constant.LOGIN_USER]: (state, payload) => {

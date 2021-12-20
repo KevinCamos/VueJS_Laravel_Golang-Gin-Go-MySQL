@@ -16,8 +16,18 @@
                     <input type="text" class="form-control" id="description" v-model="state.productsitemlocal.description" />
                 </div>
                 <div class="form-group">
-                    <label htmlFor="category">Category:</label>
-                    <input type="text" class="form-control" id="category" v-model="state.productsitemlocal.category" />
+                    <label htmlFor="category">Category :</label>
+                    <select  id="category"  name="category" v-model="state.productsitemlocal.category"
+                    class="form-select"  aria-label="Default select example">
+                        <option disabled value="" >Define la categoria</option>
+
+                        <option v-if="state.productsitemlocal.category==='bebida'" value="bebida">Bebida</option>
+                        <option v-else value="bebida">Bebida</option>
+                        <option v-if="state.productsitemlocal.category==='bocadillo'" value="bocadillo">Bocadillo</option>
+                        <option v-else value="bocadillo">Bocadillo</option>
+                        <!-- <option value="bocadillo">Bocadillo</option> -->
+                    </select>
+                    <div>Categoria seleccionada: <b>{{ state.productsitemlocal.category }}</b></div>
                 </div>
                 <div class="form-group">
                     <label htmlFor="price">Price:</label>
@@ -39,34 +49,42 @@ import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
-    setup() {
-        const store = useStore();
-        const router = useRouter();
-        const currentRoute = useRoute();
-            console.log(store.state.products.productslist[0].id);
-            console.log(currentRoute.params.id);
-            const productsitem = store.state.products.productslist.find(
-            (item) => item.id.toString() === currentRoute.params.id
-        );
-        console.log(productsitem);
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const currentRoute = useRoute();
+    // console.log(store.state.products.productslist[0]);
+    console.log(currentRoute.params.id);
+    //     const productsitem = store.state.products.productslist.find(
+    //     (item) => item.id.toString() === currentRoute.params.id
+    // );
 
-        const state = reactive({
-            productsitemlocal: { ...productsitem },
-        });
+    if (!store.state.products.productslist) {
+      store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
+    }
+    // console.log(productsitem);
 
-        const updateProducts = () => {
-            router.push({ name: "productsList" });
-            store.dispatch("products/" + Constant.UPDATE_PRODUCTS, {
-                productsitem: state.productsitemlocal,
-            });
-        };
+    const state = reactive({
+      productsitemlocal: {
+        ...store.state.products.productslist.find(
+          (item) => item.id.toString() === currentRoute.params.id
+        ),
+      },
+    });
 
-        const cancel = () => {
-            router.push({ name: "productsList" });
-        };
+    const updateProducts = () => {
+      router.push({ name: "productsList" });
+      store.dispatch("products/" + Constant.UPDATE_PRODUCTS, {
+        productsitem: state.productsitemlocal,
+      });
+    };
 
-        return { state, updateProducts, cancel };
-    },
+    const cancel = () => {
+      router.push({ name: "productsList" });
+    };
+
+    return { state, updateProducts, cancel };
+  },
 };
 </script>
 

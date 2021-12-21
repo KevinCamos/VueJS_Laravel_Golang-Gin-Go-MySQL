@@ -6,49 +6,54 @@
       alt="Card image cap"
     />
     <div class="card-body">
-      <h5 class="card-title">{{productitem.name}}</h5>
-      <p class="card-text">{{productitem.description}}</p>
-      <button class="btn btn-outline-danger" @click='this.$emit("decrement-count")'> - 
+      <h5 class="card-title" :order="order">{{ productitem.name }}</h5>
+      <p class="card-text">{{ productitem.description }}</p>
+      <button class="btn btn-outline-danger" @click="decrement(this)">-</button>
+      {{ state.mount }}
 
+      <button class="btn btn-outline-success" @click="increment(this)">
+        +
       </button>
-      {{state.mount}}
-
-      <button class="btn btn-outline-success"  @click='this.$emit("increment-count")'>+</button>
     </div>
   </div>
-
-
 </template>
 
 <script>
 import { reactive } from "vue";
 export default {
   props: {
-   /*  name: String,
-    description: String, */
-    productitem: Object
-    
-    // mount: Number
+    productitem: Object,
+    order: Object,
   },
-  emits: ["decrement-count","increment-count"],
-  setup() {
-      const state = reactive({
-          mount:0
-      })
+  emits: ["decrement-count", "increment-count"],
+   setup(props) {
+    var mount 
+      mount =  props.order.filter(function (product) {
+        if (props.productitem.id === product.id) return product
+              });
+    
+      mount = mount.length ===0? 0:mount[0].mount
+    //  var mount = 0
+     console.log(props.order)
+    const state = reactive({
+      mount: mount,
+    });
+    // console.log(props.order);
+    if(state.productfilter ){
+      state.productfilter = state.productslist.filter(function (product) {
+        if (product.category === type) return product;
+      });
+}
+    const decrement = (varThis) => {
+      varThis.$emit("decrement-count");
+      if (state.mount > 0) state.mount--;
+    };
+    const increment = (varThis) => {
+      varThis.$emit("increment-count");
+      state.mount++;
+    };
 
-      
-    //  /*        const store = useStore();
-    //         const router = useRouter();
-
-    //         const deleteWork = (id) => {
-    //             store.dispatch("products/"+Constant.DELETE_PRODUCTS, { id });
-    //         };
-
-    //         const editWork = (id) => {
-    //             router.push({ name: "updateProduct", params: { id } });
-    //         }; */
-
-    return {state};
+    return { state, decrement, increment };
   },
 };
 </script>

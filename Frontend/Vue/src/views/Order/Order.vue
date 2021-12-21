@@ -22,6 +22,7 @@
         @increment-count="incrementOrder(productitem.id)"
         @decrement-count="decrementOrder(productitem.id)"
         :productitem="productitem"
+        :order="order"
       ></Card-Product>
     </div>
   </section>
@@ -62,10 +63,12 @@ export default {
 
     const clickToggle = (toggle, type) => {
       state.toggle = type ? true : false;
-      state.productfilter = state.productslist.filter(function (product) {
-        if (product.category === type) return product;
-      });
-      console.log(state.productfilter);
+      if (state.productslist) {
+        state.productfilter = state.productslist.filter(function (product) {
+          if (product.category === type) return product;
+        });
+      }
+      // console.log(state.productfilter);
     };
 
     /* Vars for create the order */
@@ -104,7 +107,14 @@ export default {
       console.log(order);
     };
 
-    return { state, categories, clickToggle, incrementOrder, decrementOrder };
+    return {
+      state,
+      categories,
+      clickToggle,
+      incrementOrder,
+      decrementOrder,
+      order,
+    };
   },
 };
 </script>

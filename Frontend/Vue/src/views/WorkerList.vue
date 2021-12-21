@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-link class="btn btn-primary m-2 mt-5" to="/workers/add"
+    <router-link class="btn btn-danger m-2 mt-5" to="/workers/add"
       >Crea un trabajador</router-link
     >
 

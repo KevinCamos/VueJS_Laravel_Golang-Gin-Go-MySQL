@@ -36,8 +36,8 @@
                     <input type="number" class="form-control" id="price" v-model="state.productsitemlocal.price" />
                 </div>
                 <div class="form-group mt-2">
-                    <button type="button" class="btn btn-primary m-1" @click="addProduct"> Add </button>
-                    <button type="button" class="btn btn-primary m-1" @click="cancel"> Cancel </button>
+                    <button type="button" class="btn btn-danger m-1" @click="addProduct"> Add </button>
+                    <button type="button" class="btn btn-danger m-1" @click="cancel"> Cancel </button>
                 </div>
             </div>
         </div>

@@ -34,8 +34,8 @@
                     <input type="number" class="form-control" id="price" v-model="state.productsitemlocal.price" />
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary m-1" @click="updateProducts" > Update </button>
-                    <button type="button" class="btn btn-primary m-1" @click="cancel">Cancel </button>
+                    <button type="button" class="btn btn-danger m-1" @click="updateProducts" > Update </button>
+                    <button type="button" class="btn btn-danger m-1" @click="cancel">Cancel </button>
                 </div>
             </div>
         </div>
@@ -53,7 +53,6 @@ export default {
     const store = useStore();
     const router = useRouter();
     const currentRoute = useRoute();
-    // console.log(store.state.products.productslist[0]);
     console.log(currentRoute.params.id);
     //     const productsitem = store.state.products.productslist.find(
     //     (item) => item.id.toString() === currentRoute.params.id

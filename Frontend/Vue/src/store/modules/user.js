@@ -118,6 +118,19 @@ export const user = {
       }
     },
 
+    isAuthAdim(state) {
+      try {
+
+      let appointment = JSON.parse(localStorage.getItem("user")).appointment;
+        let isAdmin =
+          appointment == "gerente" ? true : false;
+        return isAdmin;
+    
+      } catch {
+        return false;
+      }
+    },
+
     /* Este getter es para GuardAuths */
 
     checkAdmin: (state) => {

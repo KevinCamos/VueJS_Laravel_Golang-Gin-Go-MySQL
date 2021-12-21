@@ -6,8 +6,8 @@
             {{ productitem.name }}
         </span>
         <div class="float-right">
-            <span class="badge badge-secondary pointer ml-1 text-primary" @click.stop="editWork(productitem.id)"> Edit </span>
-            <span class="badge badge-secondary pointer ml-1 text-primary" @click.stop="deleteWork(productitem.id)" >Delete</span>
+            <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="editWork(productitem.id)"> Edit </span>
+            <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="deleteWork(productitem.id)" >Delete</span>
         </div>
     </li>
     

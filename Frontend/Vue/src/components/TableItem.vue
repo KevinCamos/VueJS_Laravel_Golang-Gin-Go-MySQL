@@ -2,9 +2,9 @@
     <li v-bind:class="[tableitem.status === 'disable' ? 'm-2 list-group-item bg-secondary text-white' : 'm-2 list-group-item']">
         <span class="m-2"> {{ tableitem.id_table }} </span>
         <span class="m-2"> {{ tableitem.status }} </span>
-        <span v-bind:class="[tableitem.status === 'disable' ? 'm-1 btn btn-dark' : 'm-1 btn btn-primary']" 
+        <span v-bind:class="[tableitem.status === 'disable' ? 'm-1 btn btn-dark' : 'm-1 btn btn-danger']" 
             @click.stop="deleteTable(tableitem.id_table)" >Delete</span> 
-        <span v-bind:class="[tableitem.status === 'disable' ? 'm-1 btn btn-dark' : 'm-1 btn btn-primary']" 
+        <span v-bind:class="[tableitem.status === 'disable' ? 'm-1 btn btn-dark' : 'm-1 btn btn-danger']" 
             @click.stop="updateTable(tableitem.id_table, tableitem.status)" >Change status</span> 
     </li>
 </template>

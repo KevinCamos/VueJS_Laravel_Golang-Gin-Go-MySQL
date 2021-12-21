@@ -47,11 +47,11 @@
                         <input type="checkbox" name="modeadmin" id="modeadmin" class="form-check-input" v-model="state.adminmode" @click="click" >
                         <label for="remember" class="form-check-label">Modo Admin</label>
                     </div>
-                    <button v-if="type !== 'Sign Up'" type="button" class="btn btn-primary ms-auto" @click="login()">
+                    <button v-if="type !== 'Sign Up'" type="button" class="btn btn-danger ms-auto" @click="login()">
                     <!-- @click="login()"> -->
                         Login
                     </button>
-                        <button v-else type="button" class="btn btn-primary ms-auto" @click="register()" >
+                        <button v-else type="button" class="btn btn-danger ms-auto" @click="register()" >
                         Crear Usuario
                     </button>
                 </div>

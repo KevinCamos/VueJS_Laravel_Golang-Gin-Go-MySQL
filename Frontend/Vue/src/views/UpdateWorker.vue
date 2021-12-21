@@ -74,12 +74,12 @@
         <div class="form-group">
           <button
             type="button"
-            class="btn btn-primary m-1"
+            class="btn btn-danger m-1"
             @click="updateWorker"
           >
             Update
           </button>
-          <button type="button" class="btn btn-primary m-1" @click="cancel">
+          <button type="button" class="btn btn-danger m-1" @click="cancel">
             Cancel
           </button>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+  <nav class="navbar navbar-expand-md bg-danger navbar-dark">
     <h1 class="navbar-brand starbarstitle mb-1">STARBARS</h1>
     <button class="navbar-toggler" type="button" @click="changeIsNavShow">
       <span class="navbar-toggler-icon"></span>

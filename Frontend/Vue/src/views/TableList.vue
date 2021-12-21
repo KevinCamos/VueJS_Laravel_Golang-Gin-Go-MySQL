@@ -2,12 +2,12 @@
   <div style="mt-2">
     <div class="row">
       <div class="col p-3">
-        <span class="btn btn-primary" @click.stop="addProduct()">
+        <span class="btn btn-danger" @click.stop="addProduct()">
           Crea un mesa
         </span>
       </div>
       <div class="col p-3 ">
-                  <router-link class="btn btn-primary ml-5"  to="/pedido/order">Hacer Pedido</router-link>
+                  <router-link class="btn btn-danger ml-5"  to="/pedido/order">Hacer Pedido</router-link>
 
       </div>
     </div>

@@ -85,10 +85,10 @@
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-primary m-1" @click="addWorker">
+          <button type="button" class="btn btn-danger m-1" @click="addWorker">
             Añadir trabajador
           </button>
-          <button type="button" class="btn btn-primary m-1" @click="cancel">
+          <button type="button" class="btn btn-danger m-1" @click="cancel">
             Cancelar
           </button>
         </div>

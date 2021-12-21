@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import Constant from "../Constant";
-import WorkerItem from "../components/WorkerItem.vue";
+import Constant from "../../Constant";
+import WorkerItem from "../../components/WorkerItem.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 // import { useRouter } from "vue-router";

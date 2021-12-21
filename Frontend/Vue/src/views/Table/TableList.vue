@@ -29,8 +29,8 @@
   </div>
 </template>
 <script>
-import Constant from "../Constant";
-import TableItem from "../components/TableItem.vue";
+import Constant from "../../Constant";
+import TableItem from "../../components/TableItem.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 

@@ -5,27 +5,27 @@ const routes = [
   { path: "", redirect: { name: "home" }, },
   { path: "/home", name: "home", component: () => import('../views/Home') },
   { path: "/about", name: "about", component: () => import('../views/About') },
-  { path: "/workers", name: "workerList", component: () => import('../views/WorkerList'), beforeEnter: AuthGuards.authGuardAdmin  },
-  { path: "/workers/add", name: "addWorker", component: () => import('../views/AddWorker'), beforeEnter: AuthGuards.authGuardAdmin  },
+  { path: "/workers", name: "workerList", component: () => import('../views/Worker/WorkerList'), beforeEnter: AuthGuards.authGuardAdmin  },
+  { path: "/workers/add", name: "addWorker", component: () => import('../views/Worker/AddWorker'), beforeEnter: AuthGuards.authGuardAdmin  },
   {
     path: "/workers/update/:id",
     name: "updateWorker",
-    component: () => import('../views/UpdateWorker'), beforeEnter: AuthGuards.authGuardAdmin 
+    component: () => import('../views/Worker/UpdateWorker'), beforeEnter: AuthGuards.authGuardAdmin 
   },
-  { path: "/products", name: "productsList", component: () => import('../views/ProductsList'), beforeEnter: AuthGuards.authGuardWorker  },
-  { path: "/products/add", name: "addProduct", component: () => import('../views/AddProduct'), beforeEnter: AuthGuards.authGuardWorker  },
+  { path: "/products", name: "productsList", component: () => import('../views/Product/ProductsList'), beforeEnter: AuthGuards.authGuardWorker  },
+  { path: "/products/add", name: "addProduct", component: () => import('../views/Product/AddProduct'), beforeEnter: AuthGuards.authGuardWorker  },
   {
-    path: "/products/update/:id",
+    path: "/products/Product/update/:id",
     name: "updateProduct",
-    component: () => import('../views/UpdateProduct'), beforeEnter: AuthGuards.authGuardWorker 
+    component: () => import('../views/Product/UpdateProduct'), beforeEnter: AuthGuards.authGuardWorker 
   },
-  { path: "/:id/order", name: "order", component: () => import('../views/Order') , beforeEnter: AuthGuards.authGuardWorker},
+  { path: "/:id/order", name: "order", component: () => import('../views/Order/Order') , beforeEnter: AuthGuards.authGuardWorker},
 
-  { path: "/signin", name: "signin", component: () => import('../views/SignIn') },
-  { path: "/signup", name: "signup", component: () => import('../views/SignUp') },
+  { path: "/signin", name: "signin", component: () => import('../views/Login/SignIn') },
+  { path: "/signup", name: "signup", component: () => import('../views/Login/SignUp') },
   { path: "/:catchAll(.*)", component: () => import('../views/NotFound') },
 
-  { path: "/table", name: "tableList", component: () => import('../views/TableList') },
+  { path: "/table", name: "tableList", component: () => import('../views/Table/TableList') },
 ];
 
 const router = createRouter({

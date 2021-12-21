@@ -24,8 +24,8 @@
 </template>
 <script>
 
-import Constant from "../Constant";
-import ProductsItem from "../components/ProductsItem.vue";
+import Constant from "../../Constant";
+import ProductsItem from "../../components/ProductsItem.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 // import { useRouter } from "vue-router";

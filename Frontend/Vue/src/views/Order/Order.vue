@@ -27,11 +27,11 @@
   </section>
 </template>
 <script>
-import CardProduct from "../components/CardProduct.vue";
-import CardCategory from "../components/CardCategory.vue";
+import CardProduct from "../../components/CardProduct.vue";
+import CardCategory from "../../components/CardCategory.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
-import Constant from "../Constant";
+import Constant from "../../Constant";
 
 export default {
   components: { CardProduct, CardCategory },

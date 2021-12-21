@@ -25,29 +25,6 @@
             v-model="state.workeritemlocal.email"
           />
         </div>
-
-        <div class="form-group" >
-          <label htmlFor="password">Password :</label>
-          <input
-            v-if="state.showPassword == true"
-            type="password"
-            class="form-control"
-            id="password"
-            v-model="state.workeritemlocal.password"
-          />
-          <input
-            v-else
-            type="text"
-            class="form-control"
-            id="password"
-            v-model="state.workeritemlocal.password"
-          />
-         
-            <button  v-if="state.showPassword == true"  class="btn btn-outline-success m-1" @click= togglePassword(state.showPassword)>Ver contraseña</button>
-            <button  v-else class="btn btn-outline-danger m-1" @click= togglePassword(state.showPassword)>Ocultar contraseña</button>
-          
-        </div>
-
         <div class="form-group">
           <label htmlFor="phone">Phone :</label>
           <input
@@ -67,6 +44,16 @@
           />
         </div>
 
+        
+        <!--    <div class="form-group">
+          <label htmlFor="date_active">Dia de alta :</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date_active"
+            v-model="state.workeritemlocal.date_active"
+          />
+        </div> -->
         <div class="form-group">
           <label htmlFor="appointment">Puesto de trabajo :</label>
           <select
@@ -78,18 +65,22 @@
           >
             <option disabled value="" selected>Define el puesto</option>
             <option value="auxiliar">Auxiliar</option>
-            <option value="gerente">Gerente</option>
+            <option value="encargado">Encargado</option>
           </select>
           <div>
             Puesto: <b>{{ state.workeritemlocal.appointment }}</b>
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-danger m-1" @click="addWorker">
-            Añadir trabajador
+          <button
+            type="button"
+            class="btn btn-danger m-1"
+            @click="updateWorker"
+          >
+            Update
           </button>
           <button type="button" class="btn btn-danger m-1" @click="cancel">
-            Cancelar
+            Cancel
           </button>
         </div>
       </div>
@@ -98,54 +89,38 @@
 </template>
 
 <script>
-import Constant from "../Constant";
+import Constant from "../../Constant";
 import { reactive } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    // var showPassword = reactive(true);
-    const state = reactive({
-      workeritemlocal: {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        password: "",
-        appointment: "",
-      },
-      showPassword: true
-    });
-    /*   const validators = () => {
-      if (state.workeritemlocal.name.trim().length < 2) {
-        return false
-      }
-      return true;
-    }; */
+    const currentRoute = useRoute();
 
-    const togglePassword = (toggle)=>{
-      console.log(toggle)
-      state.showPassword = !toggle
-    }
-    const addWorker = () => {
-      /* Aquí van las validaciones  */
-      if (state.workeritemlocal.name.trim().length >= 2) {
-        store.dispatch("worker/" + Constant.ADD_WORKER, {
-          workeritem: state.workeritemlocal,
-        });
-        router.push({ name: "workerList" });
-      } else {
-        alert("Please enter a to-do in at least 2 characters");
-      }
+    console.log(store.state.worker.workerlist[0].id);
+    console.log(currentRoute.params.id);
+    const workeritem = store.state.worker.workerlist.find(
+      (item) => item.id === currentRoute.params.id
+    );
+    console.log(workeritem);
+    const state = reactive({
+      workeritemlocal: { ...workeritem },
+    });
+    const updateWorker = () => {
+      router.push({ name: "workerList" });
+      store.dispatch("worker/" + Constant.UPDATE_WORKER, {
+        workeritem: state.workeritemlocal,
+      });
     };
+
     const cancel = () => {
       router.push({ name: "workerList" });
     };
 
-    return { state, addWorker, cancel , togglePassword/* validators */ };
+    return { state, updateWorker, cancel };
   },
 };
 </script>

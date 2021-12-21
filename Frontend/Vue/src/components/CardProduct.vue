@@ -6,49 +6,57 @@
       alt="Card image cap"
     />
     <div class="card-body">
-      <h5 class="card-title">{{productitem.name}}</h5>
-      <p class="card-text">{{productitem.description}}</p>
-      <button class="btn btn-outline-danger" @click='this.$emit("decrement-count")'> - 
+      <h5 class="card-title">{{ productitem.name }}</h5>
+      <p class="card-text">{{ productitem.description }}</p>
+      <span @click="decrement">
+      <button
+        class="btn btn-outline-danger"
+        @click="this.$emit('decrement-count')"
+      >
+        -
+      </button></span>
+      {{ state.mount }}
+      <span @click="increment">
 
+      <button
+        class="btn btn-outline-success"
+        @click="this.$emit('increment-count')"
+      >
+        +
       </button>
-      {{state.mount}}
-
-      <button class="btn btn-outline-success"  @click='this.$emit("increment-count")'>+</button>
+      </span>
     </div>
   </div>
-
-
 </template>
 
 <script>
 import { reactive } from "vue";
 export default {
   props: {
-   /*  name: String,
+    /*  name: String,
     description: String, */
-    productitem: Object
-    
+    productitem: Object,
+
     // mount: Number
   },
-  emits: ["decrement-count","increment-count"],
+  emits: ["decrement-count", "increment-count"],
   setup() {
-      const state = reactive({
-          mount:0
-      })
+    var mount = 0;
+    const state = reactive({
+      mount: mount,
+    });
 
-      
-    //  /*        const store = useStore();
-    //         const router = useRouter();
+    const increment = () => {
+      state.mount++;
+      console.log(state.mount);
+      // this.$emit("increment-count");
+    };
 
-    //         const deleteWork = (id) => {
-    //             store.dispatch("products/"+Constant.DELETE_PRODUCTS, { id });
-    //         };
-
-    //         const editWork = (id) => {
-    //             router.push({ name: "updateProduct", params: { id } });
-    //         }; */
-
-    return {state};
+    const decrement = () => {
+      if (state.mount > 0) state.mount--;
+      // this.$emit("decrement-count");
+    };
+    return { state, increment, decrement };
   },
 };
 </script>

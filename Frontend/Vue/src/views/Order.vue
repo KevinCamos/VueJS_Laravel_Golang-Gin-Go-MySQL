@@ -104,7 +104,7 @@ export default {
       console.log(order);
     };
 
-    return { state, categories, clickToggle, incrementOrder, decrementOrder };
+    return { state, categories,clickToggle, incrementOrder, decrementOrder };
   },
 };
 </script>

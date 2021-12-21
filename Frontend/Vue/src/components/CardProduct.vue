@@ -9,21 +9,21 @@
       <h5 class="card-title">{{ productitem.name }}</h5>
       <p class="card-text">{{ productitem.description }}</p>
       <span @click="decrement">
-      <button
-        class="btn btn-outline-danger"
-        @click="this.$emit('decrement-count')"
+        <button
+          class="btn btn-outline-danger"
+          @click="this.$emit('decrement-count')"
+        >
+          -
+        </button></span
       >
-        -
-      </button></span>
       {{ state.mount }}
       <span @click="increment">
-
-      <button
-        class="btn btn-outline-success"
-        @click="this.$emit('increment-count')"
-      >
-        +
-      </button>
+        <button
+          class="btn btn-outline-success"
+          @click="this.$emit('increment-count')"
+        >
+          +
+        </button>
       </span>
     </div>
   </div>

@@ -6,10 +6,8 @@
           Crea un mesa
         </span>
       </div>
-      <div class="col p-3 ">
-                  <router-link class="btn btn-danger ml-5"  to="/pedido/order">Hacer Pedido</router-link>
+      <Make-Order></Make-Order>
 
-      </div>
     </div>
     <div class="card card-default card-borderless">
       <div class="card-body">
@@ -31,11 +29,12 @@
 <script>
 import Constant from "../../Constant";
 import TableItem from "../../components/TableItem.vue";
+import MakeOrder from "../../components/buttons/MakeOrder.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  components: { TableItem },
+  components: { TableItem, MakeOrder },
   setup() {
     const store = useStore();
 

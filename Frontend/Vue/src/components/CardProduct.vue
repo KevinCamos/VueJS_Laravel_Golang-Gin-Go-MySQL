@@ -26,24 +26,23 @@ export default {
     order: Object,
   },
   emits: ["decrement-count", "increment-count"],
-   setup(props) {
-    var mount 
-      mount =  props.order.filter(function (product) {
-        if (props.productitem.id === product.id) return product
-              });
-    
-      mount = mount.length ===0? 0:mount[0].mount
+  setup(props) {
+    let product = props.order.filter(function (product) {
+      if (props.productitem.id === product.id) return product;
+    });
+
+    let mount = product.length === 0 ? 0 : product[0].mount;
     //  var mount = 0
-     console.log(props.order)
+    console.log(props.order);
     const state = reactive({
       mount: mount,
     });
     // console.log(props.order);
-    if(state.productfilter ){
+    if (state.productfilter) {
       state.productfilter = state.productslist.filter(function (product) {
         if (product.category === type) return product;
       });
-}
+    }
     const decrement = (varThis) => {
       varThis.$emit("decrement-count");
       if (state.mount > 0) state.mount--;

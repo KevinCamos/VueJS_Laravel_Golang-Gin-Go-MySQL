@@ -35,7 +35,17 @@
           class="nav-item"
         >
           <router-link class="nav-link" to="/pedido/order"
-            >Hacer Pedido</router-link
+            >Realizar Pedido</router-link
+          >
+        </li>
+        <li
+          v-if="
+            state.authUser.isAdmin === true || state.authUser.isWorker === true
+          "
+          class="nav-item"
+        >
+          <router-link class="nav-link" to="/orders"
+            >Ver Pedidos</router-link
           >
         </li>
         <li
@@ -111,7 +121,6 @@ export default {
     store.dispatch("user/" + Constant.UPDATE_AUTH, {
       authUserLocal: state.authUserLocal,
     });
-    /* --- */
 
     return { state, changeIsNavShow, navClass, logout };
   },

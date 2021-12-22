@@ -25,6 +25,16 @@
         :order="order"
       ></Card-Product>
     </div>
+
+    <div class="row justify-content-center">
+      <button
+        type="button"
+        class="btn btn-outline-success position-absolute bottom-0"
+        @click="sendOrder()"
+      >
+        Tomar Pedido
+      </button>
+    </div>
   </section>
 </template>
 <script>
@@ -32,24 +42,27 @@ import CardProduct from "../../components/CardProduct.vue";
 import CardCategory from "../../components/CardCategory.vue";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
 import Constant from "../../Constant";
 
 export default {
   components: { CardProduct, CardCategory },
 
   setup() {
+    const router = useRouter();
+
     const state = reactive({
       toggle: false,
 
       productslist: computed(() => store.getters["products/getProducts"]),
+      orderlist: computed(() => store.getters["order/getOrder"]),
       productfilter: "",
     });
     const store = useStore();
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
-    console.log(state.productslist);
-
     const categories = [
       {
         name: "bocadillo",
@@ -61,6 +74,30 @@ export default {
       },
     ];
 
+    /* Vars for create the order */
+    const thisRouteValue = router.currentRoute._value.name;
+    const order = [];
+    /* Data for Update */
+    if (thisRouteValue === "updateOrder") {
+      var params = router.currentRoute._rawValue.params;
+      console.log(thisRouteValue, params.id);
+
+      try {
+        state.orderlist.filter(function (orders) {
+          if (orders.id == params.id) {
+            for (let i = 0; i < orders.data.length; i++) {
+              order.push(orders.data[i]);
+            }
+          }
+        });
+      } catch {
+        console.error("no se ha encontrado el order");
+      }
+    }
+    /* END Data for update */
+    console.log(order);
+    var item;
+
     const clickToggle = (toggle, type) => {
       state.toggle = type ? true : false;
       if (state.productslist) {
@@ -71,9 +108,6 @@ export default {
       // console.log(state.productfilter);
     };
 
-    /* Vars for create the order */
-    const order = [];
-    var item;
     const incrementOrder = (id) => {
       item = order.filter(function (product) {
         if (product.id === id) return product;
@@ -107,13 +141,31 @@ export default {
       console.log(order);
     };
 
+    const sendOrder = () => {
+      if (thisRouteValue === "updateOrder") {
+        alert("UPDATE Pedido");
+      var params = router.currentRoute._rawValue.params;
+
+        store.dispatch("order/" + Constant.UPDATE_ORDER, {
+          order: order,
+          id: params.id,
+        });
+      } else {
+        alert("CREA Pedido");
+
+        store.dispatch("order/" + Constant.ADD_ORDER, {
+          order: order,
+        });
+      }
+    };
     return {
       state,
       categories,
+      order,
       clickToggle,
       incrementOrder,
       decrementOrder,
-      order,
+      sendOrder,
     };
   },
 };

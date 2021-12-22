@@ -13,7 +13,7 @@ export default {
     DELETE_PRODUCTS : "deleteProdcts",
     INITIALIZE_PRODUCTS : "initializeProdcts",
 
-     /* USER */
+     /* USERS */
     LOGIN_USER:"loginUser",
     REGISTER_USER:"registerUser",
     LOGIN_ADMIN:"loginAdmin",
@@ -25,6 +25,11 @@ export default {
     INITIALIZE_TABLE : "initializeTable",
 
     USER_REMOVE:"userRemove",
-    UPDATE_AUTH:"updateAuth"
+    UPDATE_AUTH:"updateAuth",
 
+    /* ORDERS */
+   ADD_ORDER : "createOrder",
+   UPDATE_ORDER : "updateOrder",
+   DELETE_ORDER : "deleteOrder",
+   INITIALIZE_ORDER : "initializeOrder",
 }

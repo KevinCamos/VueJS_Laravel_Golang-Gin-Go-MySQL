@@ -19,7 +19,14 @@ class OrderRepository{
 
     public function createOrder($data)
     {
-        $order = Order::create($data);
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+
+        // $out->writeln("---------------data-------------------");
+        // $out->writeln($data);
+        // $out->writeln("---------------data-------------------");
+        $order = Order::create(['id_client'=> $data]);
+        // $out->writeln($order);
+
         return $order;
     }
 

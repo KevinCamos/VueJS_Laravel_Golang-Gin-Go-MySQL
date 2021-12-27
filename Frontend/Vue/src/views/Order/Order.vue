@@ -115,11 +115,11 @@ export default {
       console.log(item.length);
       if (item.length === 0) {
         item.id = id;
-        item.mount = 1;
+        item.qty = 1;
         order.push(item);
       } else {
         order.map(function (product) {
-          if (product.id === id) product.mount++;
+          if (product.id === id) product.qty++;
           return product;
         });
       }
@@ -133,7 +133,7 @@ export default {
       if (item.length > 0) {
         order.map(function (product) {
           if (product.id === id) {
-            product.mount = product.mount > 0 ? product.mount - 1 : 0;
+            product.qty = product.qty > 0 ? product.qty - 1 : 0;
           }
           return product;
         });

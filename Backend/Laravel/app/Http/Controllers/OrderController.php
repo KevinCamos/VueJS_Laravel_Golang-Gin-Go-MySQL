@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\OrderRepository;
+use App\Repositories\OrderListRepository;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderListResource;
 use App\Http\Requests\OrderRequest;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Response;
@@ -20,9 +22,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository, OrderListRepository $orderListRepository)
     {
         $this->orderRepository = $orderRepository;
+        $this->orderListRepository = $orderListRepository;
     }
 
     /**
@@ -59,9 +62,22 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            $order = $this->orderRepository->createOrder($request->validated());
+            // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            // $out->writeln("---------------request-------------------");
+            // $out->writeln($request);
+            // $out->writeln("---------------request-------------------");
+            $order = OrderResource::make($this->orderRepository->createOrder(isset($request['id_client']) ? $request['id_client'] : "shop"));
+            $listorder = OrderListResource::collection($this->orderListRepository->createOrderList($request, $order['id']));
+
+            // $out->writeln("---------------order-------------------");
+            // $out->writeln($order['id']);
+            // $out->writeln("---------------order-------------------");
             if ($order) {
-                return self::apiResponseSuccess($order, 'Pedido creado', Response::HTTP_OK);
+                $data= array(
+                    "id_order"  => $order['id'],
+                    "order" => $listorder);
+
+                return self::apiResponseSuccess($data, 'Pedido creado', Response::HTTP_OK);
             }
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
@@ -78,8 +94,8 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->getOrder($id);
-            if(is_null($order)){
-                return self::apiResponseError(null, 'Pedido no encontrado' , Response::HTTP_NOT_FOUND);
+            if (is_null($order)) {
+                return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
             }
             return self::apiResponseSuccess($order, 'Pedido obtenido', Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -109,8 +125,8 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->updateOrder($id, $request->validated());
-            if(is_null($order)){
-                return self::apiResponseError(null, 'Pedido no encontrado' , Response::HTTP_NOT_FOUND);
+            if (is_null($order)) {
+                return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
             }
             return self::apiResponseSuccess($order, 'Pedido actualizado', Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -128,10 +144,10 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->deleteOrder($id);
-            if($order){
+            if ($order) {
                 return self::apiResponseSuccess(null, 'Pedido eliminado', Response::HTTP_OK);
             }
-            return self::apiResponseError(null, 'Pedido no encontrado' , Response::HTTP_NOT_FOUND);
+            return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {
             return self::apiServerError($e->getMessage());
         }

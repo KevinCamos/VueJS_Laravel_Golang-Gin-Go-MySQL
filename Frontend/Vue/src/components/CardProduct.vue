@@ -9,7 +9,7 @@
       <h5 class="card-title" :order="order">{{ productitem.name }}</h5>
       <p class="card-text">{{ productitem.description }}</p>
       <button class="btn btn-outline-danger" @click="decrement(this)">-</button>
-      {{ state.mount }}
+      {{ state.qty }}
 
       <button class="btn btn-outline-success" @click="increment(this)">
         +
@@ -31,11 +31,11 @@ export default {
       if (props.productitem.id === product.id) return product;
     });
 
-    let mount = product.length === 0 ? 0 : product[0].mount;
-    //  var mount = 0
+    let qty = product.length === 0 ? 0 : product[0].qty;
+    //  var qty = 0
     console.log(props.order);
     const state = reactive({
-      mount: mount,
+      qty: qty,
     });
     // console.log(props.order);
     if (state.productfilter) {
@@ -45,11 +45,11 @@ export default {
     }
     const decrement = (varThis) => {
       varThis.$emit("decrement-count");
-      if (state.mount > 0) state.mount--;
+      if (state.qty > 0) state.qty--;
     };
     const increment = (varThis) => {
       varThis.$emit("increment-count");
-      state.mount++;
+      state.qty++;
     };
 
     return { state, decrement, increment };

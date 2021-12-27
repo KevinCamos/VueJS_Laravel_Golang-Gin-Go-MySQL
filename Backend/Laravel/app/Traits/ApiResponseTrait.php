@@ -1,11 +1,11 @@
 <?php
- 
+
 namespace App\Traits;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-
+/* Los traits son para enviar respuestas */
 trait ApiResponseTrait {
 
 	public static function apiServerError($message = "Internal Server Error")

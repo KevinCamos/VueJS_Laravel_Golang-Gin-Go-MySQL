@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 
 class CreateOrderTable extends Migration
 {
@@ -15,8 +16,8 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id('id_order');
-            $table->integer('id_client');
-            $table->string('status');
+            $table->string('id_client')->default('shop');
+            $table->string('status')->default('preparacion');
         });
     }
 
@@ -29,4 +30,5 @@ class CreateOrderTable extends Migration
     {
         Schema::dropIfExists('order');
     }
+
 }

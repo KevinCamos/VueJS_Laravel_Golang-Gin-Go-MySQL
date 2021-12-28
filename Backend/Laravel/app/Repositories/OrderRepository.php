@@ -1,14 +1,22 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Order;
 
-class OrderRepository{
+use App\Models\Order;
+use App\Models\OrderList;
+
+class OrderRepository
+{
 
     public function getAllOrder()
     {
-        $order = Order::all();
-        return $order;
+        // $order = Order::all();
+         $orders = Order::with(['OrderList' => function ($query) {
+            $query->select('id_product', 'qty', "id_order");
+        }])->where('status', 'preparacion')->get();
+
+
+        return   $this->$orders;
     }
 
     public function getOrder($id)
@@ -24,7 +32,7 @@ class OrderRepository{
         // $out->writeln("---------------data-------------------");
         // $out->writeln($data);
         // $out->writeln("---------------data-------------------");
-        $order = Order::create(['id_client'=> $data]);
+        $order = Order::create(['id_client' => $data]);
         // $out->writeln($order);
 
         return $order;
@@ -33,7 +41,7 @@ class OrderRepository{
     public function updateOrder($id, $data)
     {
         if (Order::where('id_order', $id)->exists()) {
-            $order = Order::where('id_order', $id)->update(['id_client'=> $data['id_client'], 'status'=> $data['status']]);
+            $order = Order::where('id_order', $id)->update(['id_client' => $data['id_client'], 'status' => $data['status']]);
             return $order;
         }
         return null;
@@ -47,5 +55,4 @@ class OrderRepository{
         }
         return false;
     }
-
 }

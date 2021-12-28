@@ -15,9 +15,12 @@ class CreateOrderlistTable extends Migration
     {
         Schema::create('orderlist', function (Blueprint $table) {
             $table->id('id_orderlist');
-            $table->integer('id_order');
+            $table->bigInteger('id_order')->unsigned();
+            $table->foreign("id_order")->references("id_order")->on("order")/* ->onDelete("cascade") */;
+            // bigInteger("brand_id")->unsigned()
             $table->integer('id_product');
             $table->integer('qty');
+
         });
     }
 

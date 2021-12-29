@@ -34,6 +34,15 @@
           "
           class="nav-item"
         >
+          <router-link class="nav-link" to="/categories">Categories</router-link>
+        </li>
+
+        <li
+          v-if="
+            state.authUser.isAdmin === true || state.authUser.isWorker === true
+          "
+          class="nav-item"
+        >
           <router-link class="nav-link" to="/pedido/order"
             >Realizar Pedido</router-link
           >

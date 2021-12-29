@@ -13,12 +13,18 @@ export default {
     DELETE_PRODUCTS : "deleteProdcts",
     INITIALIZE_PRODUCTS : "initializeProdcts",
 
+    /* CATEGORIES */
+    ADD_CATEGORIES : "addCategories",
+    UPDATE_CATEGORIES : "updateCategories",
+    DELETE_CATEGORIES : "deleteCategories",
+    INITIALIZE_CATEGORIES : "initializeCategories",
+
      /* USERS */
     LOGIN_USER:"loginUser",
     REGISTER_USER:"registerUser",
     LOGIN_ADMIN:"loginAdmin",
 
-    /* PRODUCTS */
+    /* TABLE */
     ADD_TABLE : "addTable",
     UPDATE_TABLE : "updateTable",
     DELETE_TABLE : "deleteTable",
@@ -28,8 +34,8 @@ export default {
     UPDATE_AUTH:"updateAuth",
 
     /* ORDERS */
-   ADD_ORDER : "createOrder",
-   UPDATE_ORDER : "updateOrder",
-   DELETE_ORDER : "deleteOrder",
-   INITIALIZE_ORDER : "initializeOrder",
+    ADD_ORDER : "createOrder",
+    UPDATE_ORDER : "updateOrder",
+    DELETE_ORDER : "deleteOrder",
+    INITIALIZE_ORDER : "initializeOrder",
 }

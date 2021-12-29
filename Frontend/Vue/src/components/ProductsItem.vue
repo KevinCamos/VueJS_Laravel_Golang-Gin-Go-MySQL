@@ -5,6 +5,7 @@
             :title="'Explanation : ' + productitem.name" :id="productitem.id">
             {{ productitem.name }}
         </span>
+        <img v-bind:src="productitem.image">
         <div class="float-right">
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="editWork(productitem.id)"> Edit </span>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="deleteWork(productitem.id)" >Delete</span>

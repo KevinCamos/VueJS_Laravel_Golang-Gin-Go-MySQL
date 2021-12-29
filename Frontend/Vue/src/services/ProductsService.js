@@ -9,11 +9,17 @@ export default {
     return Api(`${secret.LARAVEL_APP_URL}`).get(`products/${id}`)
   },
   createProduct(data) {
-    console.log(data);
     return Api(`${secret.LARAVEL_APP_URL}`).post('products/', data)
   },
+  upload(formData) {
+    return Api(`${secret.LARAVEL_APP_URL}`).post('products/', formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
+  },
   updateProduct(data, id) {
-    return Api(`${secret.LARAVEL_APP_URL}`).put(`products/${id}`, data)
+    return Api(`${secret.LARAVEL_APP_URL}`).post(`products/${id}?_method=PUT`, data)
   },
   deleteProductById(id) {
     return Api(`${secret.LARAVEL_APP_URL}`).delete(`products/${id}`)

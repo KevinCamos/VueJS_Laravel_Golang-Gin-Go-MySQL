@@ -9,7 +9,7 @@ export const products = {
     },
     mutations: {
         [Constant.ADD_PRODUCTS]: (state, payload) => {
-            console.log(payload)
+            /* console.log(payload) */
             
             state.productslist.push({ ...payload});
         },
@@ -18,13 +18,13 @@ export const products = {
             state.productslist.splice(index, 1);
         },
         [Constant.UPDATE_PRODUCTS]: (state, payload) => {
-            console.log(payload)
-
+            console.log(state)
+            console.log(payload.id)
             let index = state.productslist.findIndex((item) => item.id === payload.id);
             state.productslist[index] = payload;
         },
         [Constant.INITIALIZE_PRODUCTS]: (state, payload) => {
-            console.log(payload)
+            /* console.log(payload) */
             
             if (payload) {
                 state.productslist = payload;
@@ -41,11 +41,17 @@ export const products = {
     },
     actions: {
         [Constant.ADD_PRODUCTS]: (store, payload) => {
-            console.log(payload.productsitem)
-        
-            ProductsService.createProduct(payload.productsitem)
+            let formData = new FormData();
+
+            formData.append("image",  payload.productsitem.image);
+            formData.append("name",  payload.productsitem.name);
+            formData.append("description",  payload.productsitem.description);
+            formData.append("category",  payload.productsitem.category);
+            formData.append("price",  payload.productsitem.price);
+
+            ProductsService.createProduct(formData)
             .then(function (res) {
-                console.log(res.data.data)
+                /* console.log(res.data.data) */
                 store.commit(Constant.ADD_PRODUCTS, res.data.data);
             })
             .catch(function (error) {
@@ -53,9 +59,6 @@ export const products = {
             })
         },
         [Constant.DELETE_PRODUCTS]: (store, payload) => {
-            console.log(payload)
-            console.log(payload.id)
-
             ProductsService.deleteProductById(payload.id)
             .then(function (res) {
                 if (res.data.message !== "OK") {
@@ -69,10 +72,15 @@ export const products = {
             })
         },
         [Constant.UPDATE_PRODUCTS]: (store, payload) => {
-            console.log(payload.productsitem);
-            console.log(payload.productsitem.id);
-console.log({...payload.productsitem})
-            ProductsService.updateProduct({...payload.productsitem}, payload.productsitem.id)
+            let formData = new FormData();
+
+            formData.append("image",  payload.productsitem.image);
+            formData.append("name",  payload.productsitem.name);
+            formData.append("description",  payload.productsitem.description);
+            formData.append("category",  payload.productsitem.category);
+            formData.append("price",  payload.productsitem.price);
+        
+            ProductsService.updateProduct(formData, payload.productsitem.id)
             .then(function (res) {
                 console.log(res.data.data)
                 store.commit(Constant.UPDATE_PRODUCTS, res.data.data);
@@ -84,7 +92,7 @@ console.log({...payload.productsitem})
         [Constant.INITIALIZE_PRODUCTS]: (store, /* payload */) => {
             ProductsService.getAllProducts()
             .then(function (res) {
-                console.log(res.data.data)
+                /* console.log(res.data.data) */
                 store.commit(Constant.INITIALIZE_PRODUCTS, res.data.data);
             })
             .catch(function (error) {
@@ -94,7 +102,7 @@ console.log({...payload.productsitem})
     },
     getters: {
         getProducts(state) {
-            console.log(state.productslist);
+            /* console.log(state.productslist); */
             return state.productslist;
         }
     }

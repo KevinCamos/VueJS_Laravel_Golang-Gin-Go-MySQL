@@ -8,6 +8,10 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
+                    <label htmlFor="image">Image:</label>
+                    <input type="file" class="form-control" id="image" ref="image"/>
+                </div>
+                <div class="form-group">
                     <label htmlFor="name">Name :</label>
                     <input type="text" class="form-control" id="name" v-model="state.productsitemlocal.name" />
                 </div>
@@ -47,13 +51,15 @@ import Constant from "../../Constant";
 import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
+import { ref } from 'vue';
 
 export default {
   setup() {
     const store = useStore();
     const router = useRouter();
     const currentRoute = useRoute();
-    console.log(currentRoute.params.id);
+    const image = ref(null);
+
     //     const productsitem = store.state.products.productslist.find(
     //     (item) => item.id.toString() === currentRoute.params.id
     // );
@@ -73,6 +79,7 @@ export default {
 
     const updateProducts = () => {
       router.push({ name: "productsList" });
+      state.productsitemlocal.image = image.value.files[0] != undefined ? image.value.files[0] : null;
       store.dispatch("products/" + Constant.UPDATE_PRODUCTS, {
         productsitem: state.productsitemlocal,
       });
@@ -82,7 +89,7 @@ export default {
       router.push({ name: "productsList" });
     };
 
-    return { state, updateProducts, cancel };
+    return { state, image, updateProducts, cancel };
   },
 };
 </script>

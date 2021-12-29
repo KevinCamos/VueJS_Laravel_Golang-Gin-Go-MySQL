@@ -9,9 +9,15 @@ use App\Models\Products;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\FileUploader;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Http\Response;
 
 class ProductsController extends Controller
 {
+
+    use ApiResponseTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -43,10 +49,14 @@ class ProductsController extends Controller
 
     public function store(StoreProductsRequest $request)
     {
-/*         return response()->json([
-            "message" => "Product create"
-        ], 200); */
-        return ProductsResource::make(Products::create($request->validated()));
+        $data = $request->all();
+        if(isset($request['image'])){
+            if($request['image'] != null && $request['image'] != '' && !is_string($request['image'])){
+                $data['image'] = FileUploader::store($request['image'], $request['name'] ,'gallery/products');
+            } 
+        }     
+        $product = Products::create($data);
+        return $product;
     }
 
 
@@ -85,22 +95,30 @@ class ProductsController extends Controller
         $user = Auth::user();
         $products = Products::find($id);
 
-        if ($user->can('update', $products)) {
-            if(Gate::allows('isGerente')){
-                if (Products::where('id', $id)->exists()) {
-                    $product = Products::find($id);
-                    $product->name = $request->name;
-                    $product->description = $request->description;
-                    $product->category = $request->category;
-                    $product->price = $request->price;
-                    $product->save();
-                    return ProductsResource::make(Products::where('id', $id)->firstOrFail());
-                } else {
-                    return response()->json([
-                        "message" => "Product not found"
-                    ], 404);
-                }
-            }
+        if (Products::where('id', $id)->exists()) {
+            $product = Products::find($id);
+
+            $data = $request->all();
+            if(isset($request['image'])){
+                if($request['image'] != null && $request['image'] != '' && !is_string($request['image'])){
+                    $data['image'] = FileUploader::update($request['image'], $request['name'] ,'gallery/products', $product->image);
+                } 
+            }     
+
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->category = $request->category;
+            $product->price = $request->price;
+            $product->image = $data['image'];
+            $product->save();
+
+            $product = Products::where('id', $id)->firstOrFail();
+
+            return self::apiResponseSuccess($product, 'Producto actualizado', Response::HTTP_OK);
+        } else {
+            return response()->json([
+                "message" => "Product not found"
+            ], 404);
         }
     }
 
@@ -112,9 +130,13 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        Products::where('id', $id)->delete();
-        return response()->json([
-            "message" => "OK"
-        ], 202);
+        $product = Products::find($id);
+
+        if($product){
+            FileUploader::delete($product['image']);
+            $product->delete();
+            return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
+        }
+        return self::apiResponseError(null, 'Producto no encontrado' , Response::HTTP_NOT_FOUND);
     }
 }

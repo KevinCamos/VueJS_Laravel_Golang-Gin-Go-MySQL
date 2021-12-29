@@ -62,20 +62,18 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            // $out->writeln("---------------request-------------------");
-            // $out->writeln($request);
-            // $out->writeln("---------------request-------------------");
-            $order = OrderResource::make($this->orderRepository->createOrder(isset($request['id_client']) ? $request['id_client'] : "shop"));
+
+            $order = OrderResource::make($this->orderRepository->createOrder($request));
             $listorder = OrderListResource::collection($this->orderListRepository->createOrderList($request, $order['id']));
 
             // $out->writeln("---------------order-------------------");
             // $out->writeln($order['id']);
             // $out->writeln("---------------order-------------------");
             if ($order) {
-                $data= array(
+                $data = array(
                     "id_order"  => $order['id'],
-                    "order" => $listorder);
+                    "order" => $listorder
+                );
 
                 return self::apiResponseSuccess($data, 'Pedido creado', Response::HTTP_OK);
             }
@@ -124,7 +122,7 @@ class OrderController extends Controller
     public function update(OrderRequest $request, $id)
     {
         try {
-            $order = $this->orderRepository->updateOrder($id, $request->validated());
+            $order = $this->orderRepository->updateOrder($id, $request/* ->validated() */);
             if (is_null($order)) {
                 return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
             }
@@ -144,8 +142,11 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->deleteOrder($id);
+
             if ($order) {
-                return self::apiResponseSuccess(null, 'Pedido eliminado', Response::HTTP_OK);
+
+
+                return self::apiResponseSuccess(null, 'Pedido cancelado', Response::HTTP_OK);
             }
             return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {

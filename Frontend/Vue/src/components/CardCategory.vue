@@ -23,7 +23,7 @@ export default {
     description: String, */
     categoryitem: Object,
 
-    // mount: Number
+    // qty: Number
   },
   emits: ["clickToggle"],
   setup() {

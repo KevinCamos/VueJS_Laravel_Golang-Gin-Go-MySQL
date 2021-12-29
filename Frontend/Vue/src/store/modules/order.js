@@ -6,14 +6,14 @@ export const order = {
   state: {
     orderlist: [
       { id: 0, data:[
-        { id: 3, mount: 2 },
-        { id: 4, mount: 0},
-        { id: 2, mount: 1 },
+        { id: 3, qty: 2 },
+        { id: 4, qty: 0},
+        { id: 2, qty: 1 },
       ] },
       { id: 1, data:[
-        { id: 3, mount: 5 },
-        { id: 4, mount: 2 },
-        { id: 2, mount: 1 },
+        { id: 3, qty: 5 },
+        { id: 4, qty: 2 },
+        { id: 2, qty: 1 },
       ] }
     ],
   },

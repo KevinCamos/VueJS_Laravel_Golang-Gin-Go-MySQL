@@ -63,7 +63,7 @@ class OrderController extends Controller
     {
         try {
 
-            $order = OrderResource::make($this->orderRepository->createOrder($request));
+            $order = OrderResource::make($this->orderRepository->createOrder(isset($request['id_client']) ? $request['id_client'] : "shop"));
             $listorder = OrderListResource::collection($this->orderListRepository->createOrderList($request, $order['id']));
 
             // $out->writeln("---------------order-------------------");
@@ -141,12 +141,27 @@ class OrderController extends Controller
     public function destroy($id)
     {
         try {
-            $order = $this->orderRepository->deleteOrder($id);
+            $order = $this->orderRepository->endOrder($id, 'canceled');
 
             if ($order) {
 
 
                 return self::apiResponseSuccess(null, 'Pedido cancelado', Response::HTTP_OK);
+            }
+            return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
+        } catch (\Exception $e) {
+            return self::apiServerError($e->getMessage());
+        }
+    }
+
+    public function buyOrder($id){
+        try {
+            $order = $this->orderRepository->endOrder($id, 'F');
+
+            if ($order) {
+
+
+                return self::apiResponseSuccess(null, 'Pedido finalizado', Response::HTTP_OK);
             }
             return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
         } catch (\Exception $e) {

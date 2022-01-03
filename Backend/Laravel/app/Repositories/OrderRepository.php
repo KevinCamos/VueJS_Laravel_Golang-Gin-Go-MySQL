@@ -54,19 +54,34 @@ class OrderRepository
         }
         return null;
     }
-
-    public function deleteOrder($id)
+/* Al realizar los mismos pasos tanto para finalizar como para cancelar una factura, se reutiliza la función añadiendo la variable $status para definir si es una cancelación y se ha finalizado
+de ser finalizado, MYSQL realizará un sql Trigger para facturar*/
+    public function endOrder($id, $status)
     {
-        if (Order::where([['id_order', $id], ['status' , 'preparacion']])->exists()) {
+        if (Order::where([['id_order', $id], ['status', 'preparacion']])->exists()) {
+            /* Aquí se cancela o finaliza la factura */
+            Order::where('id_order', $id)->update(['status' => $status]);
+            /* Se obtiene el dato del cliente */
+            $order =  Order::where('id_order', $id)->first();
+            if ($order['id_client'] != "shop") {
+                Table::where('id_table', intval($order['id_client']))->update(['status' => 'active']);
+            }
+
+            return $order;
+        }
+        return false;
+    }
+
+    public function buyOrder($id)
+    {
+        if (Order::where([['id_order', $id], ['status', 'preparacion']])->exists()) {
             /* Aquí se cancela la factura */
             Order::where('id_order', $id)->update(['status' => 'canceled']);
             /* Se obtiene el dato del cliente */
-            $order =  Order::where('id_order', $id)->get();
-
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-
-            $out->writeln($order);
-            // Table::where('id_table',$order['id_cliente'])->update(['status' => 'active']);
+            $order =  Order::where('id_order', $id)->first();
+            if ($order['id_client'] != "shop") {
+                Table::where('id_table', intval($order['id_client']))->update(['status' => 'active']);
+            }
 
             return $order;
         }

@@ -30,6 +30,6 @@ export default {
     /* ORDERS */
    ADD_ORDER : "createOrder",
    UPDATE_ORDER : "updateOrder",
-   DELETE_ORDER : "deleteOrder",
+   CANCEL_ORDER : "cancelOrder",
    INITIALIZE_ORDER : "initializeOrder",
 }

@@ -16,7 +16,7 @@
       <tbody>
         <OrderItem
           v-for="orderitem in state.orderlist"
-          :key="orderitem.id"
+          :key="orderitem"
           :orderitem="orderitem"
         />
       </tbody>
@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-// import Constant from "../../Constant";
+import Constant from "../../Constant";
 import OrderItem from "../../components/OrderItem.vue";
 import MakeOrder from "../../components/buttons/MakeOrder.vue";
 import { reactive, computed } from "vue";
@@ -32,18 +32,14 @@ import { useStore } from "vuex";
 // import { useRouter } from "vue-router";
 
 export default {
-  components: { OrderItem,MakeOrder },
+  components: { OrderItem, MakeOrder },
   setup() {
     const store = useStore();
     const state = reactive({
       orderlist: computed(() => store.getters["order/getOrder"]),
     });
     console.log(state.orderlist);
-
-    // if (!state.orderlist) {
-    //   console.log("carga treballadors");
-    //   store.dispatch("order/" + Constant.INITIALIZE_WORKERITEM);
-    // }
+    store.dispatch("order/" + Constant.INITIALIZE_ORDER);
 
     return { state };
   },

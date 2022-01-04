@@ -27,13 +27,15 @@ export default {
   },
   emits: ["decrement-count", "increment-count"],
   setup(props) {
+          // console.log(props.order[0].id_product)
+          // console.log(props.productitem.id)
+
     let product = props.order.filter(function (product) {
-      if (props.productitem.id === product.id) return product;
+      if (props.productitem.id === product.id_product) return product;
     });
 
     let qty = product.length === 0 ? 0 : product[0].qty;
     //  var qty = 0
-    console.log(props.order);
     const state = reactive({
       qty: qty,
     });

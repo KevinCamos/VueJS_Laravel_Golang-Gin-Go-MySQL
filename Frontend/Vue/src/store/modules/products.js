@@ -33,7 +33,7 @@ export const products = {
                     id: "",
                     name: "",
                     description: "",
-                    category: "",
+                    category: 0,
                     price: 0
                 };
             }
@@ -46,7 +46,7 @@ export const products = {
             formData.append("image",  payload.productsitem.image);
             formData.append("name",  payload.productsitem.name);
             formData.append("description",  payload.productsitem.description);
-            formData.append("category",  payload.productsitem.category);
+            formData.append("categories_id",  payload.productsitem.category);
             formData.append("price",  payload.productsitem.price);
 
             ProductsService.createProduct(formData)
@@ -93,7 +93,7 @@ export const products = {
             ProductsService.getAllProducts()
             .then(function (res) {
                 /* console.log(res.data.data) */
-                store.commit(Constant.INITIALIZE_PRODUCTS, res.data.data);
+                store.commit(Constant.INITIALIZE_PRODUCTS, res.data.data.products);
             })
             .catch(function (error) {
                 console.log(error)

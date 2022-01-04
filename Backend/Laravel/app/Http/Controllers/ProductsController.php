@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductsResource;
+use App\Http\Resources\ProductsCollection;
 use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
+use App\Models\Categories;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +27,8 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->has('page') ? $request->get('page') : 1;
-        $limit = $request->has('limit') ? $request->get('limit') : 5;
-        return ProductsResource::collection(Products::limit($limit)->offset(($page - 1) * $limit)->get());
+        $products = Products::with('Categories')->get();
+        return self::apiResponseSuccess(new ProductsCollection($products), 'Datos de productos', Response::HTTP_OK);
     }
 
     /**
@@ -49,13 +50,17 @@ class ProductsController extends Controller
 
     public function store(StoreProductsRequest $request)
     {
+        $categories = Categories::find($request['categories_id']);
+
         $data = $request->all();
         if(isset($request['image'])){
             if($request['image'] != null && $request['image'] != '' && !is_string($request['image'])){
                 $data['image'] = FileUploader::store($request['image'], $request['name'] ,'gallery/products');
             } 
         }     
-        $product = Products::create($data);
+    
+        $product = new Products($data);
+        $categories->products()->save($product);
         return $product;
     }
 
@@ -69,7 +74,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return ProductsResource::make(Products::where('id', $id)->firstOrFail());
+        return ProductsResource::make(Products::with('Categories')->where('id', $id)->firstOrFail());
     }
 
     /**

@@ -38,4 +38,5 @@ export default {
     UPDATE_ORDER : "updateOrder",
     DELETE_ORDER : "deleteOrder",
     INITIALIZE_ORDER : "initializeOrder",
+
 }

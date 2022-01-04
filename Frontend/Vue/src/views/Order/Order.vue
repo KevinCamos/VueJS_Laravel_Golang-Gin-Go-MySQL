@@ -84,10 +84,13 @@ export default {
 
       try {
         state.orderlist.filter(function (orders) {
-          if (orders.id == params.id) {
-            for (let i = 0; i < orders.data.length; i++) {
-              order.push(orders.data[i]);
+          console.log(orders.id_order, params.id);
+          if (orders.id_order == params.id) {
+            for (let i = 0; i < orders.order_list.length; i++) {
+              console.log(orders.order_list[i]);
+              order.push(orders.order_list[i]);
             }
+            return false;
           }
         });
       } catch {
@@ -110,16 +113,16 @@ export default {
 
     const incrementOrder = (id) => {
       item = order.filter(function (product) {
-        if (product.id === id) return product;
+        console.log(product.id_product)
+        if (product.id_product === id) return product;
       });
       console.log(item.length);
       if (item.length === 0) {
-        item.id = id;
-        item.qty = 1;
+        item = { id_product: id, qty: 1 };
         order.push(item);
       } else {
         order.map(function (product) {
-          if (product.id === id) product.qty++;
+          if (product.id_product === id) product.qty++;
           return product;
         });
       }
@@ -128,11 +131,11 @@ export default {
 
     const decrementOrder = (id) => {
       item = order.filter(function (product) {
-        if (product.id === id) return product;
+        if (product.id_product === id) return product;
       });
       if (item.length > 0) {
         order.map(function (product) {
-          if (product.id === id) {
+          if (product.id_product === id) {
             product.qty = product.qty > 0 ? product.qty - 1 : 0;
           }
           return product;
@@ -144,7 +147,7 @@ export default {
     const sendOrder = () => {
       if (thisRouteValue === "updateOrder") {
         alert("UPDATE Pedido");
-      var params = router.currentRoute._rawValue.params;
+        var params = router.currentRoute._rawValue.params;
 
         store.dispatch("order/" + Constant.UPDATE_ORDER, {
           order: order,

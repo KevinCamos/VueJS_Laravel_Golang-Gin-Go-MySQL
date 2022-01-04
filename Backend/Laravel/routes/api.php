@@ -25,6 +25,9 @@ Route::resource('categories', CategoriesController::class);
 Route::resource('table', TableController::class);
 Route::resource('order', OrderController::class);
 
+Route::post('buy/{id}', [OrderController::class, 'buyOrder']);
+
+
 Route::post('login', [AuthController::class, 'login']);
 Route::post('auth', [AuthController::class, 'authAdmin']);
 Route::post('register', [AuthController::class, 'register']);

@@ -1,10 +1,10 @@
 <template>
-  <tr :id="orderitem.id">
+  <tr :id="orderitem.id_order">
     <td>
-      {{ orderitem.id }}
+      {{ orderitem.id_order }}
     </td>
-    <td @click.stop="editOrder(orderitem.id)" class="edit">Editar</td>
-    <td @click.stop="deleteOrder(orderitem.id)" class="delete">Eliminar</td>
+    <td @click.stop="editOrder(orderitem.id_order)" class="edit">Editar</td>
+    <td @click.stop="deleteOrder(orderitem.id_order)" class="delete">Eliminar</td>
   </tr>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 
       console.log(id);
 
-      store.dispatch("order/" + Constant.DELETE_ORDER, { id });
+      store.dispatch("order/" + Constant.CANCEL_ORDER, { id });
     };
     const editOrder = (id) => {
       console.log("eh");

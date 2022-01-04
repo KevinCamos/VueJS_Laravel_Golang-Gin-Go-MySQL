@@ -12,7 +12,7 @@ class OrderRepository
     public function getAllOrder()
     {
         $orders = Order::with(['OrderList' => function ($query) {
-            $query->select('id_product AS id', 'qty', "id_order" /* id_order es necesario para poder relacionar las tablas */);
+            $query->select('id_product', 'qty', "id_order" /* id_order es necesario para poder relacionar las tablas */);
         }])->where('status', 'preparacion')->get(/* ['OrderList.id_order AS Si quisieramos cambiar el nombre de alguna columna, también se podría desde aquí'] */);
 
 
@@ -47,10 +47,14 @@ class OrderRepository
 
     public function updateOrder($id, $data)
     {
+
+
         if (Order::where('id_order', $id)->exists()) {
+
             for ($i = 0; $i < count($data->order); $i++) {
-                OrderList::updateOrInsert(['id_order' => $id, 'id_product' => $data->order[$i]['id']], ['qty' => $data->order[$i]['qty']]);
+                OrderList::updateOrInsert(['id_order' => $id, 'id_product' => $data->order[$i]['id_product']], ['qty' => $data->order[$i]['qty']]);
             }
+            return true;
         }
         return null;
     }

@@ -25,6 +25,7 @@ export const order = {
        state.orderlist.slice(index,1)
       console.log(state.orderlist) */
       var i = state.orderlist.length;
+      if(i>0){
       while(i--){
          if( state.orderlist[i] 
              && state.orderlist[i].hasOwnProperty("id_order") 
@@ -33,7 +34,7 @@ export const order = {
               state.orderlist.splice(i,1);
   
          }
-      }
+      }}
 
     },
     [Constant.INITIALIZE_ORDER]: (state, payload) => {

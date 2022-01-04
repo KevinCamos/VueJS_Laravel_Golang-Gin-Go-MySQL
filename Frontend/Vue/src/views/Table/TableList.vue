@@ -7,7 +7,6 @@
         </span>
       </div>
       <Make-Order></Make-Order>
-
     </div>
     <div class="card card-default card-borderless">
       <div class="card-body">

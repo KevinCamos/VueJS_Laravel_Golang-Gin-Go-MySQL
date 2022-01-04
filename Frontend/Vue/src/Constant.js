@@ -36,7 +36,8 @@ export default {
     /* ORDERS */
     ADD_ORDER : "createOrder",
     UPDATE_ORDER : "updateOrder",
-    DELETE_ORDER : "deleteOrder",
+    CANCEL_ORDER : "cancelOrder",
+    CANCEL_ORDER_TABLE : "cancelOrderTable",
     INITIALIZE_ORDER : "initializeOrder",
 
 }

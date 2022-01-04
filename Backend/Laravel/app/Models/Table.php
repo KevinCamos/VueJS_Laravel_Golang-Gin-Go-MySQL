@@ -11,4 +11,11 @@ class Table extends Model
     protected $table = 'table';
     protected $fillable = ['id_table', 'id_order', 'status'];
     public $timestamps = false;
+
+
+    public function Order()
+    {
+        return $this->hasOne(Order::class, "id_client", "id_table");
+    }
+
 }

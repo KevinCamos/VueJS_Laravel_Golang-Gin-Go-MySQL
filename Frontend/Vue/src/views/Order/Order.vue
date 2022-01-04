@@ -113,7 +113,7 @@ export default {
 
     const incrementOrder = (id) => {
       item = order.filter(function (product) {
-        console.log(product.id_product)
+        console.log(product.id_product);
         if (product.id_product === id) return product;
       });
       console.log(item.length);
@@ -155,10 +155,15 @@ export default {
         });
       } else {
         alert("CREA Pedido");
-
-        store.dispatch("order/" + Constant.ADD_ORDER, {
-          order: order,
-        });
+        console.log(router.currentRoute._rawValue.params.id);
+        let pedido =
+          router.currentRoute._rawValue.params.id === "pedido"
+            ? { order: order }
+            : {
+                order: order,
+                id_client: router.currentRoute._rawValue.params.id,
+              };
+        store.dispatch("order/" + Constant.ADD_ORDER,pedido);
       }
     };
     return {

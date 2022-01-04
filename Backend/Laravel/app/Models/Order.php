@@ -16,4 +16,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderList::class, "id_order", "id_order");
     }
+
+    public function Table()
+    {
+        return $this->belongsTo(Table::class);
+    }
 }

@@ -35,31 +35,6 @@ func UserRegister(c *gin.Context) {
 
 }
 
-func UserLogin(c *gin.Context) {
-
-	loginValidator := NewLoginValidator()
-	if err := loginValidator.Bind(c); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err)
-		return
-	}
-	
-	// fmt.Println(loginValidator.Email, loginValidator.userModel, loginValidator)
-	userModel, err := FindOneUser(&UserModel{Email: loginValidator.userModel.Email})
-
-	if err != nil {
-		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email ")))
-		return
-	}
-
-	if userModel.checkPassword(loginValidator.Password) != nil {
-		c.JSON(http.StatusForbidden,common.NewError("login", errors.New(" invalid password")))
-		return
-	}
-
-	c.Set("my_user_model", userModel)
-	CheckInLaravel(c)
-	}
-	
 
 func CheckAdmin(c *gin.Context) {
 		CheckInLaravel(c)
@@ -130,3 +105,48 @@ func DeleteUser(c *gin.Context) {
 			})
 		}
 }
+
+func UserLogin(c *gin.Context) {
+
+
+	loginValidator := NewLoginValidator()
+	if err := loginValidator.Bind(c); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, err)
+		return
+	}
+	
+	// fmt.Println(loginValidator.Email, loginValidator.userModel, loginValidator)
+	userModel, err := FindOneUser(&UserModel{Email: loginValidator.userModel.Email})
+
+	if err != nil {
+		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email ")))
+		return
+	}
+
+	if userModel.checkPassword(loginValidator.Password) != nil {
+		c.JSON(http.StatusForbidden,common.NewError("login", errors.New(" invalid password")))
+		return
+	}
+
+	c.Set("my_user_model", userModel)
+	CheckInLaravel(c)
+	}
+
+	  
+	func prueba(c *gin.Context) {
+	
+	var count1 int64
+	var count2 int64
+	var count3 int64
+
+	config.DB.Table("order").Where("status = ?", "canceled").Count(&count1)
+	config.DB.Table("order").Where("status = ?", "F").Count(&count2)
+	config.DB.Table("order").Count(&count3)
+
+	c.JSON(http.StatusCreated,  gin.H{
+		"canceled": count1,
+		"Ending": count2,
+		"Total":count3 , 
+		})
+	}
+	

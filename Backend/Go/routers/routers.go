@@ -18,12 +18,9 @@ func CORS(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
 	// Second, we handle the OPTIONS problem
-	if c.Request.Method != "OPTIONS" {
-		
+	if c.Request.Method != "OPTIONS" {	
 		c.Next()
-
-	} else {
-        
+	} else {   
 		// Everytime we receive an OPTIONS request, 
 		// we just return an HTTP 200 Status Code
 		// Like this, Angular can now do the real 

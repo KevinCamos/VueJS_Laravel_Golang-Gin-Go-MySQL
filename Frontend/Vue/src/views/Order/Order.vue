@@ -23,10 +23,47 @@
         @decrement-count="decrementOrder(productitem.id)"
         :productitem="productitem"
         :order="order"
+        :card="true"
       ></Card-Product>
     </div>
 
-    <div class="row justify-content-center">
+    <!-- Tabla de contenido-->
+    <div v-if="state.totalPrice >0 && state.toggle == false">
+      <table class="table table-hover table-striped table-bordered m-2 text-center">
+        <caption class="text-center">
+          Pedidos
+        </caption>
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Precio/U</th>
+            <th>Rest</th>
+            <th>Total/U</th>
+            <th>Añad</th>
+            <th>Precio Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <Card-Product
+            v-for="productitem in state.productslist"
+            :key="productitem.id"
+            @increment-count="incrementOrder(productitem.id)"
+            @decrement-count="decrementOrder(productitem.id)"
+            :productitem="productitem"
+            :order="order"
+            :card="false"
+          ></Card-Product>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="6" >TOTAL PEDIDO</th>
+                    <th >{{ state.totalPrice }}€</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row justify-content-center position-sticky bottom-0">
       <button
         type="button"
         class="btn btn-outline-success position-sticky bottom-0"
@@ -58,6 +95,7 @@ export default {
       productslist: computed(() => store.getters["products/getProducts"]),
       orderlist: computed(() => store.getters["order/getOrder"]),
       productfilter: "",
+      totalPrice: 0,
     });
     const store = useStore();
     if (!state.productslist) {
@@ -131,10 +169,19 @@ export default {
         console.error("no se ha encontrado el order");
       }
     }
-    /* END Data for update */
-    console.log(order);
-    var item;
-
+    const totalPrice = () => {
+      state.totalPrice = 0;
+      for (let i = 0; i < order.length; i++) {
+        console.log(order[i].id_product);
+        for (let e = 0; e < state.productslist.length; e++) {
+          if (order[i].id_product == state.productslist[e].id) {
+            state.totalPrice += order[i].qty * state.productslist[e].price;
+            console.log(state.totalPrice);
+          }
+        }
+      }
+      console.log(state.totalPrice);
+    };
     const clickToggle = (toggle, type) => {
       state.toggle = type ? true : false;
       if (state.productslist) {
@@ -143,9 +190,12 @@ export default {
           if (product.categories.id == type) return product;
         });
       }
+
       // console.log(state.productfilter);
     };
 
+    /* END Data for update */
+    var item;
     const incrementOrder = (id) => {
       item = order.filter(function (product) {
         console.log(product.id_product);
@@ -161,6 +211,8 @@ export default {
           return product;
         });
       }
+      totalPrice();
+
       console.log(order);
     };
 
@@ -176,6 +228,8 @@ export default {
           return product;
         });
       }
+      totalPrice();
+
       console.log(order);
     };
     const sendOrder = () => {
@@ -200,6 +254,8 @@ export default {
         store.dispatch("order/" + Constant.ADD_ORDER, pedido);
       }
     };
+    totalPrice();
+
     return {
       state,
       categories,

@@ -27,7 +27,8 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Products::with('Categories')->get();
+           $products = Products::all();
+        // $products = Products::with('Categories')->get();
         return self::apiResponseSuccess(new ProductsCollection($products), 'Datos de productos', Response::HTTP_OK);
     }
 
@@ -53,12 +54,12 @@ class ProductsController extends Controller
         $categories = Categories::find($request['categories_id']);
 
         $data = $request->all();
-        if(isset($request['image'])){
-            if($request['image'] != null && $request['image'] != '' && !is_string($request['image'])){
-                $data['image'] = FileUploader::store($request['image'], $request['name'] ,'gallery/products');
-            } 
-        }     
-    
+        if (isset($request['image'])) {
+            if ($request['image'] != null && $request['image'] != '' && !is_string($request['image'])) {
+                $data['image'] = FileUploader::store($request['image'], $request['name'], 'gallery/products');
+            }
+        }
+
         $product = new Products($data);
         $categories->products()->save($product);
         return $product;
@@ -104,11 +105,11 @@ class ProductsController extends Controller
             $product = Products::find($id);
 
             $data = $request->all();
-            if(isset($request['image'])){
-                if($request['image'] != null && $request['image'] != '' && !is_string($request['image'])){
-                    $data['image'] = FileUploader::update($request['image'], $request['name'] ,'gallery/products', $product->image);
-                } 
-            }     
+            if (isset($request['image'])) {
+                if ($request['image'] != null && $request['image'] != '' && !is_string($request['image'])) {
+                    $data['image'] = FileUploader::update($request['image'], $request['name'], 'gallery/products', $product->image);
+                }
+            }
 
             $product->name = $request->name;
             $product->description = $request->description;
@@ -137,11 +138,11 @@ class ProductsController extends Controller
     {
         $product = Products::find($id);
 
-        if($product){
+        if ($product) {
             FileUploader::delete($product['image']);
             $product->delete();
             return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
         }
-        return self::apiResponseError(null, 'Producto no encontrado' , Response::HTTP_NOT_FOUND);
+        return self::apiResponseError(null, 'Producto no encontrado', Response::HTTP_NOT_FOUND);
     }
 }

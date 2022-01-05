@@ -1,11 +1,12 @@
 <template>
 
     <li class="list-group-item">
+                <img v-bind:src="categoryitem.image" class= "rounded float-right img-thumbnail m-1"  style="max-width: 150px">
+
         <span :class="{ pointer: true, 'todo-done': categoryitem.active }" 
             :title="'Explanation : ' + categoryitem.name" :id="categoryitem.id">
             {{ categoryitem.name }}
         </span>
-        <img v-bind:src="categoryitem.image">
         <div class="float-right">
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="editCategory(categoryitem.id)"> Edit </span>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="deleteCategory(categoryitem.id)" >Delete</span>

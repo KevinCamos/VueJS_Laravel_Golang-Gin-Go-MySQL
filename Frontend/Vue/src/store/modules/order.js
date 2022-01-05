@@ -17,7 +17,7 @@ export const order = {
       // state.orderlist[index].order_list = payload.order;
     },
     [Constant.CANCEL_ORDER]: (state, payload) => {
-      let index = state.orderlist.findIndex((item) => item.id_order === payload.id);
+      // let index = state.orderlist.findIndex((item) => item.id_order === payload.id);
    /*    console.log(index)
       console.log(state.orderlist)
       console.log(typeof(state.orderlist))

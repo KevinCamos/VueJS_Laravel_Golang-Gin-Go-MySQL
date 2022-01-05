@@ -1,12 +1,14 @@
 <template>
   <div class="card col-1 m-3" style="width: 18rem">
     <img
-      class="card-img-top m-1"
-      src="https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg"
+      class="card-img-top m-1 img-thumbnail"
+      v-bind:src="productitem.image"
       alt="Card image cap"
     />
+    
     <div class="card-body">
-      <h5 class="card-title" :order="order">{{ productitem.name }}</h5>
+      <h5 class="card-title" :order="order">{{ productitem.name }} </h5>
+      <h5 class="card-title" :order="order"> {{ productitem.price }}€</h5>
       <p class="card-text">{{ productitem.description }}</p>
       <button class="btn btn-outline-danger" @click="decrement(this)">-</button>
       {{ state.qty }}

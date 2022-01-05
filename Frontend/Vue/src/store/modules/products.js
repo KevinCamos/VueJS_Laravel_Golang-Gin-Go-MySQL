@@ -24,7 +24,7 @@ export const products = {
             state.productslist[index] = payload;
         },
         [Constant.INITIALIZE_PRODUCTS]: (state, payload) => {
-            /* console.log(payload) */
+           console.log(payload) 
             
             if (payload) {
                 state.productslist = payload;

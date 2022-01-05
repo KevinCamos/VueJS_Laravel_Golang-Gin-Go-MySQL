@@ -1,17 +1,13 @@
-<template>
-
-    <li class="list-group-item">
-        <span :class="{ pointer: true, 'todo-done': categoryitem.active }" 
-            :title="'Explanation : ' + categoryitem.name" :id="categoryitem.id">
-            {{ categoryitem.name }}
-        </span>
-        <img v-bind:src="categoryitem.image">
-        <div class="float-right">
+<template>    
+    <tr>
+        <td>{{ categoryitem.id }}</td>
+        <td>{{ categoryitem.name }}</td>
+        <td>
+            <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="viewCategory(categoryitem.id)"> View </span>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="editCategory(categoryitem.id)"> Edit </span>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="deleteCategory(categoryitem.id)" >Delete</span>
-        </div>
-    </li>
-    
+        </td>
+    </tr>
 </template>
 
 <script>
@@ -36,7 +32,11 @@
                 router.push({ name: "updateCategory", params: { id } });
             };
 
-            return { deleteCategory, editCategory };
+            const viewCategory = (id) => {
+                router.push({ name: "viewCategory", params: { id } });
+            };
+
+            return { deleteCategory, editCategory, viewCategory };
         },
     };
 </script>

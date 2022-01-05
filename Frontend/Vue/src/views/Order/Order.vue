@@ -4,7 +4,7 @@
       <Card-Category
         v-for="category in categories"
         :key="category"
-        @clickToggle="clickToggle(true, category.name)"
+        @clickToggle="clickToggle(true, category.id)"
         :categoryitem="category"
       ></Card-Category>
     </div>
@@ -65,13 +65,35 @@ export default {
     }
     const categories = [
       {
-        name: "bocadillo",
-        description: "Elegir entre los bocadillos",
+        id: "1",
+        name: "Pizza",
+        description: "Elegir entre las pizzas",
       },
       {
-        name: "bebida",
+        id: "2",
+        name: "Bebida",
         description: "Elegir entre las bebidas",
       },
+      {
+        id: "3",
+        name: "Postres",
+        description: "Elegir entre los postres",
+      },
+      {
+        id: "4",
+        name: "Entrantes",
+        description: "Elegir entre los entrates",
+      },
+      {
+        id: "5",
+        name: "Sándwiches",
+        description: "Elegir entre los sándwiches",
+      },
+      {
+        id: "6",
+        name: "Ensaladas",
+        description: "Elegir entre las ensaladas",
+      }
     ];
 
     /* Vars for create the order */
@@ -105,7 +127,8 @@ export default {
       state.toggle = type ? true : false;
       if (state.productslist) {
         state.productfilter = state.productslist.filter(function (product) {
-          if (product.category === type) return product;
+          console.log(product.categories.id == type);
+          if (product.categories.id == type) return product;
         });
       }
       // console.log(state.productfilter);

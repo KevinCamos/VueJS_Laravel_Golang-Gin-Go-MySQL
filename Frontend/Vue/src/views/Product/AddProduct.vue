@@ -28,8 +28,12 @@
                     <select  id="category"  name="category" v-model="state.productsitemlocal.category"
                     class="form-select"  aria-label="Default select example">
                         <option disabled value="" selected>Define la categoria</option>
-                        <option value="0">Bebida</option>
-                        <option value="1">Bocadillo</option>
+                        <option value="1">Pizza</option>
+                        <option value="2">Bebidas</option>
+                        <option value="3">Postres</option>
+                        <option value="4">Entrantes</option>
+                        <option value="5">Sándwiches</option>
+                        <option value="6">Ensalas</option>
                     </select>
                     <div>Categoria seleccionada: <b>{{ state.productsitemlocal.category }}</b></div>
                 </div>

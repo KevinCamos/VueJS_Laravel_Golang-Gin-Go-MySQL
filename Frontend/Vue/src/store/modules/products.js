@@ -38,6 +38,11 @@ export const products = {
                 };
             }
         },
+        [Constant.GET_PRODUCTS_BY_ID]: (state, payload) => {
+            if (payload) {
+                state.productslist = payload;
+            }
+        }
     },
     actions: {
         [Constant.ADD_PRODUCTS]: (store, payload) => {
@@ -94,6 +99,17 @@ export const products = {
             .then(function (res) {
                 /* console.log(res.data.data) */
                 store.commit(Constant.INITIALIZE_PRODUCTS, res.data.data.products);
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        },
+        [Constant.GET_PRODUCTS_BY_ID]: (store, payload) => {
+            console.log(payload.id);
+            ProductsService.getProductById(payload.id)
+            .then(function (res) {
+                console.log(res.data.data);
+                store.commit(Constant.GET_PRODUCTS_BY_ID, res.data.data);
             })
             .catch(function (error) {
                 console.log(error)

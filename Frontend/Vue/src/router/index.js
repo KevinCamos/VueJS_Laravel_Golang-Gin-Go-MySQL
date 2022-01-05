@@ -21,6 +21,11 @@ const routes = [
     name: "updateProduct",
     component: () => import('../views/Product/UpdateProduct'), beforeEnter: AuthGuards.authGuardWorker 
   },
+  {
+    path: "/products/:id",
+    name: "viewProduct",
+    component: () => import('../views/Product/ViewProduct'), beforeEnter: AuthGuards.authGuardWorker 
+  },
 
   { path: "/categories", name: "CategoriesList", component: () => import('../views/Categories/CategoriesList'), beforeEnter: AuthGuards.authGuardWorker  },
   { path: "/categories/add", name: "addCategory", component: () => import('../views/Categories/AddCategory'), beforeEnter: AuthGuards.authGuardWorker  },
@@ -28,6 +33,11 @@ const routes = [
     path: "/categories/Categories/update/:id",
     name: "updateCategory",
     component: () => import('../views/Categories/UpdateCategory'), beforeEnter: AuthGuards.authGuardWorker 
+  },
+  {
+    path: "/categories/:id",
+    name: "viewCategory",
+    component: () => import('../views/Categories/ViewCategory'), beforeEnter: AuthGuards.authGuardWorker 
   },
 
   { path: "/:id/order", name: "order", component: () => import('../views/Order/Order') , beforeEnter: AuthGuards.authGuardWorker},

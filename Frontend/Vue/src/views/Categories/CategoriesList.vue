@@ -1,26 +1,39 @@
 <template>
-  <div style="mt-2">
-    <div class="row">
-      <div class="col p-3">
-        <router-link class="btn btn-danger" to="/categories/add">Crea una categoria</router-link>
-      </div>
-    </div>
-    <div class="card card-default card-borderless">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <ul class="list-group">
-              <CategoriesItem
-                v-for="categoryitem in state.categorieslist"
-                :key="categoryitem.id"
-                :categoryitem="categoryitem"
-              />
-            </ul>
+  <div class="container-lg m-5">
+    <div class="table-wrapper">
+
+      <div class="table-title">
+          <div class="row">
+              <div class="col-sm-8"><h2>Categories <b>Lists</b></h2></div>
+              <div class="col-sm-4">
+                  <div class="row">
+                      <router-link class="col-6 btn btn-danger" to="/categories/add">Add New</router-link>
+                      <div class="search-box col-6">
+                          <input type="text" class="form-control" placeholder="Search&hellip;">
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
+            
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+            <CategoriesItem
+              v-for="categoryitem in state.categorieslist"
+              :key="categoryitem.id"
+              :categoryitem="categoryitem"
+            />
+          </tbody>
+      </table>
     </div>
-  </div>
+  </div>     
 </template>
 <script>
 

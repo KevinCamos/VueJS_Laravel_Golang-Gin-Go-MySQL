@@ -1,5 +1,6 @@
 import Constant from '../../Constant';
 import TableService from '@/services/TableService'
+import OrderService from "@/services/OrderService";
 
 export const table = {
     namespaced: true,
@@ -19,6 +20,15 @@ export const table = {
         [Constant.UPDATE_TABLE]: (state, payload) => {
             let index = state.tablelist.findIndex((item) => item.id_table === payload.id_table);
             state.tablelist[index] = payload;
+        },
+        [Constant.CANCEL_ORDER_TABLE]: (state, payload) => {
+            let index = state.tablelist.findIndex((item) => item.id_table === payload.id_table);
+            state.tablelist[index] ={
+                id_table: payload.id_table,
+                id_order: null,
+                status: "active",
+                order:null
+            };
         },
         [Constant.INITIALIZE_TABLE]: (state, payload) => {
             if (payload) {
@@ -55,6 +65,16 @@ export const table = {
                 console.log(error)
             })
         },
+        [Constant.CANCEL_ORDER_TABLE]: (store, payload) => {
+            OrderService.cancelOrderById(payload.id_order)
+            .then(function (res) {
+            console.log(res);
+            store.commit(Constant.CANCEL_ORDER_TABLE, payload);
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        },
         [Constant.UPDATE_TABLE]: (store, payload) => {
             TableService.updateTable(payload.tableitem, payload.id)
             .then(function (res) {
@@ -67,6 +87,7 @@ export const table = {
         [Constant.INITIALIZE_TABLE]: (store, /* payload */) => {
             TableService.getAllTables()
             .then(function (res) {
+                console.log(res.data.data)
                 store.commit(Constant.INITIALIZE_TABLE, res.data.data);
             })
             .catch(function (error) {

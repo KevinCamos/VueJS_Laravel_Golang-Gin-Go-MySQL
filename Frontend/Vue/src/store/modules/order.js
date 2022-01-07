@@ -17,7 +17,7 @@ export const order = {
       // state.orderlist[index].order_list = payload.order;
     },
     [Constant.CANCEL_ORDER]: (state, payload) => {
-      let index = state.orderlist.findIndex((item) => item.id_order === payload.id);
+      // let index = state.orderlist.findIndex((item) => item.id_order === payload.id);
    /*    console.log(index)
       console.log(state.orderlist)
       console.log(typeof(state.orderlist))
@@ -25,6 +25,7 @@ export const order = {
        state.orderlist.slice(index,1)
       console.log(state.orderlist) */
       var i = state.orderlist.length;
+      if(i>0){
       while(i--){
          if( state.orderlist[i] 
              && state.orderlist[i].hasOwnProperty("id_order") 
@@ -33,7 +34,7 @@ export const order = {
               state.orderlist.splice(i,1);
   
          }
-      }
+      }}
 
     },
     [Constant.INITIALIZE_ORDER]: (state, payload) => {

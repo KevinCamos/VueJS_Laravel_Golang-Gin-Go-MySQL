@@ -31,4 +31,6 @@ func UserRouter(router *gin.RouterGroup) {
 func UserRouterNoAuth(router *gin.RouterGroup) {
 	/* POST */
 	router.POST("/login", UserLogin)
+	router.GET("/prueba", prueba)
+
 }

@@ -8,14 +8,16 @@
         : 'm-2 list-group-item bg-success  text-white',
     ]"
   >
-    <span class="m-2"> {{ tableitem.id_table }} </span>
-    <span class="m-2"> {{ tableitem.status }} </span>
+    <span class="m-1 btn btn-primary rounded-circle">
+      {{ tableitem.id_table }}
+    </span>
+    <span class="m-5"> {{ tableitem.status }} </span>
     <button
       type="button"
       v-bind:class="[
         tableitem.status === 'disable'
           ? 'm-1 btn btn-dark'
-          : 'm-1 btn btn-danger',
+          : 'm-1 btn btn-secondary',
       ]"
       @click.stop="deleteTable(tableitem.id_table)"
     >
@@ -28,9 +30,32 @@
           ? 'm-1 btn btn-dark'
           : 'm-1 btn btn-danger',
       ]"
-      @click.stop="updateTable(tableitem.id_table, tableitem.status)"
+      @click.stop="updateStatus(tableitem.id_table, tableitem.status)"
     >
       Change status
+    </button>
+
+    <button
+      v-if="tableitem.status === 'active'"
+      type="button"
+      class="ml-1 btn btn-warning"
+      @click.stop="initTable(tableitem.id_table)"
+    >
+      Ocupar Mesa
+    </button>
+    <button
+      v-if="tableitem.status === 'busy'"
+      class="m-1 btn btn-primary"
+      @click.stop="updateTable(tableitem.order.id_order)"
+    >
+      Gestionar Mesa
+    </button>
+    <button
+      v-if="tableitem.status === 'busy'"
+      class="m-1 btn btn-success"
+      @click.stop="endingTable(tableitem.order.id_order, tableitem.id_table)"
+    >
+      Cancelar Mesa
     </button>
   </li>
 </template>
@@ -60,7 +85,7 @@ export default {
       store.dispatch("table/" + Constant.DELETE_TABLE, { id });
     };
 
-    const updateTable = (id, status) => {
+    const updateStatus = (id, status) => {
       if (status != "busy") {
         state.tableitemlocal.status =
           status === "disable" ? "active" : "disable";
@@ -70,13 +95,37 @@ export default {
           id,
         });
       } else {
-        alert("SORPRESA!!!!", "No pots modificar una taula ocupada!!!! ");
+        alert("SORPRESA!!!! No pots modificar una taula ocupada!!!! ");
       }
     };
+    const initTable = (id) => {
+      router.push({ name: "order", params: { id } });
+    };
+    const updateTable = (id) => {
+      alert("crear función");
+      router.push({ name: "updateOrder", params: { id } });
+    };
+    const endingTable = (id,id_table) => {
+      console.log(id)
+      alert("crear función");
+      store.dispatch("table/" + Constant.CANCEL_ORDER_TABLE, { id_order:id, id_table: id_table });
 
-    return { state, deleteTable, updateTable };
+      // store.dispatch("table/" + Constant.DELETE_TABLE, { id });
+    };
+    return {
+      state,
+      deleteTable,
+      updateStatus,
+      initTable,
+      updateTable,
+      endingTable,
+    };
   },
 };
 </script>
 
-<style></style>
+<style>
+.circle {
+  background-color: darkseagreen;
+}
+</style>

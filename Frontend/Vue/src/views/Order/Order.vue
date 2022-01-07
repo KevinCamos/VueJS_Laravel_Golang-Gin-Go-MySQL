@@ -23,13 +23,50 @@
         @decrement-count="decrementOrder(productitem.id)"
         :productitem="productitem"
         :order="order"
+        :card="true"
       ></Card-Product>
     </div>
 
-    <div class="row justify-content-center">
+    <!-- Tabla de contenido-->
+    <div v-if="state.totalPrice >0 && state.toggle == false">
+      <table class="table table-hover table-striped table-bordered m-2 text-center">
+        <caption class="text-center">
+          Pedidos
+        </caption>
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Precio/U</th>
+            <th>Rest</th>
+            <th>Total/U</th>
+            <th>Añad</th>
+            <th>Precio Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <Card-Product
+            v-for="productitem in state.productslist"
+            :key="productitem.id"
+            @increment-count="incrementOrder(productitem.id)"
+            @decrement-count="decrementOrder(productitem.id)"
+            :productitem="productitem"
+            :order="order"
+            :card="false"
+          ></Card-Product>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="6" >TOTAL PEDIDO</th>
+                    <th >{{ state.totalPrice }}€</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row justify-content-center position-sticky bottom-0">
       <button
         type="button"
-        class="btn btn-outline-success position-absolute bottom-0"
+        class="btn btn-outline-success position-sticky bottom-0"
         @click="sendOrder()"
       >
         Tomar Pedido
@@ -58,6 +95,7 @@ export default {
       productslist: computed(() => store.getters["products/getProducts"]),
       orderlist: computed(() => store.getters["order/getOrder"]),
       productfilter: "",
+      totalPrice: 0,
     });
     const store = useStore();
     if (!state.productslist) {
@@ -68,31 +106,43 @@ export default {
         id: "1",
         name: "Pizza",
         description: "Elegir entre las pizzas",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       },
       {
         id: "2",
         name: "Bebida",
         description: "Elegir entre las bebidas",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       },
       {
         id: "3",
         name: "Postres",
         description: "Elegir entre los postres",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       },
       {
         id: "4",
         name: "Entrantes",
         description: "Elegir entre los entrates",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       },
       {
         id: "5",
         name: "Sándwiches",
         description: "Elegir entre los sándwiches",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       },
       {
         id: "6",
         name: "Ensaladas",
         description: "Elegir entre las ensaladas",
+        image:
+          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
       }
     ];
 
@@ -119,10 +169,19 @@ export default {
         console.error("no se ha encontrado el order");
       }
     }
-    /* END Data for update */
-    console.log(order);
-    var item;
-
+    const totalPrice = () => {
+      state.totalPrice = 0;
+      for (let i = 0; i < order.length; i++) {
+        console.log(order[i].id_product);
+        for (let e = 0; e < state.productslist.length; e++) {
+          if (order[i].id_product == state.productslist[e].id) {
+            state.totalPrice += order[i].qty * state.productslist[e].price;
+            console.log(state.totalPrice);
+          }
+        }
+      }
+      console.log(state.totalPrice);
+    };
     const clickToggle = (toggle, type) => {
       state.toggle = type ? true : false;
       if (state.productslist) {
@@ -131,12 +190,15 @@ export default {
           if (product.categories.id == type) return product;
         });
       }
+
       // console.log(state.productfilter);
     };
 
+    /* END Data for update */
+    var item;
     const incrementOrder = (id) => {
       item = order.filter(function (product) {
-        console.log(product.id_product)
+        console.log(product.id_product);
         if (product.id_product === id) return product;
       });
       console.log(item.length);
@@ -149,6 +211,8 @@ export default {
           return product;
         });
       }
+      totalPrice();
+
       console.log(order);
     };
 
@@ -164,9 +228,10 @@ export default {
           return product;
         });
       }
+      totalPrice();
+
       console.log(order);
     };
-
     const sendOrder = () => {
       if (thisRouteValue === "updateOrder") {
         alert("UPDATE Pedido");
@@ -178,12 +243,19 @@ export default {
         });
       } else {
         alert("CREA Pedido");
-
-        store.dispatch("order/" + Constant.ADD_ORDER, {
-          order: order,
-        });
+        console.log(router.currentRoute._rawValue.params.id);
+        let pedido =
+          router.currentRoute._rawValue.params.id === "pedido"
+            ? { order: order }
+            : {
+                order: order,
+                id_client: router.currentRoute._rawValue.params.id,
+              };
+        store.dispatch("order/" + Constant.ADD_ORDER, pedido);
       }
     };
+    totalPrice();
+
     return {
       state,
       categories,

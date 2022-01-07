@@ -5,10 +5,18 @@ use App\Models\Table;
 
 class TableRepository{
 
+
+/**
+ *
+ *  Aquí utilizamos una RelationShip para poder editar finalizar el pedido sin necesidad de hacer más peticiones */
     public function getAllTable()
     {
-        $table = Table::all();
-        return $table;
+
+        $order = Table::with(['Order' => function ($query) {
+        $query->where('status', 'preparacion');
+    }])->get();
+        return $order;
+
     }
 
     public function getTable($id)

@@ -11,6 +11,8 @@ export default {
     }
   },
   authGuardAdmin(to, from, next) {
+    store.dispatch("order/" + Constant.INITIALIZE_ORDER);
+    store.dispatch("products/" + Constant.INITIALIZE_ORDER);
     UserService.checkAdmin()
     .then(function (user) {
       user = user.data.user;

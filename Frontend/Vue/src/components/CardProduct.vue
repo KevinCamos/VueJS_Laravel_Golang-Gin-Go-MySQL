@@ -19,15 +19,15 @@
     </div>
   </div>
 
-    <tr v-else-if="state.qty > 0 " >
-      <td >{{ productitem.id }}</td>
-      <td>{{ productitem.name }}</td>
-      <td>{{ productitem.price }}€</td>
-      <td @click="decrement(this)" class="rest">-</td>
-      <td>{{ state.qty }}</td>
-      <td @click="increment(this)" class="sum">+</td>
-      <td>{{ state.qty * productitem.price }}€</td>
-    </tr>
+  <tr v-else-if="state.qty > 0">
+    <td>{{ productitem.id }}</td>
+    <td>{{ productitem.name }}</td>
+    <td>{{ productitem.price }}€</td>
+    <td @click="decrement(this)" class="rest">-</td>
+    <td>{{ state.qty }}</td>
+    <td @click="increment(this)" class="sum">+</td>
+    <td>{{ state.qty * productitem.price }}€</td>
+  </tr>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
   setup(props) {
     // console.log(props.order[0].id_product)
     // console.log(props.productitem.id)
-
+    // console.log(props.order);
     let product = props.order.filter(function (product) {
       if (props.productitem.id === product.id_product) return product;
     });

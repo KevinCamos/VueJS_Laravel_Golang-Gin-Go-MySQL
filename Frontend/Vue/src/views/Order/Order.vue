@@ -159,7 +159,7 @@ export default {
           console.log(orders.id_order, params.id);
           if (orders.id_order == params.id) {
             for (let i = 0; i < orders.order_list.length; i++) {
-              console.log(orders.order_list[i]);
+              // console.log(orders.order_list[i]);
               order.push(orders.order_list[i]);
             }
             return false;
@@ -169,8 +169,11 @@ export default {
         console.error("no se ha encontrado el order");
       }
     }
+
     const totalPrice = () => {
       state.totalPrice = 0;
+      if(state.productslist!=undefined){
+        
       for (let i = 0; i < order.length; i++) {
         console.log(order[i].id_product);
         for (let e = 0; e < state.productslist.length; e++) {
@@ -180,6 +183,9 @@ export default {
           }
         }
       }
+      
+      }
+      order.length
       console.log(state.totalPrice);
     };
     const clickToggle = (toggle, type) => {

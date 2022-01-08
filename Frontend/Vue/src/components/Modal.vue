@@ -9,7 +9,9 @@
         aria-describedby="modalDescription"
       >
         <header class="modal-header" id="modalTitle">
-          <slot name="header"> This is the default tile! </slot>
+          <slot name="header">
+            Este es el pedido número {{ order[0].id_order }}
+          </slot>
           <button
             type="button"
             class="btn-close"
@@ -37,9 +39,8 @@
                   <th>ID</th>
                   <th>Producto</th>
                   <th>Precio/U</th>
-                  <th>Rest</th>
                   <th>Total/U</th>
-                  <th>Añad</th>
+
                   <th>Precio Total</th>
                 </tr>
               </thead>
@@ -49,13 +50,14 @@
                   :key="productitem.id"
                   :productitem="productitem"
                   :order="order"
-                  :card="false"
+                  :isCard="false"
+                  :isUpdate="false"
                 ></Card-Product>
               </tbody>
               <tfoot>
                 <tr>
-                  <th colspan="6">TOTAL PEDIDO</th>
-                  <th>{{totalPrice()}}</th>
+                  <th colspan="4">TOTAL PEDIDO</th>
+                  <th>{{ totalPrice() }}€</th>
                 </tr>
               </tfoot>
             </table>
@@ -63,15 +65,25 @@
         </section>
 
         <footer class="modal-footer">
-          <slot name="footer"> This is the default footer! </slot>
-          <button
-            type="button"
-            class="btn-green"
-            @click="this.$emit('close')"
-            aria-label="Close modal"
-          >
-            Close me!
-          </button>
+          <!-- <slot name="footer"> This is the default footer! </slot> -->
+          <div class="row">
+            <button
+              type="button"
+              class="btn btn-danger col-6"
+              @click="this.$emit('close')"
+              aria-label="Close modal "
+            >
+              Retroceder
+            </button>
+            <button
+              type="button"
+              class="btn btn-success col-6"
+              @click="[this.$emit('close'), endOrder(order[0].id_order)]"
+              aria-label="Close modal and end oder"
+            >
+              Finalizar Pedido
+            </button>
+          </div>
         </footer>
       </div>
     </div>
@@ -80,6 +92,8 @@
 <script>
 /* https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component */
 import CardProduct from "./CardProduct.vue";
+import Constant from "../Constant";
+import { useStore } from "vuex";
 
 export default {
   components: { CardProduct },
@@ -92,8 +106,11 @@ export default {
   name: "Modal",
 
   setup(props) {
+        const store = useStore();
+
     const totalPrice = () => {
       var totalPrice = 0;
+       console.log(props.order)
       if (props.productslist != undefined) {
         for (let i = 0; i < props.order.length; i++) {
           for (let e = 0; e < props.productslist.length; e++) {
@@ -105,16 +122,22 @@ export default {
               );
 
               totalPrice += props.order[i].qty * props.productslist[e].price;
-              console.log(totalPrice);
+              // console.log(totalPrice);
             }
           }
         }
         return totalPrice;
       }
     };
-
+    const endOrder = (id_order) => {
+     
+      console.log(id_order);
+       store.dispatch("order/" + Constant.END_ORDER, {
+        id_order: id_order,
+      });
+    };
     console.log(props.order);
-    return { totalPrice };
+    return { totalPrice, endOrder };
   },
 };
 </script>
@@ -156,6 +179,7 @@ export default {
 .modal-footer {
   border-top: 1px solid #eeeeee;
   flex-direction: column;
+  align-items: inherit;
 }
 
 .modal-body {

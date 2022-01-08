@@ -23,13 +23,16 @@
         @decrement-count="decrementOrder(productitem.id)"
         :productitem="productitem"
         :order="order"
-        :card="true"
+        :isCard="true"
+        :isUpdate="true"
       ></Card-Product>
     </div>
 
     <!-- Tabla de contenido-->
-    <div v-if="state.totalPrice >0 && state.toggle == false">
-      <table class="table table-hover table-striped table-bordered m-2 text-center">
+    <div v-if="state.totalPrice > 0 && state.toggle == false">
+      <table
+        class="table table-hover table-striped table-bordered m-2 text-center"
+      >
         <caption class="text-center">
           Pedidos
         </caption>
@@ -52,13 +55,14 @@
             @decrement-count="decrementOrder(productitem.id)"
             :productitem="productitem"
             :order="order"
-            :card="false"
+            :isCard="false"
+            :isUpdate="true"
           ></Card-Product>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="6" >TOTAL PEDIDO</th>
-                    <th >{{ state.totalPrice }}€</th>
+            <th colspan="6">TOTAL PEDIDO</th>
+            <th>{{ state.totalPrice }}€</th>
           </tr>
         </tfoot>
       </table>
@@ -172,20 +176,18 @@ export default {
 
     const totalPrice = () => {
       state.totalPrice = 0;
-      if(state.productslist!=undefined){
-        
-      for (let i = 0; i < order.length; i++) {
-        console.log(order[i].id_product);
-        for (let e = 0; e < state.productslist.length; e++) {
-          if (order[i].id_product == state.productslist[e].id) {
-            state.totalPrice += order[i].qty * state.productslist[e].price;
-            console.log(state.totalPrice);
+      if (state.productslist != undefined) {
+        for (let i = 0; i < order.length; i++) {
+          console.log(order[i].id_product);
+          for (let e = 0; e < state.productslist.length; e++) {
+            if (order[i].id_product == state.productslist[e].id) {
+              state.totalPrice += order[i].qty * state.productslist[e].price;
+              console.log(state.totalPrice);
+            }
           }
         }
       }
-      
-      }
-      order.length
+      order.length;
       console.log(state.totalPrice);
     };
     const clickToggle = (toggle, type) => {

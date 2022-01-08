@@ -1,5 +1,13 @@
 <template>
-  <tr :id="orderitem.id_order">
+  <tr v-if="orderitem.status==='F'" :id="orderitem.id_order" class="success">
+    <td>
+      {{ orderitem.id_order }}
+    </td>
+    <td colspan="3" >Pedido Finalizado</td>
+   
+  </tr>
+
+  <tr v-else :id="orderitem.id_order">
     <td>
       {{ orderitem.id_order }}
     </td>
@@ -45,6 +53,10 @@ export default {
 </script>
 
 <style>
+.success{
+    background-color: rgb(144, 238, 144);
+
+}
 tr:hover {
   cursor: pointer;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="card === true" class="card col-3 m-3" style="width: 18rem">
+  <div v-if="isCard === true" class="card col-3 m-3" style="width: 18rem">
     <img
       class="card-img-top m-1 img-thumbnail"
       v-bind:src="productitem.image"
@@ -23,11 +23,12 @@
     <td>{{ productitem.id }}</td>
     <td>{{ productitem.name }}</td>
     <td>{{ productitem.price }}€</td>
-    <td @click="decrement(this)" class="rest">-</td>
+    <td v-if="isUpdate" @click="decrement(this)" class="rest">-</td>
     <td>{{ state.qty }}</td>
-    <td @click="increment(this)" class="sum">+</td>
+    <td v-if="isUpdate"  @click="increment(this)" class="sum">+</td>
     <td>{{ state.qty * productitem.price }}€</td>
   </tr>
+
 </template>
 
 <script>
@@ -36,7 +37,8 @@ export default {
   props: {
     productitem: Object,
     order: Object,
-    card: Boolean,
+    isCard: Boolean,
+    isUpdate: Boolean,
   },
   emits: ["decrement-count", "increment-count"],
   setup(props) {

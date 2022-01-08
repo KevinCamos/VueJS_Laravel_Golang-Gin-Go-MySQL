@@ -58,16 +58,16 @@ export default {
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
-    console.log(state.orderlist);
+    // console.log(state.orderlist);
     store.dispatch("order/" + Constant.INITIALIZE_ORDER);
 
     const showModal = (order) => {
-       console.log(order)
+      //  console.log(order)
        
       state.order = order.order_list;
 
-      console.log(state.productslist)
-      console.log(state.order)
+      // console.log(state.productslist)
+      // console.log(state.order)
       state.isModalVisible = true;
     };
     const closeModal = () => {

@@ -17,32 +17,31 @@ export const order = {
       // state.orderlist[index].order_list = payload.order;
     },
     [Constant.CANCEL_ORDER]: (state, payload) => {
-      // let index = state.orderlist.findIndex((item) => item.id_order === payload.id);
-   /*    console.log(index)
-      console.log(state.orderlist)
-      console.log(typeof(state.orderlist))
-
-       state.orderlist.slice(index,1)
-      console.log(state.orderlist) */
       var i = state.orderlist.length;
-      if(i>0){
-      while(i--){
-         if( state.orderlist[i] 
-             && state.orderlist[i].hasOwnProperty("id_order") 
-             && (arguments.length > 2 && state.orderlist[i]["id_order"] === payload.id ) ){ 
-  
-              state.orderlist.splice(i,1);
-  
-         }
-      }}
-
+      if (i > 0) {
+        while (i--) {
+          if (
+            state.orderlist[i] &&
+            state.orderlist[i].hasOwnProperty("id_order") &&
+            arguments.length > 2 &&
+            state.orderlist[i]["id_order"] === payload.id
+          ) {
+            state.orderlist.splice(i, 1);
+          }
+        }
+      }
+    },
+    [Constant.END_ORDER]: (state, payload) => {
+      let index = state.orderlist.findIndex((item) => item.id_order === payload.id_order);
+      state.orderlist[index].status = "F";
+      console.log(state.orderlist[index])
     },
     [Constant.INITIALIZE_ORDER]: (state, payload) => {
       if (payload) state.orderlist = payload;
       else state.orderlist = [];
     },
-  },/*      let index = state.workerlist.findIndex((item) => item.id === payload.id);
-  state.workerlist.splice(index, 1); */
+  } /*      let index = state.workerlist.findIndex((item) => item.id === payload.id);
+  state.workerlist.splice(index, 1); */,
   actions: {
     [Constant.ADD_ORDER]: (store, payload) => {
       OrderService.createOrder(payload)
@@ -66,12 +65,22 @@ export const order = {
           console.log(error);
         });
     },
-    
+
     [Constant.CANCEL_ORDER]: (store, payload) => {
       OrderService.cancelOrderById(payload.id)
         .then(function (res) {
           console.log(res);
           store.commit(Constant.CANCEL_ORDER, payload);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    [Constant.END_ORDER]: (store, payload) => {
+      OrderService.buyOrderById(payload.id_order)
+        .then(function (res) {
+          console.log(res);
+          store.commit(Constant.END_ORDER, payload);
         })
         .catch(function (error) {
           console.log(error);

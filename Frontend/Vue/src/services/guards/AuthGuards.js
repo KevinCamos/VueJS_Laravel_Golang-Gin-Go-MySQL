@@ -1,5 +1,6 @@
 import store from "@/store";
 import UserService from "@/services/UserService";
+import Constant from "../../Constant";
 
 export default {
 
@@ -11,8 +12,8 @@ export default {
     }
   },
   authGuardAdmin(to, from, next) {
-    store.dispatch("order/" + Constant.INITIALIZE_ORDER);
-    store.dispatch("products/" + Constant.INITIALIZE_ORDER);
+    // store.dispatch("order/" + Constant.INITIALIZE_ORDER);
+    // store.dispatch("products/" + Constant.INITIALIZE_ORDER);
     UserService.checkAdmin()
     .then(function (user) {
       user = user.data.user;

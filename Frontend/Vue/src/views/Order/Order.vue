@@ -70,10 +70,10 @@
     <div class="row justify-content-center position-sticky bottom-0">
       <button
         type="button"
-        class="btn btn-outline-success position-sticky bottom-0"
+        class="btn btn-success position-sticky bottom-0"
         @click="sendOrder()"
       >
-        Tomar Pedido
+        CONFIRMAR PEDIDO
       </button>
     </div>
   </section>
@@ -92,16 +92,19 @@ export default {
 
   setup() {
     const router = useRouter();
+    const store = useStore();
 
     const state = reactive({
       toggle: false,
 
       productslist: computed(() => store.getters["products/getProducts"]),
       orderlist: computed(() => store.getters["order/getOrder"]),
+      tablelist: computed(() => store.getters["table/getOrder"]),
       productfilter: "",
       totalPrice: 0,
     });
-    const store = useStore();
+
+    console.log(state.tablelist);
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
@@ -154,7 +157,8 @@ export default {
     const thisRouteValue = router.currentRoute._value.name;
     const order = [];
     /* Data for Update */
-    if (thisRouteValue === "updateOrder") {
+    if (thisRouteValue === "updateOrder" || thisRouteValue === "updateTable") {
+      // if (thisRouteValue === "updateTable") state.productlist = state.tablelist;
       var params = router.currentRoute._rawValue.params;
       console.log(thisRouteValue, params.id);
 
@@ -241,7 +245,10 @@ export default {
       console.log(order);
     };
     const sendOrder = () => {
-      if (thisRouteValue === "updateOrder") {
+      if (
+        thisRouteValue === "updateOrder" ||
+        thisRouteValue === "updateTable"
+      ) {
         alert("UPDATE Pedido");
         var params = router.currentRoute._rawValue.params;
 
@@ -249,18 +256,26 @@ export default {
           order: order,
           id: params.id,
         });
+
+        // if (thisRouteValue === "updateTable") router.push({ name: "tableList" });
+        // else router.push({ name: "orderList" });
       } else {
-        alert("CREA Pedido");
+        // alert("CREA Pedido");
         console.log(router.currentRoute._rawValue.params.id);
+        let routeId = router.currentRoute._rawValue.params.id;
         let pedido =
-          router.currentRoute._rawValue.params.id === "pedido"
+          routeId === "pedido"
             ? { order: order }
             : {
                 order: order,
                 id_client: router.currentRoute._rawValue.params.id,
               };
         store.dispatch("order/" + Constant.ADD_ORDER, pedido);
+
+        // if (routeId === "pedido") router.push({ name: "orderList" });
+        // else router.push({ name: "tableList" });
       }
+      router.push({ name: "orderList" });
     };
     totalPrice();
 

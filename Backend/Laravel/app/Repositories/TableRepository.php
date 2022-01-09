@@ -1,22 +1,28 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\Table;
 
-class TableRepository{
+class TableRepository
+{
 
 
-/**
- *
- *  Aquí utilizamos una RelationShip para poder editar finalizar el pedido sin necesidad de hacer más peticiones */
+    /**
+     *
+     *  Aquí utilizamos dos RelationShip para poder editar y finalizar el pedido sin necesidad de hacer más peticiones */
     public function getAllTable()
     {
 
-        $order = Table::with(['Order' => function ($query) {
-        $query->where('status', 'preparacion');
-    }])->get();
-        return $order;
+        $tables = Table::with(['Order' => function ($query) {
+            $query->with("orderlist")->where('status', 'preparacion');
+        }])->get();
 
+        // foreach ($tables as $key => $table) {
+        //     // $table[$key]->Order = $table->Order;
+        //     $table[$key]->order = $table->order->OrderList;
+        // }
+        return $tables;
     }
 
     public function getTable($id)
@@ -34,7 +40,7 @@ class TableRepository{
     public function updateTable($id, $data)
     {
         if (Table::where('id_table', $id)->exists()) {
-            Table::where('id_table', $id)->update(['id_order'=> $data['id_order'], 'status'=> $data['status']]);
+            Table::where('id_table', $id)->update(['id_order' => $data['id_order'], 'status' => $data['status']]);
             $table = Table::where('id_table', $id)->get();
             return $table;
         }
@@ -49,5 +55,4 @@ class TableRepository{
         }
         return false;
     }
-
 }

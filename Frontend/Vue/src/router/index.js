@@ -33,6 +33,7 @@ const routes = [
   { path: "/:id/order", name: "order", component: () => import('../views/Order/Order') , beforeEnter: AuthGuards.authGuardWorker},
   { path: "/orders", name: "orderList", component: () => import('../views/Order/OrderList.vue') , beforeEnter: AuthGuards.authGuardWorker},
   { path: "/updateOrder/:id", name: "updateOrder", component: () => import('../views/Order/Order.vue') , beforeEnter: AuthGuards.authGuardWorker},
+  { path: "/updateTable/:id", name: "updateTable", component: () => import('../views/Order/Order.vue') , beforeEnter: AuthGuards.authGuardWorker},
   
   { path: "/signin", name: "signin", component: () => import('../views/Login/SignIn') },
   { path: "/signup", name: "signup", component: () => import('../views/Login/SignUp') },

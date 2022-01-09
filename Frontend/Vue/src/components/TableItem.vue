@@ -53,7 +53,7 @@
     <button
       v-if="tableitem.status === 'busy'"
       class="m-1 btn btn-success"
-      @click.stop="endingTable(tableitem.order.id_order, tableitem.id_table)"
+      @click.stop="cancelTable(tableitem.order.id_order, tableitem.id_table)"
     >
       Cancelar Mesa
     </button>
@@ -102,10 +102,9 @@ export default {
       router.push({ name: "order", params: { id } });
     };
     const updateTable = (id) => {
-      alert("crear función");
-      router.push({ name: "updateOrder", params: { id } });
+      router.push({ name: "updateTable", params: { id } });
     };
-    const endingTable = (id,id_table) => {
+    const cancelTable = (id,id_table) => {
       console.log(id)
       alert("crear función");
       store.dispatch("table/" + Constant.CANCEL_ORDER_TABLE, { id_order:id, id_table: id_table });
@@ -118,7 +117,7 @@ export default {
       updateStatus,
       initTable,
       updateTable,
-      endingTable,
+      cancelTable,
     };
   },
 };

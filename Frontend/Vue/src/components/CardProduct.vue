@@ -68,7 +68,7 @@ export default {
       varThis.$emit("increment-count");
       state.qty++;
     };
-
+props.order = null
     return { state, decrement, increment };
   },
 };

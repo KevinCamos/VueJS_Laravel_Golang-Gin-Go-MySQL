@@ -24,14 +24,15 @@
         />
       </tbody>
     </table>
-    <button type="button" class="btn" @click="showModal">Open Modal!</button>
-
+    <!-- <button type="button" class="btn" @click="showModal">Open Modal!</button> -->
     <Modal v-if="state.order && state.productslist"
+  
       v-show="state.isModalVisible"
       @close="closeModal"
       :order="state.order"
       :productslist="state.productslist"
     />
+  
   </div>
 </template>
 <script>
@@ -50,7 +51,7 @@ export default {
     const store = useStore();
     const state = reactive({
       orderlist: computed(() => store.getters["order/getOrder"]),
-          productslist: computed(() => store.getters["products/getProducts"]),
+      productslist: computed(() => store.getters["products/getProducts"]),
       isModalVisible: false,
       order: "",
     });
@@ -63,7 +64,8 @@ export default {
 
     const showModal = (order) => {
       //  console.log(order)
-       
+       console.log(order)
+
       state.order = order.order_list;
 
       // console.log(state.productslist)

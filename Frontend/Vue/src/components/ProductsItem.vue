@@ -2,9 +2,6 @@
     <tr>
         <td>{{ productitem.id }}</td>
         <td>{{ productitem.name }}</td>
-        <td>{{ productitem.description }}</td>
-        <td>{{ productitem.categories.name }}</td>
-        <td>{{ productitem.price }}</td>
         <td>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="viewProduct(productitem.id)"> View </span>
             <span class="badge badge-secondary pointer ml-1 text-danger" @click.stop="editProduct(productitem.id)"> Edit </span>

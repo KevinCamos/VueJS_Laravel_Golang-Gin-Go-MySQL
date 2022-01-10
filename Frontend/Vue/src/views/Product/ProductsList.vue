@@ -21,9 +21,6 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Catgory</th>
-                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

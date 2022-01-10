@@ -46,7 +46,7 @@ export default {
         const currentRoute = useRoute();
 
         if (!store.state.categories.productslist) {
-            store.dispatch("categories/" + Constant.INITIALIZE_PRODUCTS);
+            store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
         }
 
         const state = reactive({
@@ -62,7 +62,7 @@ export default {
         };
 
         const editCategories = (id) => {
-            router.push({ name: "updateCategories", params: { id } });
+            router.push({ name: "updateCategory", params: { id } });
         };
 
         const cancel = () => {

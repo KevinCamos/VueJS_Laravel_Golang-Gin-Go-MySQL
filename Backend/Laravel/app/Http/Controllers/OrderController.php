@@ -168,4 +168,17 @@ class OrderController extends Controller
             return self::apiServerError($e->getMessage());
         }
     }
+
+    public function orderChart()
+    {
+        try {
+            $data = $this->orderRepository->chartOrder();
+            if ($data){
+                return self::apiResponseSuccess($data, 'Data for chart', Response::HTTP_OK);
+            } 
+            return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
+        } catch (\Exception $e) {
+            return self::apiServerError($e->getMessage());
+        }
+    }
 }

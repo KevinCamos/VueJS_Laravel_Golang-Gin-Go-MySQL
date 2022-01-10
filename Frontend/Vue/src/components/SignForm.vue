@@ -149,7 +149,7 @@ export default {
 
           this.store.dispatch("user/" + Constant.LOGIN_USER, {
             dataUser: this.state.form,
-          });
+          }).then(() => this.$router.push({ name: "home" }));;
         }
       } else {
         /* NO VALIDA*/

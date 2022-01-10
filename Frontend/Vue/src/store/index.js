@@ -6,6 +6,7 @@ import { categories } from './modules/categories'
 import { user } from './modules/user'
 import { table } from './modules/table'
 import { order } from './modules/order'
+import { chart } from './modules/chart'
 
 export default Vuex.createStore({
 
@@ -16,6 +17,7 @@ export default Vuex.createStore({
         user: user,
         table: table,
         order: order,
+        chart: chart,
     //     worker:  () => import('./modules/workers'),
     //     products: () => import('./modules/products'),
     //     user:  () => import('./modules/user'),

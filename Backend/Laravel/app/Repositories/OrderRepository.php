@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Order;
 use App\Models\OrderList;
 use App\Models\Table;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepository
 {
@@ -90,5 +91,15 @@ de ser finalizado, MYSQL realizará un sql Trigger para facturar*/
             return $order;
         }
         return false;
+    }
+
+    public function chartOrder()
+    {
+        return DB::table('OrderList')
+                ->join('Order', 'OrderList.id_order', '=', 'Order.id_order')
+                ->join('Products', 'Products.id', '=', 'OrderList.id_product')
+                ->select('Products.name as product', DB::raw('SUM(OrderList.qty) as qty'))
+                ->groupBy('OrderList.id_product','Products.name')
+                ->get();
     }
 }

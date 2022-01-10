@@ -21,15 +21,10 @@
                 </div>
                 <div class="form-group">
                     <label htmlFor="category">Category :</label>
-                    <select  id="category"  name="category" v-model="state.productsitemlocal.category"
+                    <select  id="category"  name="category" v-model="state.productsitemlocal.categories.id"
                     class="form-select"  aria-label="Default select example">
                         <option disabled value="" >Define la categoria</option>
-
-                        <option v-if="state.productsitemlocal.category==='bebida'" value="bebida">Bebida</option>
-                        <option v-else value="bebida">Bebida</option>
-                        <option v-if="state.productsitemlocal.category==='bocadillo'" value="bocadillo">Bocadillo</option>
-                        <option v-else value="bocadillo">Bocadillo</option>
-                        <!-- <option value="bocadillo">Bocadillo</option> -->
+                        <option v-for="category in state.categorieslist" :value="category.id"> {{ category.name }}</option>
                     </select>
                     <div>Categoria seleccionada: <b>{{ state.productsitemlocal.category }}</b></div>
                 </div>
@@ -48,7 +43,7 @@
 
 <script>
 import Constant from "../../Constant";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import { ref } from 'vue';
@@ -75,7 +70,12 @@ export default {
           (item) => item.id.toString() === currentRoute.params.id
         ),
       },
+      categorieslist: computed(() => store.getters["categories/getCategories"])
     });
+
+    if (!state.categorieslist) {
+      store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
+    }
 
     const updateProducts = () => {
       router.push({ name: "productsList" });

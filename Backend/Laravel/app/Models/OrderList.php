@@ -16,4 +16,9 @@ class OrderList extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Products::class);
+    }
 }

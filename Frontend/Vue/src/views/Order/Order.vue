@@ -2,7 +2,7 @@
   <section>
     <div v-if="state.toggle == false" class="row justify-content-center">
       <Card-Category
-        v-for="category in categories"
+        v-for="category in state.categorieslist"
         :key="category"
         @clickToggle="clickToggle(true, category.id)"
         :categoryitem="category"
@@ -91,7 +91,7 @@ export default {
 
     const state = reactive({
       toggle: false,
-
+      categorieslist: computed(() => store.getters["categories/getCategories"]),
       productslist: computed(() => store.getters["products/getProducts"]),
       orderlist: computed(() => store.getters["order/getOrder"]),
       productfilter: "",
@@ -101,50 +101,9 @@ export default {
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
-    const categories = [
-      {
-        id: "1",
-        name: "Pizza",
-        description: "Elegir entre las pizzas",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      },
-      {
-        id: "2",
-        name: "Bebida",
-        description: "Elegir entre las bebidas",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      },
-      {
-        id: "3",
-        name: "Postres",
-        description: "Elegir entre los postres",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      },
-      {
-        id: "4",
-        name: "Entrantes",
-        description: "Elegir entre los entrates",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      },
-      {
-        id: "5",
-        name: "Sándwiches",
-        description: "Elegir entre los sándwiches",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      },
-      {
-        id: "6",
-        name: "Ensaladas",
-        description: "Elegir entre las ensaladas",
-        image:
-          "https://offloadmedia.feverup.com/valenciasecreta.com/wp-content/uploads/2021/03/11054825/coca-cola-valencia-1024x512.jpg",
-      }
-    ];
+    if (!state.categorieslist) {
+        store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
+    }
 
     /* Vars for create the order */
     const thisRouteValue = router.currentRoute._value.name;
@@ -258,7 +217,6 @@ export default {
 
     return {
       state,
-      categories,
       order,
       clickToggle,
       incrementOrder,

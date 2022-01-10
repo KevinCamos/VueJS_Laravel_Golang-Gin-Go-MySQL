@@ -22,4 +22,7 @@ export default {
   buyOrderById(id) {
     return Api(`${secret.LARAVEL_APP_URL}`).post(`buy/${id}`);
   },
+  getProductsOrderChart() {
+    return Api(`${secret.LARAVEL_APP_URL}`).get(`orderChart`)
+  }
 };

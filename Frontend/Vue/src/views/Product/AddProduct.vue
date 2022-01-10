@@ -28,12 +28,7 @@
                     <select  id="category"  name="category" v-model="state.productsitemlocal.category"
                     class="form-select"  aria-label="Default select example">
                         <option disabled value="" selected>Define la categoria</option>
-                        <option value="1">Pizza</option>
-                        <option value="2">Bebidas</option>
-                        <option value="3">Postres</option>
-                        <option value="4">Entrantes</option>
-                        <option value="5">Sándwiches</option>
-                        <option value="6">Ensalas</option>
+                        <option v-for="category in state.categorieslist" :value="category.id"> {{ category.name }}</option>
                     </select>
                     <div>Categoria seleccionada: <b>{{ state.productsitemlocal.category }}</b></div>
                 </div>
@@ -54,7 +49,7 @@
 <script>
     import Constant from "../../Constant";
     import ProductsService from '@/services/ProductsService'
-    import { reactive } from "vue";
+    import { reactive, computed } from "vue";
     import { useStore } from "vuex";
     import { useRouter } from "vue-router";
     import { ref } from 'vue';
@@ -70,10 +65,15 @@
                     category: "",
                     price: "",
                     image: "",
-                }
+                },
+                categorieslist: computed(() => store.getters["categories/getCategories"]),
             });
             const image = ref(null)
             
+            if (!state.categorieslist) {
+                store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
+            }
+
             const addProduct = () => {
             /* Aquí van las validaciones  */
                 if (state.productsitemlocal.name.trim().length >= 2) {

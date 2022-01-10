@@ -16,5 +16,8 @@ export default {
   },
   deleteProductById(id) {
     return Api(`${secret.LARAVEL_APP_URL}`).delete(`products/${id}`)
+  },
+  getCategoriesProductsChart() {
+    return Api(`${secret.LARAVEL_APP_URL}`).get(`productsChart`)
   }
 }

@@ -40,4 +40,7 @@ export default {
     CANCEL_ORDER_TABLE : "cancelOrderTable",
     INITIALIZE_ORDER : "initializeOrder",
 
+    /* CHART */
+    GET_CATEGORIES_PRODUCTS_CHART: "getProductsChart",
+    GET_PRODUCTS_ORDER_CHART : "getProductsOrderChart"
 }

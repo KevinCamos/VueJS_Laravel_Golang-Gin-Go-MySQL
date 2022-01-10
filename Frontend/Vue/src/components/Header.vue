@@ -11,79 +11,37 @@
           <router-link class="nav-link" to="/home">Homes</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/about">About</router-link>
+          <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
+        </li>
+        <li v-if="state.authUser.isAdmin === true" class="nav-item">
+          <router-link class="nav-link" to="/products">Products</router-link>
+        </li>
+        <li v-if="state.authUser.isAdmin === true" class="nav-item">
+          <router-link class="nav-link" to="/categories">Categories</router-link>
         </li>
         <li v-if="state.authUser.isAdmin === true" class="nav-item">
           <router-link class="nav-link" to="/workers">Trabajadores</router-link>
         </li>
-        <li v-if="state.authUser.isAdmin === true" class="nav-item">
+        <li v-if="state.authUser.isAdmin === true || state.authUser.isWorker === true" class="nav-item">
           <router-link class="nav-link" to="/table">Mesas</router-link>
         </li>
-        <li
-          v-if="
-            state.authUser.isAdmin === true || state.authUser.isWorker === true
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/products">Products</router-link>
+        <li v-if="state.authUser.isAdmin === true || state.authUser.isWorker === true" class="nav-item">
+          <router-link class="nav-link" to="/pedido/order">Realizar Pedido</router-link>
         </li>
-
-        <li
-          v-if="
-            state.authUser.isAdmin === true || state.authUser.isWorker === true
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/categories">Categories</router-link>
+        <li v-if="state.authUser.isAdmin === true || state.authUser.isWorker === true" class="nav-item">
+          <router-link class="nav-link" to="/orders">Ver Pedidos</router-link>
         </li>
-
-        <li
-          v-if="
-            state.authUser.isAdmin === true || state.authUser.isWorker === true
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/pedido/order"
-            >Realizar Pedido</router-link
-          >
+        <li class="nav-item">
+          <router-link class="nav-link" to="/about">About</router-link>
         </li>
-        <li
-          v-if="
-            state.authUser.isAdmin === true || state.authUser.isWorker === true
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/orders"
-            >Ver Pedidos</router-link
-          >
-        </li>
-        <li
-          v-if="
-            state.authUser.isAdmin === false &&
-            state.authUser.isWorker === false
-          "
-          class="nav-item"
-        >
+        <li v-if="state.authUser.isAdmin === false && state.authUser.isWorker === false" class="nav-item">
           <router-link class="nav-link" to="/signin">Sign in</router-link>
         </li>
-        <li
-          v-if="
-            state.authUser.isAdmin === false &&
-            state.authUser.isWorker === false
-          "
-          class="nav-item"
-        >
+        <li v-if="state.authUser.isAdmin === false && state.authUser.isWorker === false" class="nav-item">
           <router-link class="nav-link" to="/signup">Sign up</router-link>
         </li>
-        <li
-          v-if="
-            state.authUser.isAdmin === true || state.authUser.isWorker === true
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/home" @click="logout"
-            >Log out</router-link
-          >
+        <li v-if="state.authUser.isAdmin === true || state.authUser.isWorker === true" class="nav-item">
+          <router-link class="nav-link" to="/home" @click="logout">Log out</router-link >
         </li>
       </ul>
     </div>

@@ -4,6 +4,7 @@ import AuthGuards from "../services/guards/AuthGuards";
 const routes = [
   { path: "", redirect: { name: "home" }, },
   { path: "/home", name: "home", component: () => import('../views/Home') },
+  { path: "/dashboard", name: "dashboard", component: () => import('../views/Dashboard') },
   { path: "/about", name: "about", component: () => import('../views/About') },
   
   { path: "/workers", name: "workerList", component: () => import('../views/Worker/WorkerList'), beforeEnter: AuthGuards.authGuardAdmin  },

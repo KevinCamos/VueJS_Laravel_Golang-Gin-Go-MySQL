@@ -18,14 +18,10 @@ export const products = {
             state.productslist.splice(index, 1);
         },
         [Constant.UPDATE_PRODUCTS]: (state, payload) => {
-            console.log(state)
-            console.log(payload.id)
             let index = state.productslist.findIndex((item) => item.id === payload.id);
             state.productslist[index] = payload;
         },
         [Constant.INITIALIZE_PRODUCTS]: (state, payload) => {
-           console.log(payload) 
-            
             if (payload) {
                 state.productslist = payload;
             } else {
@@ -82,7 +78,7 @@ export const products = {
             formData.append("image",  payload.productsitem.image);
             formData.append("name",  payload.productsitem.name);
             formData.append("description",  payload.productsitem.description);
-            formData.append("category",  payload.productsitem.category);
+            formData.append("categories_id",  payload.productsitem.categories.id);
             formData.append("price",  payload.productsitem.price);
         
             ProductsService.updateProduct(formData, payload.productsitem.id)
@@ -122,5 +118,4 @@ export const products = {
             return state.productslist;
         }
     }
-
 }

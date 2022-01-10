@@ -8,12 +8,13 @@ use App\Http\Resources\CategoriesResource;
 use App\Http\Requests\CategoriesRequest;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Response;
+use Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller
 {
 
     use ApiResponseTrait;
-
     private $categoriesRepository;
 
     public function __construct(CategoriesRepository $categoriesRepository)
@@ -54,14 +55,18 @@ class CategoriesController extends Controller
      */
     public function store(CategoriesRequest $request)
     {
-        try {
-            $categories = $this->categoriesRepository->createCategories($request->validated());
-            if ($categories) {
-                return self::apiResponseSuccess($categories, 'Categoria creada', Response::HTTP_OK);
+        /* if (Gate::allows('isGerente', $request)) { */
+            try {
+                $categories = $this->categoriesRepository->createCategories($request->validated());
+                if ($categories) {
+                    return self::apiResponseSuccess($categories, 'Categoria creada', Response::HTTP_OK);
+                }
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+       /*  } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 
     /**
@@ -103,15 +108,19 @@ class CategoriesController extends Controller
      */
     public function update(CategoriesRequest $request, $id)
     {
-        try {
-            $categories = $this->categoriesRepository->updateCategories($id, $request->validated());
-            if(is_null($categories)){
-                return self::apiResponseError(null, 'Categoria no encontrada' , Response::HTTP_NOT_FOUND);
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $categories = $this->categoriesRepository->updateCategories($id, $request->validated());
+                if(is_null($categories)){
+                    return self::apiResponseError(null, 'Categoria no encontrada' , Response::HTTP_NOT_FOUND);
+                }
+                return self::apiResponseSuccess($categories, 'Categoria actualizada', Response::HTTP_OK);
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-            return self::apiResponseSuccess($categories, 'Categoria actualizada', Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+        /* } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 
     /**
@@ -122,14 +131,18 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $categories = $this->categoriesRepository->deleteCategories($id);
-            if($categories){
-                return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $categories = $this->categoriesRepository->deleteCategories($id);
+                if($categories){
+                    return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
+                }
+                return self::apiResponseError(null, 'Categoria no encontrada' , Response::HTTP_NOT_FOUND);
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-            return self::apiResponseError(null, 'Categoria no encontrada' , Response::HTTP_NOT_FOUND);
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+        /* } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 }

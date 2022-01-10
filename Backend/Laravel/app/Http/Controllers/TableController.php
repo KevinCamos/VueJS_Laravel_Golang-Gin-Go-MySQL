@@ -58,15 +58,19 @@ class TableController extends Controller
      */
     public function store(TableRequest $request)
     {
-        try {
-            $table = $this->tableRepository->createTable($request->validated());
-            $table->id_table = $table->id;
-            if ($table) {
-                return self::apiResponseSuccess(TableResource::make($table), 'Mesa creada', Response::HTTP_OK);
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $table = $this->tableRepository->createTable($request->validated());
+                $table->id_table = $table->id;
+                if ($table) {
+                    return self::apiResponseSuccess(TableResource::make($table), 'Mesa creada', Response::HTTP_OK);
+                }
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+       /*  } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 
     /**
@@ -108,15 +112,19 @@ class TableController extends Controller
      */
     public function update(TableRequest $request, $id)
     {
-        try {
-            $table = $this->tableRepository->updateTable($id, $request->validated());
-            if(is_null($table)){
-                return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $table = $this->tableRepository->updateTable($id, $request->validated());
+                if(is_null($table)){
+                    return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
+                }
+                return self::apiResponseSuccess($table, 'Mesa actualizada', Response::HTTP_OK);
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-            return self::apiResponseSuccess($table, 'Mesa actualizada', Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+        /* } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 
     /**
@@ -127,14 +135,18 @@ class TableController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $table = $this->tableRepository->deleteTable($id);
-            if($table){
-                return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $table = $this->tableRepository->deleteTable($id);
+                if($table){
+                    return self::apiResponseSuccess(null, 'OK', Response::HTTP_OK);
+                }
+                return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
             }
-            return self::apiResponseError(null, 'Mesa no encontrada' , Response::HTTP_NOT_FOUND);
-        } catch (\Exception $e) {
-            return self::apiServerError($e->getMessage());
-        }
+        /* } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
     }
 }

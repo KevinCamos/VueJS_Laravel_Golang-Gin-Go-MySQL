@@ -12,13 +12,19 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <ul class="list-group">
+            <ul v-if="state.tablelist" class="list-group">
               <TableItem
                 v-for="tableitem in state.tablelist"
                 :key="tableitem.id_table"
                 :tableitem="tableitem"
                 @showModal="showModal(tableitem.order.orderlist)"
               />
+            </ul>
+            <ul v-else class="list-group">
+              <Lazy-Table
+                v-for="thisLazy in lazyLoad"
+                v-bind:key="thisLazy"
+              ></Lazy-Table>
             </ul>
           </div>
         </div>
@@ -38,15 +44,21 @@
 <script>
 import Constant from "../../Constant";
 import TableItem from "../../components/TableItem.vue";
+import LazyTable from "../../components/lazyLoad/lazyTable.vue";
 import MakeOrder from "../../components/buttons/MakeOrder.vue";
 import Modal from "../../components/Modal";
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  components: { TableItem, MakeOrder, Modal },
+  components: { TableItem, MakeOrder, Modal, LazyTable },
 
   setup() {
+    /* array para el lazy load */
+    const lazyLoad = [];
+    for (var i = 0; i < 10; i++) {
+      lazyLoad.push(i);
+    }
     const store = useStore();
 
     const state = reactive({
@@ -60,6 +72,7 @@ export default {
       isModalVisible: false,
       order: false,
     });
+    console.log(state.tablelist == true);
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
@@ -80,11 +93,10 @@ export default {
       state.isModalVisible = true;
     };
     const closeModal = () => {
-
       state.isModalVisible = false;
     };
 
-    return { state, addTable, showModal, closeModal };
+    return { state, lazyLoad, addTable, showModal, closeModal };
   },
 };
 </script>

@@ -47,7 +47,7 @@ import TableItem from "../../components/TableItem.vue";
 import LazyTable from "../../components/lazyLoad/lazyTable.vue";
 import MakeOrder from "../../components/buttons/MakeOrder.vue";
 import Modal from "../../components/Modal";
-import { reactive, computed } from "vue";
+import { reactive, computed, watch, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -56,9 +56,11 @@ export default {
   setup() {
     /* array para el lazy load */
     const lazyLoad = [];
+
     for (var i = 0; i < 10; i++) {
       lazyLoad.push(i);
     }
+
     const store = useStore();
 
     const state = reactive({
@@ -72,6 +74,7 @@ export default {
       isModalVisible: false,
       order: false,
     });
+
     console.log(state.tablelist == true);
     if (!state.productslist) {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);

@@ -43,20 +43,22 @@
     >
       Ocupar Mesa
     </button>
-    <button
-      v-if="tableitem.status === 'busy'"
-      class="m-1 btn btn-primary"
-      @click.stop="updateTable(tableitem.order.id_order)"
-    >
-      Gestionar Mesa
-    </button>
-    <button
-      v-if="tableitem.status === 'busy'"
-      class="m-1 btn btn-success"
-      @click.stop="endingTable(tableitem.order.id_order, tableitem.id_table)"
-    >
-      Cancelar Mesa
-    </button>
+      <button  v-if="tableitem.status === 'busy'"
+        class="m-1 btn btn-primary"
+        @click.stop="updateTable(tableitem.order.id_order)"
+      >
+        Gestionar Mesa
+      </button>
+      <button  v-if="tableitem.status === 'busy'"
+        class="m-1 btn btn-success"
+        @click.stop="cancelTable(tableitem.order.id_order, tableitem.id_table)"
+      >
+        Cancelar Mesa
+      </button>
+      <button  v-if="tableitem.status === 'busy'" @click="this.$emit('showModal')"  class="m-1 btn btn-success">
+        Ver y finalizar
+      </button>
+
   </li>
 </template>
 
@@ -102,13 +104,15 @@ export default {
       router.push({ name: "order", params: { id } });
     };
     const updateTable = (id) => {
-      alert("crear función");
-      router.push({ name: "updateOrder", params: { id } });
+      router.push({ name: "updateTable", params: { id } });
     };
-    const endingTable = (id,id_table) => {
-      console.log(id)
+    const cancelTable = (id, id_table) => {
+      console.log(id);
       alert("crear función");
-      store.dispatch("table/" + Constant.CANCEL_ORDER_TABLE, { id_order:id, id_table: id_table });
+      store.dispatch("table/" + Constant.CANCEL_ORDER_TABLE, {
+        id_order: id,
+        id_table: id_table,
+      });
 
       // store.dispatch("table/" + Constant.DELETE_TABLE, { id });
     };
@@ -118,7 +122,7 @@ export default {
       updateStatus,
       initTable,
       updateTable,
-      endingTable,
+      cancelTable,
     };
   },
 };

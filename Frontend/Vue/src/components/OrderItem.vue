@@ -1,10 +1,21 @@
 <template>
-  <tr :id="orderitem.id_order">
+  <tr v-if="orderitem.status==='F'" :id="orderitem.id_order" class="success">
+    <td>
+      {{ orderitem.id_order }}
+    </td>
+    <td colspan="3" >Pedido Finalizado</td>
+   
+  </tr>
+
+  <tr v-else :id="orderitem.id_order">
     <td>
       {{ orderitem.id_order }}
     </td>
     <td @click.stop="editOrder(orderitem.id_order)" class="edit">Editar</td>
-    <td @click.stop="deleteOrder(orderitem.id_order)" class="delete">Eliminar</td>
+    <td @click.stop="deleteOrder(orderitem.id_order)" class="delete">
+      Eliminar
+    </td>
+    <td @click="this.$emit('showModal')" class="read">Ver y finalizar</td>
   </tr>
 </template>
 
@@ -14,12 +25,16 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 export default {
+  emits: ["showModal"],
+
   props: {
     orderitem: Object,
+    productslist: Object,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
+
     const deleteOrder = (id) => {
       console.log("delete");
 
@@ -38,15 +53,20 @@ export default {
 </script>
 
 <style>
+.success{
+    background-color: rgb(144, 238, 144);
+
+}
 tr:hover {
   cursor: pointer;
 }
 .edit:hover {
-  background-color: rgb(144, 238, 144);
-  color: green;
+  background-color: yellow;
 }
 .delete:hover {
   background-color: #ff8080;
-  color: darkred;
+}
+.read:hover {
+  background-color: rgb(144, 238, 144);
 }
 </style>

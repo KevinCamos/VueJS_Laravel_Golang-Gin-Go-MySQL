@@ -1,5 +1,5 @@
 <template>
-  <div v-if="card === true" class="card col-3 m-3" style="width: 18rem">
+  <div v-if="isCard === true" class="card col-3 m-3" style="width: 18rem">
     <img
       class="card-img-top m-1 img-thumbnail"
       v-bind:src="productitem.image"
@@ -19,15 +19,16 @@
     </div>
   </div>
 
-    <tr v-else-if="state.qty > 0 " >
-      <td >{{ productitem.id }}</td>
-      <td>{{ productitem.name }}</td>
-      <td>{{ productitem.price }}€</td>
-      <td @click="decrement(this)" class="rest">-</td>
-      <td>{{ state.qty }}</td>
-      <td @click="increment(this)" class="sum">+</td>
-      <td>{{ state.qty * productitem.price }}€</td>
-    </tr>
+  <tr v-else-if="state.qty > 0">
+    <td>{{ productitem.id }}</td>
+    <td>{{ productitem.name }}</td>
+    <td>{{ productitem.price }}€</td>
+    <td v-if="isUpdate" @click="decrement(this)" class="rest">-</td>
+    <td>{{ state.qty }}</td>
+    <td v-if="isUpdate"  @click="increment(this)" class="sum">+</td>
+    <td>{{ state.qty * productitem.price }}€</td>
+  </tr>
+
 </template>
 
 <script>
@@ -36,13 +37,14 @@ export default {
   props: {
     productitem: Object,
     order: Object,
-    card: Boolean,
+    isCard: Boolean,
+    isUpdate: Boolean,
   },
   emits: ["decrement-count", "increment-count"],
   setup(props) {
     // console.log(props.order[0].id_product)
     // console.log(props.productitem.id)
-
+    // console.log(props.order);
     let product = props.order.filter(function (product) {
       if (props.productitem.id === product.id_product) return product;
     });
@@ -66,7 +68,7 @@ export default {
       varThis.$emit("increment-count");
       state.qty++;
     };
-
+props.order = null
     return { state, decrement, increment };
   },
 };

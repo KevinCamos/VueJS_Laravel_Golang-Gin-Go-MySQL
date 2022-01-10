@@ -38,6 +38,7 @@ export default {
     UPDATE_ORDER : "updateOrder",
     CANCEL_ORDER : "cancelOrder",
     CANCEL_ORDER_TABLE : "cancelOrderTable",
+    END_ORDER : "endOrder",
     INITIALIZE_ORDER : "initializeOrder",
 
     /* CHART */

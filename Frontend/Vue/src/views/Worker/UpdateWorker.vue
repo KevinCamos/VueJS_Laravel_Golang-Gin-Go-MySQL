@@ -89,37 +89,11 @@
 </template>
 
 <script>
-import Constant from "../../Constant";
-import { reactive } from "vue";
-import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import useAddWorkers from "../../composables/addWorkers";
 
 export default {
   setup() {
-    const store = useStore();
-    const router = useRouter();
-    const currentRoute = useRoute();
-
-    console.log(store.state.worker.workerlist[0].id);
-    console.log(currentRoute.params.id);
-    const workeritem = store.state.worker.workerlist.find(
-      (item) => item.id === currentRoute.params.id
-    );
-    console.log(workeritem);
-    const state = reactive({
-      workeritemlocal: { ...workeritem },
-    });
-    const updateWorker = () => {
-      router.push({ name: "workerList" });
-      store.dispatch("worker/" + Constant.UPDATE_WORKER, {
-        workeritem: state.workeritemlocal,
-      });
-    };
-
-    const cancel = () => {
-      router.push({ name: "workerList" });
-    };
-
+ const { state, updateWorker, cancel } = useAddWorkers();
     return { state, updateWorker, cancel };
   },
 };

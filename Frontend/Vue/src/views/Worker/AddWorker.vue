@@ -26,7 +26,7 @@
           />
         </div>
 
-        <div class="form-group" >
+        <div class="form-group">
           <label htmlFor="password">Password :</label>
           <input
             v-if="state.showPassword == true"
@@ -42,10 +42,21 @@
             id="password"
             v-model="state.workeritemlocal.password"
           />
-         
-            <button  v-if="state.showPassword == true"  class="btn btn-outline-success m-1" @click= togglePassword(state.showPassword)>Ver contraseña</button>
-            <button  v-else class="btn btn-outline-danger m-1" @click= togglePassword(state.showPassword)>Ocultar contraseña</button>
-          
+
+          <button
+            v-if="state.showPassword == true"
+            class="btn btn-outline-success m-1"
+            @click="togglePassword(state.showPassword)"
+          >
+            Ver contraseña
+          </button>
+          <button
+            v-else
+            class="btn btn-outline-danger m-1"
+            @click="togglePassword(state.showPassword)"
+          >
+            Ocultar contraseña
+          </button>
         </div>
 
         <div class="form-group">
@@ -98,54 +109,15 @@
 </template>
 
 <script>
-import Constant from "../../Constant";
-import { reactive } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import useAddWorkers from "../../composables/addWorkers";
 
 export default {
   setup() {
-    const store = useStore();
-    const router = useRouter();
-    // var showPassword = reactive(true);
-    const state = reactive({
-      workeritemlocal: {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        password: "",
-        appointment: "",
-      },
-      showPassword: true
-    });
-    /*   const validators = () => {
-      if (state.workeritemlocal.name.trim().length < 2) {
-        return false
-      }
-      return true;
-    }; */
+    const { state, togglePassword, addWorker, cancel } = useAddWorkers();
 
-    const togglePassword = (toggle)=>{
-      console.log(toggle)
-      state.showPassword = !toggle
-    }
-    const addWorker = () => {
-      /* Aquí van las validaciones  */
-      if (state.workeritemlocal.name.trim().length >= 2) {
-        store.dispatch("worker/" + Constant.ADD_WORKER, {
-          workeritem: state.workeritemlocal,
-        });
-        router.push({ name: "workerList" });
-      } else {
-        alert("Please enter a to-do in at least 2 characters");
-      }
-    };
-    const cancel = () => {
-      router.push({ name: "workerList" });
-    };
+    // togglePassword(toggle);
 
-    return { state, addWorker, cancel , togglePassword/* validators */ };
+    return { state, addWorker, cancel, togglePassword /* validators */ };
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div v-if="isCard === true" class="card col-3 m-3" style="width: 18rem">
     <img
       class="card-img-top m-1 img-thumbnail"
-      v-bind:src="productitem.image"
+      v-lazy="{ src: productitem.image, loading: 'http://127.0.0.1:8000/gallery/load/load.gif', error: 'http://127.0.0.1:8000/gallery/load/not-found.jpg' }"
       alt="Card image cap"
     />
 

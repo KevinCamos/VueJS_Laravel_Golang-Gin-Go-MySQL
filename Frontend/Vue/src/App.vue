@@ -1,22 +1,35 @@
 <template>
   <div class="container-fluid my-container">
-    <Header />
+    <suspense>
+      <template #default>
+        <Header />
+      </template>
+      <template #fallback>
+        <nav class="navbar navbar-expand-md bg-danger navbar-dark">
+          <h1 class="navbar-brand starbarstitle mb-1">STARBARS</h1>
+          <button class="navbar-toggler" type="button" @click="changeIsNavShow">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div :class="navClass">
+            <ul class="navbar-nav">
+              <li class="nav-item text-white">Cargando...</li>
+            </ul>
+          </div>
+        </nav>
+      </template>
+    </suspense>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
-// import Constant from "./Constant";
-// import { useStore } from "vuex";
+import { defineAsyncComponent } from "vue";
 
 export default {
-  components: { Header },
-  // setup() {
-  //   const store = useStore();
-  //   store.dispatch("user/" + Constant.USER_STORAGE);
-  //   return {};
-  // },
+  components: {
+    Header: defineAsyncComponent(() => import("./components/Header")),
+  },
 };
 </script>
 <style>

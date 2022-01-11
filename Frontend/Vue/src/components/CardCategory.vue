@@ -2,7 +2,8 @@
   <div class="card col-4 m-5" style="width: 18rem">
     <img
       class="card-img-top m-1"
-v-bind:src="categoryitem.image"
+      v-lazy="{ src: categoryitem.image, loading: 'http://127.0.0.1:8000/gallery/load/load.gif', error: 'http://127.0.0.1:8000/gallery/load/load.gif' }"
+
       alt="Card image cap"
     />
     <div class="card-body">

@@ -136,6 +136,7 @@ import Constant from "../Constant";
 import useLogin from "../composables/login";
 
 export default {
+  
   name: "SignForm",
   props: {
     type: String,
@@ -145,6 +146,7 @@ export default {
     return { state, v$, click, store };
   },
   methods: {
+    
     login() {
       console.log(this.v$.form.email.$error);
       console.log(this.state.adminmode);
@@ -159,7 +161,7 @@ export default {
         } else {
           this.store.dispatch("user/" + Constant.LOGIN_USER, {
             dataUser: this.state.form,
-          }).then(() => this.$router.push({ name: "home" }));;
+          });
         }
       } else {
         console.error("error register");

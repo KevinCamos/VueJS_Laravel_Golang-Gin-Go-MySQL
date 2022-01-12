@@ -112,24 +112,39 @@ Lista de tecnologías utilizadas en este proyecto:
 
 `Backend` 🏗️
 
-- [ExpressJs](https://expressjs.com/): V4.17.1
+- [Go](https://go.dev/):  V1.17.3
 
-  - NodeJS
-  - Javascript
-  - Routes
-  - Models
-  - Mongoose
-    - Models
-    - Schema
-    - Header
-  - Middleware
+  - Golang
+  - Routes General
+  - Module
+    - Routes
+    - Models 
+      - UUID
+    - Requests
+    - Controller
+    - Validators
+    - Serializers multiple
+    - Middlewares (JWT)
+    - Middleware
     - Token JWT
+    - Connect with Laravel
 
-  - NodeJS
-  - Javascript
+- [Laravel](https://laravel.com/):  V1.17.3
+
   - Models
-  - Conexión con servidor ExpressJS para comprobar el Token JWT
-
+  - Migrations
+  - RelationShips
+  - Triggers
+  - FileUpload
+  - Traits
+  - Repositories
+  - Policies
+  - Exceptions
+  - Routes
+  - Controllers
+  - Requests
+  - Middleware
+ 
 `Frontend` 🏛️
 
 - [Vue3](https://vue3.org): V3
@@ -146,8 +161,8 @@ Lista de tecnologías utilizadas en este proyecto:
     - Computed 
     - DefineAsyncComponent
     - Watch y Emmits
-    - Suspense
-    - Lazy Load (Librería y propio)
+    - Suspense (Librería y propio)
+    - Lazy Load 
 `BBDD`💾
 
 - [MySQL](https://www.mysql.com/)

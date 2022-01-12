@@ -62,7 +62,7 @@ Route::group(['middleware' => ['jwt.verify', 'admin']], function() {
 Route::resource('products', ProductsController::class);
 Route::resource('categories', CategoriesController::class);
 Route::resource('table', TableController::class);
-Route::resource('order', OrderController::class); 
+Route::resource('order', OrderController::class);
 
 Route::post('buy/{id}', [OrderController::class, 'buyOrder']);
 

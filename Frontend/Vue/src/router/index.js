@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthGuards from "../services/guards/AuthGuards";
 
 const routes = [
+
   { path: "", redirect: { name: "home" }, },
   { path: "/home", name: "home", component: () => import('../views/Home') },
   { path: "/about", name: "about", component: () => import('../views/About') },
@@ -98,7 +99,7 @@ const routes = [
     path: "/table", name: "tableList", 
     component: () => import('../views/Table/TableList'), 
     beforeEnter: AuthGuards.authGuardWorker, meta: {  requiresAuth: true }
-  },
+  }
 ];
 
 const router = createRouter({

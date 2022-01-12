@@ -139,6 +139,7 @@ Lista de tecnologías utilizadas en este proyecto:
   - Traits
   - Repositories
   - Policies and Gates
+  - Policies
   - Exceptions
   - Routes
   - Controllers

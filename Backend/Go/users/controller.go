@@ -133,7 +133,7 @@ func UserLogin(c *gin.Context) {
 	}
 
 	  
-	func prueba(c *gin.Context) {
+/* 	func prueba(c *gin.Context) {
 	
 	var count1 int64
 	var count2 int64
@@ -149,4 +149,4 @@ func UserLogin(c *gin.Context) {
 		"Total":count3 , 
 		})
 	}
-	
+	 */

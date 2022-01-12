@@ -48,6 +48,8 @@ type UserResponse struct {
 	ID    		uuid.UUID	`json:"id"`
 	Name 		string  `json:"name"`
 	Email    	string  `json:"email"`
+	Phone    	string  `json:"phone"`
+	Address    	string  `json:"address"`
 	Appointment string 	`json:"appointment"`
 }
 
@@ -63,6 +65,8 @@ func (self *UserSerializer) Response() UserResponse {
 		ID : 			myUserModel.ID,
 		Name : 			myUserModel.Name,
 		Email:    		myUserModel.Email,
+		Phone:    		myUserModel.Phone,
+		Address:    	myUserModel.Address,
 		Appointment:    myUserModel.Appointment,
 	}
 	return user
@@ -87,7 +91,7 @@ func (self *UsersSerializer) Response() []UserResponse {
 	for _, user := range self.Users {
 
 		self.c.Set("my_user_model", user)
-		 serializer := UserSerializer{self.c}
+		serializer := UserSerializer{self.c}
 		response = append(response, serializer.Response())
 	}
 	

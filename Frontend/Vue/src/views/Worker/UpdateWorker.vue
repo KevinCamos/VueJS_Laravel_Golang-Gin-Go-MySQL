@@ -65,8 +65,9 @@
           >
             <option disabled value="" selected>Define el puesto</option>
             <option value="auxiliar">Auxiliar</option>
-            <option value="encargado">Encargado</option>
+            <option value="gerente">Gerente</option>
           </select>
+        
           <div>
             Puesto: <b>{{ state.workeritemlocal.appointment }}</b>
           </div>

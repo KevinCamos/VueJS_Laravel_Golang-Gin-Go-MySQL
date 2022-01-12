@@ -1,6 +1,5 @@
 import store from "@/store";
 import UserService from "@/services/UserService";
-import Constant from "../../Constant";
 
 export default {
 
@@ -12,14 +11,13 @@ export default {
     }
   },
   authGuardAdmin(to, from, next) {
-    // store.dispatch("order/" + Constant.INITIALIZE_ORDER);
-    // store.dispatch("products/" + Constant.INITIALIZE_ORDER);
+
     UserService.checkAdmin()
     .then(function (user) {
       user = user.data.user;
       localStorage.token = user.token;
       localStorage.setItem("user", JSON.stringify(user));
-      next();;
+      next();
     })
     .catch(function (error) {
       store.state.authUser.isAdmin = false;
@@ -27,15 +25,7 @@ export default {
       console.log("error!!!")
       next("/signin");
     });
-/*     if (store.getters["user/checkAdmin"]) {
-      console.log("isAdmin");
 
-      next();
-    } else if (store.getters["user/isAuthWorker"]) {
-      next("/home");
-    } else {
-      next("/signin");
-    } */
   },
   noAuth(to, from, next) {
     console.log(!store.getters["user/isAuthWorker"]);
@@ -43,7 +33,7 @@ export default {
     if (!store.getters["user/isAuthWorker"]) {
       next();
     } else {
-      next("/home");
+      next("/signin");
     }
   },
 

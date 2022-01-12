@@ -47,7 +47,7 @@
               <tbody>
                 <Card-Product
                   v-for="productitem in productslist"
-                  :key="productitem.id"
+                  :key="key(productitem.id)"
                   :productitem="productitem"
                   :order="order"
                   :isCard="false"
@@ -107,7 +107,9 @@ export default {
 
   setup(props) {
         const store = useStore();
-
+const key= (prod)  =>{
+  return (Math.floor(Math.random() * (100000+prod)))
+}
     const totalPrice = () => {
       var totalPrice = 0;
        console.log(props.order)
@@ -135,9 +137,12 @@ export default {
        store.dispatch("order/" + Constant.END_ORDER, {
         id_order: id_order,
       });
+        store.dispatch("table/" + Constant.END_TABLE, {
+        id_order: id_order,
+      });
     };
     console.log(props.order);
-    return { totalPrice, endOrder };
+    return { totalPrice, endOrder ,key};
   },
 };
 </script>

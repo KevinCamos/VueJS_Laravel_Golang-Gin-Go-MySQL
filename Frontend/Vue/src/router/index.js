@@ -2,10 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthGuards from "../services/guards/AuthGuards";
 
 const routes = [
-  { path: "", redirect: { name: "home" }, },
-  { path: "/home", name: "home", component: () => import('../views/Home') },
+  { path: "", redirect: { name: "signin" }, },
+  // { path: "/home", name: "home", component: () => import('../views/Home') },
   { path: "/dashboard", name: "dashboard", component: () => import('../views/Dashboard') },
-  { path: "/about", name: "about", component: () => import('../views/About') },
+  // { path: "/about", name: "about", component: () => import('../views/About') },
   
   { path: "/workers", name: "workerList", component: () => import('../views/Worker/WorkerList'), beforeEnter: AuthGuards.authGuardAdmin  },
   { path: "/workers/add", name: "addWorker", component: () => import('../views/Worker/AddWorker'), beforeEnter: AuthGuards.authGuardAdmin  },
@@ -48,7 +48,7 @@ const routes = [
   
   { path: "/signin", name: "signin", component: () => import('../views/Login/SignIn') },
   { path: "/signup", name: "signup", component: () => import('../views/Login/SignUp') },
-  { path: "/:catchAll(.*)", component: () => import('../views/NotFound') },
+  { path: "/:catchAll(.*)", component: () => import('../views/Login/SignIn') },
 
   { path: "/table", name: "tableList", component: () => import('../views/Table/TableList') },
 ];

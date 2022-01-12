@@ -28,6 +28,7 @@ export default {
     ADD_TABLE : "addTable",
     UPDATE_TABLE : "updateTable",
     DELETE_TABLE : "deleteTable",
+    END_TABLE : "endTable",
     INITIALIZE_TABLE : "initializeTable",
 
     USER_REMOVE:"userRemove",

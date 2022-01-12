@@ -10,6 +10,23 @@ export const table = {
       console.log(payload);
       state.tablelist.push({ ...payload });
     },
+    [Constant.END_TABLE]: (state, payload) => {
+      console.log(payload);
+      console.log("payload",payload)
+      let index = state.tablelist.findIndex(
+        (item) => {
+          console.log( "item",item)
+          try{
+            console.log( item.order.id_order === payload.id_order)
+            return(  item.order.id_order === payload.id_order)
+          }catch{
+            return false
+          }
+          
+        }
+      );
+      state.tablelist[index].status="active"
+      },
     [Constant.DELETE_TABLE]: (state, payload) => {
       console.log(payload);
       let index = state.tablelist.findIndex(
@@ -55,6 +72,9 @@ export const table = {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    [Constant.END_TABLE]: (store, payload) => {      
+      store.commit(Constant.END_TABLE, payload);
     },
     [Constant.DELETE_TABLE]: (store, payload) => {
       TableService.deleteTableById(payload.id)

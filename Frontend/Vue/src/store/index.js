@@ -18,12 +18,7 @@ export default Vuex.createStore({
         table: table,
         order: order,
         chart: chart,
-    //     worker:  () => import('./modules/workers'),
-    //     products: () => import('./modules/products'),
-    //     user:  () => import('./modules/user'),
-    //     table: () => import('./modules/table'),
-    //     order:  () => import('./modules/order'),
-    // }
+
     }
 
 });

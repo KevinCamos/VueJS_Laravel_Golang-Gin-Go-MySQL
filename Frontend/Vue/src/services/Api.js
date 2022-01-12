@@ -28,7 +28,7 @@ export default (URL) => {
         store.dispatch("user/" + Constant.USER_REMOVE, {
           succes: true,
         });
-        router.push({ name: "home" });
+        router.push({ name: "signin" });
       }
       return Promise.reject(error)
     }

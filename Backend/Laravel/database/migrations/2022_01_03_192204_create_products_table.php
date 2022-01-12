@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
                     ->onCascade('delete');
             $table->integer('price');
             $table->string('image');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

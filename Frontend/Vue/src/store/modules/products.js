@@ -21,6 +21,10 @@ export const products = {
             let index = state.productslist.findIndex((item) => item.id === payload.id);
             state.productslist[index] = payload;
         },
+        [Constant.UPDATE_STATUS_PRODUCTS]: (state, payload) => {
+            let index = state.productslist.findIndex((item) => item.id === payload.id);
+            state.productslist[index] = payload;
+        },
         [Constant.INITIALIZE_PRODUCTS]: (state, payload) => {
             if (payload) {
                 state.productslist = payload;
@@ -85,6 +89,17 @@ export const products = {
             .then(function (res) {
                 console.log(res.data.data)
                 store.commit(Constant.UPDATE_PRODUCTS, res.data.data);
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        },
+        [Constant.UPDATE_STATUS_PRODUCTS]: (store, payload) => {
+            console.log(payload.products);
+            ProductsService.changeStatusProduct(payload.products, payload.id)
+            .then(function (res) {
+                console.log(res.data.data)
+                store.commit(Constant.UPDATE_STATUS_PRODUCTS, res.data.data);
             })
             .catch(function (error) {
                 console.log(error)

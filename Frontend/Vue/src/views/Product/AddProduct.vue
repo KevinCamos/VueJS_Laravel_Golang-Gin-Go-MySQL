@@ -19,10 +19,6 @@
                     <label htmlFor="description">Description:</label>
                     <input type="text" class="form-control" id="description" v-model="state.productsitemlocal.description" />
                 </div>
-                <!--<div class="form-group">
-                    <label htmlFor="category">Category:</label>
-                    <input type="text" class="form-control" id="category" v-model="state.productsitemlocal.category" />
-                </div> -->
                 <div class="form-group">
                     <label htmlFor="category">Category :</label>
                     <select  id="category"  name="category" v-model="state.productsitemlocal.category"
@@ -75,7 +71,6 @@
             }
 
             const addProduct = () => {
-            /* Aquí van las validaciones  */
                 if (state.productsitemlocal.name.trim().length >= 2) {
                     state.productsitemlocal.image = image.value.files[0] != undefined ? image.value.files[0] : null;
                     store.dispatch("products/"+Constant.ADD_PRODUCTS, {

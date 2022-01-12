@@ -1,5 +1,5 @@
 <template>
-      <div class="container-lg m-5">
+    <div class="container-lg m-5">
         <div class="table-wrapper">
 
             <div class="table-title">
@@ -7,10 +7,7 @@
                     <div class="col-sm-8"><h2>Products <b>Lists</b></h2></div>
                     <div class="col-sm-4">
                         <div class="row">
-                            <router-link class="col-6 btn btn-danger" to="/products/add">Add New</router-link>
-                            <div class="search-box col-6">
-                                <input type="text" class="form-control" placeholder="Search&hellip;">
-                            </div>
+                            <router-link class="col-12 btn btn-danger" to="/products/add">Add New</router-link>
                         </div>
                     </div>
                 </div>
@@ -21,6 +18,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,21 +43,20 @@ import { useStore } from "vuex";
 // import { useRouter } from "vue-router";
 
 export default {
-  components: { ProductsItem },
-  setup() {
-      const store = useStore();
-      // const router = useRouter();
-      const state = reactive({
-          productslist: computed(() => store.getters["products/getProducts"]),
-      });
-      console.log(state.productslist);
+    components: { ProductsItem },
+    setup() {
+        const store = useStore();
 
-      // if (!state.productslist) {
-          store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
-      // }
-      console.log(state);
-      return { state };
-  },
+        const state = reactive({
+            productslist: computed(() => store.getters["products/getProducts"]),
+        });
+
+        // if (!state.productslist) {
+            store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
+        // }
+
+        return { state };
+    },
 };
 </script>
 

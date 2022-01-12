@@ -18,13 +18,6 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("---------------LOGIN-------------------");
-        $out->writeln($this);
-      
-        $out->writeln("---------------LOGIN-------------------");
-
-
         return [
             'email'     => 'required|max:255|email',
             'password'  => 'required'

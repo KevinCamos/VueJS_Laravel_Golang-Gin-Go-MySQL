@@ -3,6 +3,8 @@
 namespace App\Repositories;
 use App\Models\Categories;
 use App\Helpers\FileUploader;
+use Illuminate\Support\Facades\DB;
+use App\Models\Products;
 
 class CategoriesRepository{
 
@@ -59,4 +61,15 @@ class CategoriesRepository{
         return false;
     }
 
+    public function changeStatus($id, $data)
+    {
+        if (Categories::where('id', $id)->exists()) {
+            Categories::where('id', $id)->update(['status' => $data['status']]);
+            Products::where('categories_id', $id)->update(['status' => $data['status']]);
+            $categories = Categories::find($id);
+            return $categories;
+        } else {
+            return null;
+        }
+    }
 }

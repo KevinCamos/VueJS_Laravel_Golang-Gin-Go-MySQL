@@ -17,6 +17,7 @@
       <tbody>
         <OrderItem
           v-for="orderitem in state.orderlist"
+          v-show="orderitem.id_worker == state.user.id || state.user.appointment == 'gerente'"
           :key="orderitem"
           :orderitem="orderitem"
           :productslist="state.productslist"
@@ -54,6 +55,7 @@ export default {
       productslist: computed(() => store.getters["products/getProducts"]),
       isModalVisible: false,
       order: "",
+      user: JSON.parse(localStorage.getItem("user"))
     });
 
     if (!state.productslist) {

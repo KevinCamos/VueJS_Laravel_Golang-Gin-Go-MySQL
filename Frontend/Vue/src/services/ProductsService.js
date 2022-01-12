@@ -14,6 +14,9 @@ export default {
   updateProduct(data, id) {
     return Api(`${secret.LARAVEL_APP_URL}`).post(`products/${id}?_method=PUT`, data)
   },
+  changeStatusProduct(data, id) {
+    return Api(`${secret.LARAVEL_APP_URL}`).put(`products/changeStatus/${id}`, data)
+  },
   deleteProductById(id) {
     return Api(`${secret.LARAVEL_APP_URL}`).delete(`products/${id}`)
   },

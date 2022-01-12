@@ -10,7 +10,7 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/home">Homes</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="state.authUser.isAdmin === true" class="nav-item">
           <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
         </li>
         <li v-if="state.authUser.isAdmin === true" class="nav-item">

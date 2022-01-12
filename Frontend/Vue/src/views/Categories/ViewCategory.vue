@@ -13,13 +13,17 @@
                 <tr>
                     <th>Id</th>
                     <td>{{ state.categoriesitemlocal.id }} </td>
-                    <td rowspan="2" class="col-6"> 
+                    <td rowspan="3" class="col-6"> 
                         <img class="w-75" v-bind:src="state.categoriesitemlocal.image">
                     </td>
                 </tr>
                 <tr>
                     <th>Name</th>
                     <td>{{ state.categoriesitemlocal.name }} </td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ state.categoriesitemlocal.status }} </td>
                 </tr>
             </tbody>
         </table>

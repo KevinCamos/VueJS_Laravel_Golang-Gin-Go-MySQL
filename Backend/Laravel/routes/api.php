@@ -24,6 +24,7 @@ Route::get('products/{id}', [ProductsController::class, 'show']);
 Route::post('products', [ProductsController::class, 'store']);
 Route::put('products/{id}', [ProductsController::class, 'update']);
 Route::delete('products/{id}', [ProductsController::class, 'destroy']);
+Route::put('products/changeStatus/{id}', [ProductsController::class, 'changeStatus']);
 Route::get('productsChart', [ProductsController::class, 'getChart']);
 
 Route::get('categories', [CategoriesController::class, 'index']);
@@ -31,6 +32,7 @@ Route::get('categories/{id}', [CategoriesController::class, 'show']);
 Route::post('categories', [CategoriesController::class, 'store']);
 Route::put('categories/{id}', [CategoriesController::class, 'update']);
 Route::delete('categories/{id}', [CategoriesController::class, 'destroy']);
+Route::put('categories/changeStatus/{id}', [CategoriesController::class, 'changeStatus']);
 
 Route::get('table', [TableController::class, 'index']);
 Route::get('table/{id}', [TableController::class, 'show']);

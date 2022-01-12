@@ -7,10 +7,7 @@
               <div class="col-sm-8"><h2>Categories <b>Lists</b></h2></div>
               <div class="col-sm-4">
                   <div class="row">
-                      <router-link class="col-6 btn btn-danger" to="/categories/add">Add New</router-link>
-                      <div class="search-box col-6">
-                          <input type="text" class="form-control" placeholder="Search&hellip;">
-                      </div>
+                      <router-link class="col-12 btn btn-danger" to="/categories/add">Add New</router-link>
                   </div>
               </div>
           </div>
@@ -21,6 +18,7 @@
               <tr>
                   <th>Id</th>
                   <th>Name</th>
+                  <th>Status</th>
                   <th>Actions</th>
               </tr>
           </thead>

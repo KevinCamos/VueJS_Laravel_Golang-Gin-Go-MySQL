@@ -28,18 +28,13 @@ class OrderRepository
         return $order;
     }
 
-    public function createOrder($data)
+    public function createOrder($id_client, $id_worker)
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln($data);
-        /*       $order = Order::create(['id_client' => $data]);
-        return $order; */
-        if ($data === 'shop') {
-
-            $order = Order::create(['id_client' => $data]);
-        } else if (!Order::where([['id_client', $data], ['status', 'preparacion']])->exists() && Table::where([['id_table', $data], ['status', 'active']])->exists()) {
-            $order = Order::create(['id_client' => $data]);
-            Table::where('id_table', $data)->update(['status' => 'busy']);
+        if ($id_client === 'shop') {
+            $order = Order::create(['id_client' => $id_client, 'id_worker' => $id_worker]);
+        } else if (!Order::where([['id_client', $id_client], ['status', 'preparacion']])->exists() && Table::where([['id_table', $id_client], ['status', 'active']])->exists()) {
+            $order = Order::create(['id_client' => $id_client]);
+            Table::where('id_table', $id_client)->update(['status' => 'busy']);
         } else {
             return null;
         }
@@ -48,10 +43,7 @@ class OrderRepository
 
     public function updateOrder($id, $data)
     {
-
-
         if (Order::where('id_order', $id)->exists()) {
-
             for ($i = 0; $i < count($data->order); $i++) {
                 OrderList::updateOrInsert(['id_order' => $id, 'id_product' => $data->order[$i]['id_product']], ['qty' => $data->order[$i]['qty']]);
             }
@@ -96,7 +88,6 @@ de ser finalizado, MYSQL realizará un sql Trigger para facturar*/
     public function chartOrder()
     {
         return DB::table('OrderList')
-                ->join('Order', 'OrderList.id_order', '=', 'Order.id_order')
                 ->join('Products', 'Products.id', '=', 'OrderList.id_product')
                 ->select('Products.name as product', DB::raw('SUM(OrderList.qty) as qty'))
                 ->groupBy('OrderList.id_product','Products.name')

@@ -32,7 +32,7 @@
     </div>
     <!-- <button type="button" class="btn" @click="showModal">Open Modal!</button>  -->
     <Modal
-      v-if="state.order && state.productprueba"
+      v-if="state.order && state.productslist"
       v-show="state.isModalVisible"
       @close="closeModal"
       :order="state.order"
@@ -47,7 +47,7 @@ import TableItem from "../../components/TableItem.vue";
 import LazyTable from "../../components/lazyLoad/lazyTable.vue";
 import MakeOrder from "../../components/buttons/MakeOrder.vue";
 import Modal from "../../components/Modal";
-import { reactive, computed, watch, watchEffect } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -90,7 +90,7 @@ export default {
     const showModal = (order) => {
       console.log(order);
       state.order = order;
-
+      // state.productslist
       // console.log(state.productslist)
       // console.log(state.order)
       state.isModalVisible = true;

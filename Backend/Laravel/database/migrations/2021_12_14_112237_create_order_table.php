@@ -17,6 +17,7 @@ class CreateOrderTable extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id('id_order');
             $table->string('id_client')->default('shop');
+            $table->string('id_worker');
             $table->string('status')->default('preparacion');
         });
     }

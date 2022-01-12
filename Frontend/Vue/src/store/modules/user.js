@@ -18,7 +18,7 @@ export const user = {
       console.log(payload.data.user);
       state.user = payload.data.user;
       localStorage.setItem("user", JSON.stringify(payload.data.user));
-      localStorage.token = payload.data.acces_token;
+      localStorage.token = payload.data.access_token;
       state.authUser.isWorker = true;
       state.authUser.isAdmin = false;
 

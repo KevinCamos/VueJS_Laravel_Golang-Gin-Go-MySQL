@@ -10,6 +10,7 @@ export default {
     /* PRODUCTS */
     ADD_PRODUCTS : "addProdcts",
     UPDATE_PRODUCTS : "updateProdcts",
+    UPDATE_STATUS_PRODUCTS : "updateStatusProdcts",
     DELETE_PRODUCTS : "deleteProdcts",
     INITIALIZE_PRODUCTS : "initializeProdcts",
 
@@ -18,6 +19,7 @@ export default {
     UPDATE_CATEGORIES : "updateCategories",
     DELETE_CATEGORIES : "deleteCategories",
     INITIALIZE_CATEGORIES : "initializeCategories",
+    UPDATE_STATUS_CATEGORIES : "updateStatusCategories",
 
      /* USERS */
     LOGIN_USER:"loginUser",

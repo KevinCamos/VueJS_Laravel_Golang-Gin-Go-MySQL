@@ -20,8 +20,6 @@ export default function useAddWorkers() {
     });
   };
 
-  
-
   const state = reactive({
     workeritemlocal: {
       name: "",

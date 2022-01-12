@@ -14,6 +14,9 @@ export default {
   updateCategory(data, id) {
     return Api(`${secret.LARAVEL_APP_URL}`).post(`categories/${id}?_method=PUT`, data)
   },
+  changeStatusCategory(data, id) {
+    return Api(`${secret.LARAVEL_APP_URL}`).put(`categories/changeStatus/${id}`, data)
+  },
   deleteCategoryById(id) {
     return Api(`${secret.LARAVEL_APP_URL}`).delete(`categories/${id}`)
   }

@@ -64,7 +64,7 @@ class CategoriesController extends Controller
             } catch (\Exception $e) {
                 return self::apiServerError($e->getMessage());
             }
-       /*  } else {
+        /* } else {
             return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
         } */
     }
@@ -142,6 +142,23 @@ class CategoriesController extends Controller
                 return self::apiServerError($e->getMessage());
             }
         /* } else {
+            return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
+        } */
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        /* if (Gate::allows('isGerente')) { */
+            try {
+                $categories = $this->categoriesRepository->changeStatus($id, $request);
+                if(!$categories){
+                    return self::apiResponseError(null, 'Categoria no encontrada' , Response::HTTP_NOT_FOUND);
+                }
+                return self::apiResponseSuccess($categories, 'Status actualizada', Response::HTTP_OK);
+            } catch (\Exception $e) {
+                return self::apiServerError($e->getMessage());
+            }
+      /*   } else {
             return self::apiResponseError(null, 'Unauthorized' , response::HTTP_FORBIDDEN);
         } */
     }

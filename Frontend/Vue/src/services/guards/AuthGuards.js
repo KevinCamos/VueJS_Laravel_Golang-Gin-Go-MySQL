@@ -8,7 +8,7 @@ export default {
     if (store.getters["user/isAuthWorker"]) {
       next();
     } else {
-      next("/home");
+      next("/signin");
     }
   },
   authGuardAdmin(to, from, next) {
@@ -19,11 +19,11 @@ export default {
       user = user.data.user;
       localStorage.token = user.token;
       localStorage.setItem("user", JSON.stringify(user));
-      next();;
+      next();
     })
     .catch(function (error) {
       store.state.authUser.isAdmin = false;
-      store. state.authUser.isWorker = false;
+      store.state.authUser.isWorker = false;
       console.log("error!!!")
       next("/signin");
     });

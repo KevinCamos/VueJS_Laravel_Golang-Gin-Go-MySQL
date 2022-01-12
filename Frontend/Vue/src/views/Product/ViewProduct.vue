@@ -13,7 +13,7 @@
                 <tr>
                     <th>Id</th>
                     <td>{{ state.productsitemlocal.id }} </td>
-                    <td rowspan="5" class="col-6"> 
+                    <td rowspan="6" class="col-6"> 
                         <img class="w-75" v-bind:src="state.productsitemlocal.image">
                     </td>
                 </tr>
@@ -32,6 +32,10 @@
                 <tr>
                     <th>Price</th>
                     <td>{{ state.productsitemlocal.price }} </td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ state.productsitemlocal.status }} </td>
                 </tr>
             </tbody>
         </table>

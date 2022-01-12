@@ -10,6 +10,8 @@ use App\Http\Resources\OrderListResource;
 use App\Http\Requests\OrderRequest;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Response;
+use App\Models\Order;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -62,19 +64,14 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-
-            $order = OrderResource::make($this->orderRepository->createOrder(isset($request['id_client']) ? $request['id_client'] : "shop"));
+            $order = OrderResource::make($this->orderRepository->createOrder(isset($request['id_client']) ? $request['id_client'] : "shop", auth()->id()));
             $listorder = OrderListResource::collection($this->orderListRepository->createOrderList($request, $order['id']));
 
-            // $out->writeln("---------------order-------------------");
-            // $out->writeln($order['id']);
-            // $out->writeln("---------------order-------------------");
             if ($order) {
                 $data = array(
                     "id_order"  => $order['id'],
                     "order" => $listorder
                 );
-
                 return self::apiResponseSuccess($data, 'Pedido creado', Response::HTTP_OK);
             }
         } catch (\Exception $e) {
@@ -121,6 +118,27 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, $id)
     {
+
+       /*  $user = auth()->user();
+        $order = Order::where('id_order', $id)->get();
+
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $out->writeln("---------------DATA-------------------");
+        $out->writeln($order);
+        $out->writeln($order[0]->id_worker);
+        $out->writeln($user['id']);
+        $out->writeln($id);
+        $out->writeln("---------------DATA-------------------");
+
+        if(Gate::allows('update', $order)){
+            $out->writeln("yes");
+        }
+
+        if ($user->can('update', $order)) {
+            $out->writeln("---------------hola-------------------");
+        } 
+        $this->authorize('update', $order); */
+
         try {
             $order = $this->orderRepository->updateOrder($id, $request/* ->validated() */);
             if (is_null($order)) {
@@ -142,10 +160,7 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderRepository->endOrder($id, 'canceled');
-
             if ($order) {
-
-
                 return self::apiResponseSuccess(null, 'Pedido cancelado', Response::HTTP_OK);
             }
             return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);
@@ -157,10 +172,7 @@ class OrderController extends Controller
     public function buyOrder($id){
         try {
             $order = $this->orderRepository->endOrder($id, 'F');
-
             if ($order) {
-
-
                 return self::apiResponseSuccess(null, 'Pedido finalizado', Response::HTTP_OK);
             }
             return self::apiResponseError(null, 'Pedido no encontrado', Response::HTTP_NOT_FOUND);

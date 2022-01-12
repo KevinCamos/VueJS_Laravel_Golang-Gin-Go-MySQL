@@ -11,7 +11,7 @@ class FileUploader
 
     public static function name($title)
     {
-        return Str::slug(substr($title, 0, 15)).'-'.time();
+        return Str::slug($title, "-").'-'.time();
     }
 
 	public static function store($file, $title, $loc)

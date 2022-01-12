@@ -11,6 +11,6 @@ class OrderListRepository
         for ($i = 0; $i < count($data->order); $i++) {
             OrderList::create(['id_order' => $id, 'id_product' => $data->order[$i]['id_product'], 'qty' => $data->order[$i]['qty']]);
         }
-        return   OrderList::where('id_order', $id)->get();
+        return OrderList::where('id_order', $id)->get();
     }
 }

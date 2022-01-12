@@ -9,7 +9,7 @@ class Categories extends Model
 {
     use HasFactory;
     protected $table = 'categories';
-    protected $fillable = ['id', 'name', 'image'];
+    protected $fillable = ['id', 'name', 'image', 'status' => 'active'];
     public $timestamps = false;
 
     public function products()

@@ -1,12 +1,20 @@
 <template>
   <section>
     <div v-if="state.toggle == false" class="row justify-content-center">
-      <Card-Category
-        v-for="category in state.categorieslist"
-        :key="category"
-        @clickToggle="clickToggle(true, category.id)"
-        :categoryitem="category"
-      ></Card-Category>
+      <suspense>
+        <template #default>
+          <Card-Category
+            v-for="category in state.categorieslist"
+            v-show="category.status == 'active'"
+            :key="category"
+            @clickToggle="clickToggle(true, category.id)"
+            :categoryitem="category"
+          ></Card-Category>
+        </template>
+        <template #fallback>
+          <h2>loading...</h2>
+        </template>
+      </suspense>
     </div>
     <div v-else class="row justify-content-center">
       <button
@@ -18,6 +26,7 @@
       </button>
       <Card-Product
         v-for="productitem in state.productfilter"
+        v-show="productitem.status == 'active'"
         :key="productitem.id"
         @increment-count="incrementOrder(productitem.id)"
         @decrement-count="decrementOrder(productitem.id)"
@@ -80,21 +89,27 @@
 </template>
 <script>
 import CardProduct from "../../components/CardProduct.vue";
-import CardCategory from "../../components/CardCategory.vue";
-import { reactive, computed } from "vue";
+// import CardCategory from "../../components/CardCategory.vue";
+
+import { reactive, computed, defineAsyncComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 import Constant from "../../Constant";
 
 export default {
-  components: { CardProduct, CardCategory },
+  components: {
+    CardProduct,
+    CardCategory: defineAsyncComponent(() =>
+      import("../../components/CardCategory.vue")
+    ),
+  },
 
-  setup() {
+    setup() {
     const router = useRouter();
     const store = useStore();
 
-    const state = reactive({
+    const state =   reactive({
       toggle: false,
       categorieslist: computed(() => store.getters["categories/getCategories"]),
       productslist: computed(() => store.getters["products/getProducts"]),
@@ -109,7 +124,7 @@ export default {
       store.dispatch("products/" + Constant.INITIALIZE_PRODUCTS);
     }
     if (!state.categorieslist) {
-        store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
+      store.dispatch("categories/" + Constant.INITIALIZE_CATEGORIES);
     }
 
     /* Vars for create the order */

@@ -19,6 +19,10 @@ export const categories = {
             let index = state.categorieslist.findIndex((item) => item.id === payload.id);
             state.categorieslist[index] = payload;
         },
+        [Constant.UPDATE_STATUS_CATEGORIES]: (state, payload) => {
+            let index = state.categorieslist.findIndex((item) => item.id === payload.id);
+            state.categorieslist[index] = payload;
+        },
         [Constant.INITIALIZE_CATEGORIES]: (state, payload) => {
             if (payload) {
                 state.categorieslist = payload;
@@ -68,6 +72,15 @@ export const categories = {
             CategoriesService.updateCategory(formData, payload.categoriesitem.id)
             .then(function (res) {
                 store.commit(Constant.UPDATE_CATEGORIES, res.data.data[0]);
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        },
+        [Constant.UPDATE_STATUS_CATEGORIES]: (store, payload) => {
+            CategoriesService.changeStatusCategory(payload.categories, payload.id)
+            .then(function (res) {
+                store.commit(Constant.UPDATE_STATUS_CATEGORIES, res.data.data);
             })
             .catch(function (error) {
                 console.log(error)

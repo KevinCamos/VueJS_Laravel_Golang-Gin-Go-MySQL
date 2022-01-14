@@ -10,7 +10,8 @@ Por [`Juanmi Bellot Tolsà`](https://github.com/jubelltols) y [`Kevin Camos Soto
 
 # ¡StarBars! 💻
 
-\_Bienvenidas y bienvenidos a Starbars
+Bienvenidas y bienvenidos a Starbars
+<img src="./img/orders.gif">
 
 `¿Qué es VueJS_Laravel_Golang-Gin-Go-MySQL?`
 
@@ -102,7 +103,7 @@ $ go run main.go
 
 `./backend/Go`
 
-<!-- <img src="./assets/video2.gif"> -->
+<img src="./img/tables.gif">
 
 ## Tecnologías 👨‍💻
 
@@ -167,4 +168,3 @@ Lista de tecnologías utilizadas en este proyecto:
 
 - [MySQL](https://www.mysql.com/)
 
-<!-- <img src="./assets/video3.gif"> -->
